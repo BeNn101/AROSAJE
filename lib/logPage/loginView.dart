@@ -44,6 +44,7 @@ Widget boutton() {
       onTap: () { print('true');},
       autofocus: true,
       enabled: false,
+      readOnly: true,
       decoration: InputDecoration(
         hintText: 'LOGIN',
         border: OutlineInputBorder(
