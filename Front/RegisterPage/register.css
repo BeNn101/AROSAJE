@@ -1,0 +1,64 @@
+#block{
+    margin-top:150px;
+    background-color: #d9d9d9;
+    /* background-color: ; */
+    display: flex;
+    width: 520px;
+    height: 600px;
+    margin-left: 480px;
+}
+
+#logo{
+    width: 150px;
+    height: 80px;
+}
+
+#avatar_choice{
+    width: 150px;
+    height: 80px;
+}
+#div_header{
+    display: flex;
+    flex-direction: column;
+    margin-left: 180px;
+}
+#div_avatar{
+    display: flex;
+    justify-content: center;
+}
+
+
+label{
+    display: flex;
+    flex-direction: column;
+}
+
+#register_button{
+    margin-top: 10px;
+    width: 150px;
+}
+
+a{
+    margin-top: 10px;
+    display: flex;
+}
+
+#avatar_btn{
+    width: 150px;
+    height: 100px;
+    margin-left:15px;
+}
+
+#avatar_choice{
+    margin-left:-15px;
+}
+
+#item_form{
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+input{
+    width: 200px;
+}
