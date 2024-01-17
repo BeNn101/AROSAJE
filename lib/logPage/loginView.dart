@@ -41,9 +41,9 @@ Widget boutton() {
     padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 110),
     child: TextField(
       textAlign: TextAlign.center,
-      onTap: () { print('true');},
-      autofocus: true,
-      enabled: false,
+      onTap: () { Get.offAllNamed('/home');},
+      //autofocus: f,
+      enabled: true,
       readOnly: true,
       decoration: InputDecoration(
         hintText: 'LOGIN',
