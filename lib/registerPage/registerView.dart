@@ -5,13 +5,12 @@ class RegisterView extends GetView {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Supprimer l'AppBar
       body: Center(
         child: SingleChildScrollView(
+          padding: EdgeInsets.only(bottom: 70),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              // Logo (rendre l'image plus grande)
               Container(
                 width: 170,
                 height: 170,
@@ -23,60 +22,60 @@ class RegisterView extends GetView {
                 ),
               ),
               SizedBox(height: 20),
-              // Texte d'inscription
               Text(
                 'Inscription',
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 30),
-              // Champs de saisie avec espacement vertical
               RegistrationFormField(label: 'Prénom'),
               SizedBox(height: 12),
               RegistrationFormField(label: 'Nom'),
               SizedBox(height: 12),
               RegistrationFormField(
-                  label: 'Email', keyboardType: TextInputType.emailAddress),
-              SizedBox(height: 12),
-              RegistrationFormField(label: 'Mot de passe', obscureText: true),
+                label: 'Email',
+                keyboardType: TextInputType.emailAddress,
+              ),
               SizedBox(height: 12),
               RegistrationFormField(
-                  label: 'Téléphone', keyboardType: TextInputType.phone),
+                label: 'Mot de passe',
+                obscureText: true,
+              ),
+              SizedBox(height: 12),
+              RegistrationFormField(
+                label: 'Téléphone',
+                keyboardType: TextInputType.phone,
+              ),
               SizedBox(height: 20),
-              // Texte pour la page de connexion
               GestureDetector(
-                onTap: () {
-                  // Mettez ici la navigation vers la page de connexion
-                },
+                onTap: () {},
                 child: Text(
                   'Déjà inscrit ? Connectez-vous',
                   style: TextStyle(
-                    color: Colors.blue, // Texte en bleu
+                    color: Colors.blue,
                     decoration: TextDecoration.underline,
                   ),
                 ),
               ),
               SizedBox(height: 20),
-              // Bouton d'inscription personnalisé
               ElevatedButton(
-                onPressed: () {
-                  // Mettez ici votre logique d'inscription
-                },
+                onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.black, // Couleur du bouton
+                  primary: Colors.white,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0), // Bords arrondis
+                    borderRadius: BorderRadius.circular(8.0),
                   ),
-                  side: BorderSide(color: Colors.black), // Bordure noire
+                  side: BorderSide(color: Colors.black),
                 ),
                 child: Container(
-                  width: double.infinity, // Bouton plein largeur
-                  padding: EdgeInsets.symmetric(vertical: 12),
+                  width: 300,
+                  padding: EdgeInsets.symmetric(vertical: 14),
+                  color: Colors.white,
                   child: Center(
                     child: Text(
                       'S\'inscrire',
                       style: TextStyle(
-                        color: Colors.white, // Texte blanc
-                        fontSize: 16,
+                        color: Colors.black,
+                        fontSize: 20,
                       ),
                     ),
                   ),
@@ -108,6 +107,8 @@ class RegistrationFormField extends StatelessWidget {
       child: TextFormField(
         decoration: InputDecoration(
           labelText: label,
+          filled: true,
+          fillColor: Colors.grey[200], 
           border: OutlineInputBorder(),
         ),
         obscureText: obscureText,
