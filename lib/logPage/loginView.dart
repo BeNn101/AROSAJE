@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LoginView extends GetView<LoginViewController> {
-  const LoginView({super.key});
-
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,49 +18,44 @@ class LoginView extends GetView<LoginViewController> {
         elevation: 3,
         toolbarHeight: 70,
       ),
-      body:  Center(
-  child: Column(
-    mainAxisAlignment: MainAxisAlignment.center, // Centrer verticalement
-    children: [
-      XTextField(onTap: () {
-        // Votre logique
-      }, hintText: 'mail'),
-      SizedBox(height: 10),
-      XTextField(onTap: () {
-        // Votre logique
-      }, hintText: 'Password'),
-      boutton(),
-    ],
-  ),
-)
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            XTextField(
+              controller: emailController,
+              hintText: 'Email',
+            ),
+            SizedBox(height: 10),
+            XTextField(
+              controller: passwordController,
+              hintText: 'Password',
+            ),
+            boutton(),
+          ],
+        ),
+      ),
     );
   }
-}
 
-Widget boutton() {
-  return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 110),
-    child: TextField(
-      textAlign: TextAlign.center,
-      onTap: () { Get.offAllNamed('/home');},
-      //autofocus: f,
-      enabled: true,
-      readOnly: true,
-      decoration: InputDecoration(
-        hintText: 'LOGIN',
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30),
-          borderSide: const BorderSide(
-            width: 0,
-            style: BorderStyle.none,
+  Widget boutton() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 110),
+      child: ElevatedButton(
+        onPressed: () async {
+          final String email = emailController.text;
+          final String password = passwordController.text;
+
+          
+        },
+        child: Text('LOGIN'),
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
           ),
+          primary: const Color.fromARGB(255, 42, 228, 49),
         ),
-        alignLabelWithHint: true,
-        filled: true,
-        fillColor: const Color.fromARGB(255, 42, 228, 49),
-       // Ajustez cette valeur selon vos besoins
       ),
-      style: TextStyle(fontSize: 20, color: Colors.white),
-    ),
-  );
+    );
+  }
 }

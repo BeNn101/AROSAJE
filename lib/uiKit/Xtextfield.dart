@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 
 class XTextField extends StatelessWidget {
   final String? hintText;
-  final Function()? onTap; // Déclarer la variable de fonction
+  final TextEditingController? controller;
+  //final Function()? onTap;
 
-  const XTextField({Key? key, this.hintText, required this.onTap})
+  const XTextField({Key? key, this.hintText, this.controller})
       : super(key: key);
 
   @override
@@ -12,15 +13,13 @@ class XTextField extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
     double textFieldWidth = screenWidth / 2;
     double fontSize = screenWidth > 600 ? 16 : 14;
-    
+
     return Container(
       width: textFieldWidth,
-     
       child: GestureDetector(
-        
-        // Utiliser la fonction onTap
+        //onTap: onTap,
         child: TextFormField(
-          onTap: onTap,
+          controller: controller,
           autofocus: true,
           cursorColor: Colors.green,
           decoration: InputDecoration(
