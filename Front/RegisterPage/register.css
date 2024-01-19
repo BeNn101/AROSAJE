@@ -13,20 +13,22 @@
     height: 80px;
 }
 
-#avatar_choice{
-    width: 150px;
-    height: 80px;
+#password_div{
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
 }
+
 #div_header{
     display: flex;
     flex-direction: column;
     margin-left: 180px;
 }
+
 #div_avatar{
     display: flex;
     justify-content: center;
 }
-
 
 label{
     display: flex;
@@ -44,9 +46,15 @@ a{
 }
 
 #avatar_btn{
-    width: 150px;
+    /* width: 150px;
     height: 100px;
-    margin-left:15px;
+    margin-left:15px; */
+    color: white;
+    padding: 0.5rem;
+    font-family: sans-serif;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    margin-top: 1rem;
 }
 
 #avatar_choice{

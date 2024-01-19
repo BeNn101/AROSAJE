@@ -1,7 +1,6 @@
 <?php
 require_once('../../db_connect.php');
-// require("../mailer.php");
-print_r($_POST);
+require("../../mailer.php");
 if (isset($_POST["firstname"], $_POST["lastname"],$_POST["email"],$_POST["pwd"],$_POST["phonenumber"]) && !empty(trim($_POST["firstname"])) && !empty(trim($_POST["lastname"])) && !empty(trim($_POST["email"])) && !empty(trim($_POST["pwd"] && !empty(trim($_POST["phonenumber"]))))){
 } else {
     echo json_encode(["success" => false, "error" => "Donnée vide"]);
@@ -14,14 +13,10 @@ if(!preg_match($regex,$_POST["email"])){
     die;
 }
 
-// $regex = "^=.*[0-9])(?=.*[^a-zA-Z0-9])([A-Z].{7,}$";
-$regex = "/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])[a-zA-Z0-9]{8,12}$/";
+// $regex = "/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])[a-zA-Z0-9]{8,12}$/";
+$regex = '/^[A-Z](?=.*\d)(?=.*[@#$%^+=!])(?=.*[a-zA-Z])[a-zA-Z0-9@#$%^+=!]{7,}$/';
 
-if (!preg_match($regex, $_POST["pwd"])) {
-    echo json_encode(["success" => false, "error" => "Mot de passe au mauvais format"]);
-    die;
-} else {
-    // print($_POST);
+if (preg_match($regex, $_POST["pwd"])) {
     $hash = password_hash($_POST["pwd"], PASSWORD_DEFAULT);
     $req = $db->prepare("INSERT INTO  user (prenom, nom,email,mot_de_passe,telephone,avatar) VALUES (:prenom, :nom, :email,:mot_de_passe,:telephone,:avatar)");
     $req->bindValue(":prenom",$_POST["firstname"]);
@@ -34,7 +29,6 @@ if (!preg_match($regex, $_POST["pwd"])) {
     if (isset($_FILES['avatar'])) {
         // Récupère les informations sur le fichier
         $file_name = $_FILES['avatar']['name'];
-        print($file_name);
         $file_tmp = $_FILES['avatar']['tmp_name'];
         $file_size = $_FILES['avatar']['size'];
         $file_error = $_FILES['avatar']['error'];
@@ -63,5 +57,8 @@ if (!preg_match($regex, $_POST["pwd"])) {
     $req->execute();
     echo json_encode(["success" => true, "msg" => "inscrit"]);
     // alert("Bienvenu sur Arosaje");
-    // mailer("m.beaumet@gmail.com", "Bienvenu {$_POST["firstname"]} {$_POST["lastname"]}", "Merci de ton inscription");
+    mailer("m.beaumet@gmail.com", "Bienvenu {$_POST["firstname"]} {$_POST["lastname"]}", "Merci de ton inscription");
+} else {
+    echo json_encode(["success" => false, "error" => "Mot de passe au mauvais format"]);
+    die;
 }
