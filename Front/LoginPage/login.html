@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+    <title>Connexion</title>
+</head>
+<body>
+    <div class="base">
+        <div class="logo-container">
+            <img src="../../images/logo arosage.png" alt="logo de l'app">
+        </div>
+        <div class="data">
+            <p>Email: </p>
+            <input type="email" id="emailInput" placeholder="Entrez votre email...">
+            <div class="password-container">
+                <p>Mot de passe: </p>
+                <input type="password" placeholder="Entrez votre mot de passe..." id="password">
+                <span class="eye-icon" onclick="togglePasswordVisibility()"></span>
+            </div>
+        </div>
+        <div>
+            <button type="submit" onclick="validateAndSubmit()">CONNEXION</button>
+            
+        </div>
+        <div class="inscription-link">
+            <a href="#">Pas encore de compte ? Inscris-toi</a>
+        </div>
+
+    </div>
+    
+</body>
+</html>
