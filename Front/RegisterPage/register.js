@@ -1,5 +1,6 @@
 // console.log("Test de connxeion")
 $("form").submit((event) => {
+    console.log('test');
     event.preventDefault();
     $.ajax({
         url:"../../Back/Register/register.php",

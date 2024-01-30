@@ -1,12 +1,12 @@
 function togglePasswordVisibility() {
-    var passwordInput = document.getElementById("password");
+    let passwordInput = document.getElementById("password");
     passwordInput.type = (passwordInput.type === "password") ? "text" : "password";
     updateEyeIcon();
 }
 
 function updateEyeIcon() {
-    var passwordInput = document.getElementById("password");
-    var eyeIcon = document.querySelector(".eye-icon");
+    let passwordInput = document.getElementById("password");
+    let eyeIcon = document.querySelector(".eye-icon");
 
     eyeIcon.style.backgroundImage = (passwordInput.type === "password") ? "url('../../images/show_password.png')" : "url('../../images/hide_password.png')";
 }
@@ -15,10 +15,10 @@ function redirectToAnotherPage() {
 }
 
 function validateAndSubmit() {
-    var emailInput = document.getElementById("emailInput").value;
-    var passwordInput = document.getElementById("password").value;
+    let emailInput = document.getElementById("emailInput").value;
+    let passwordInput = document.getElementById("password").value;
 
-    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(emailInput)) {
         alert("Veuillez entrer une adresse email valide.");
         return; 
