@@ -14,7 +14,6 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    overflow: hidden;
 }
 
 .base {
@@ -30,7 +29,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%; /* Utilisez la hauteur de 100% pour que le conteneur s'adapte à la hauteur de l'image */
+    height: 100%; 
 }
 
 .logo-container img {
