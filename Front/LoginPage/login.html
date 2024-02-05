@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="login.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <title>Connexion</title>
 </head>
 <body>
@@ -20,20 +19,16 @@
                 <div class="password-container">
                     <p>Mot de passe: </p>
                     <input required type="password" placeholder="Entrez votre mot de passe..."id="password">
-                    <span  class="eye-icon_show" onclick="togglePasswordVisibility()"></span>
+                    <span class="eye-icon" onclick="togglePasswordVisibility()"></span>
                 </div>
             </div>
-
-        <div>
-            <!-- <button type="submit" onclick="validateAndSubmit()">CONNEXION</button> -->
-            <button type="submit">CONNEXION</button>
-            
-        </div>
+            <div class="button-container">
+                <button type="submit">CONNEXION</button>
+            </div>
         </form>
         <div class="inscription-link">
             <a href="../RegisterPage/register.html">Pas encore de compte ? Inscris-toi</a>
         </div>
-
     </div>
     <script src="login.js"></script>
     <script src="login_request.js"></script>

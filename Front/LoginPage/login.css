@@ -1,58 +1,70 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 body {
+    font-family: 'Inter', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    background-image: url('../../images/app_background.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
 }
 
 .base {
-    width: 702px;
-    height: 600px;
-    background-color: #D9D9D9;
-    margin-top: 20px;
+    width: 80%;
+    max-width: 600px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 50px;
+    border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    display: flex;
-    flex-direction: column; 
-    align-items: center; 
-}
-.base {
-    width: 80%; /* Utilise une largeur relative pour une meilleure adaptation aux différents écrans */
-    max-width: 702px; /* Définit une largeur maximale pour éviter une largeur excessive sur des écrans larges */
-    background-color: #D9D9D9;
-    padding: 20px; /* Ajoute un espace intérieur pour un aspect plus aéré */
-
 }
 
 .logo-container {
-    margin-bottom: 20px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Utilisez la hauteur de 100% pour que le conteneur s'adapte à la hauteur de l'image */
 }
 
 .logo-container img {
-    width: 271px;
-    height: 152px;
+    width: 100%;
+    max-width: 271px;
+    height: auto;
 }
 
-.data input{
-    width: 592px;
-    height: 20px;
+.data input {
+    width: 100%;
+    max-width: 592px;
+    height: 40px;
     border: 1px solid black;
     padding: 8px;
     margin-bottom: 15px;
-}
-.data p {
-    font-size: 19px;
-    margin-bottom: 8px;
-    font-family: 'Inter', sans-serif;
-    font-weight: bold;
-}
-.password-container {
-    position: relative;
+    font-size: 16px;
 }
 
-.eye-icon_show {
+.data p {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.password-container {
+    position: relative;
+    margin-top: 20px;
+}
+
+.eye-icon {
     position: absolute;
     right: 10px;
-    top: 40px;
+    top: 50px;
+    transform: translateY(-50%);
     width: 20px;
     height: 20px;
     background: url('../../images/show_password.png') no-repeat center center;
@@ -60,43 +72,40 @@ body {
     cursor: pointer;
 }
 
-.eye-icon_not_show{
-    position: absolute;
-    right: 10px;
-    top: 40px;
-    width: 20px;
-    height: 20px;
-    background: url('../../images/hide_password.png') no-repeat center center;
-    background-size: contain;
-    cursor: pointer;
+.button-container {
+    text-align: center;
 }
 
-
-
-button{
-    width: 230px;
+button {
+    width: 100%;
+    max-width: 230px;
     height: 45px;
-    margin-top: 20px;
     font-size: 20px;
-    border: 2px solid black;
     font-weight: bold;
     background-color: white;
+    border: 2px solid black;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
 button:hover {
     color: white;
     background-color: #45a049;
 }
-.inscription-link{
+
+.inscription-link {
+    text-align: center;
     margin-top: 20px;
 }
+
 .inscription-link a {
     font-size: 18px;
-    font-family: 'Inter', sans-serif;
     color: #1855F1;
     text-decoration: none;
 }
-.inscription-link a:hover {
-    color: #005580; 
-}
 
+.inscription-link a:hover {
+    color: #005580;
+}
