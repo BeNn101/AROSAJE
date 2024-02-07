@@ -1,72 +1,123 @@
-#block{
-    margin-top:150px;
-    background-color: #d9d9d9;
-    /* background-color: ; */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
     display: flex;
-    width: 520px;
-    height: 600px;
-    margin-left: 480px;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('../../images/app_background.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-#logo{
-    width: 150px;
-    height: 80px;
+.base {
+    width: 80%;
+    height: 80vh;
+    max-width: 600px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 30px;
+    overflow-y: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-
-#password_div{
-    display: flex;
-    flex-direction: column;
-    margin-top: 10px;
+.base::-webkit-scrollbar {
+    display: none; 
 }
-
-#div_header{
-    display: flex;
-    flex-direction: column;
-    margin-left: 180px;
-}
-
-#div_avatar{
+.logo-container {
     display: flex;
     justify-content: center;
 }
 
-label{
-    display: flex;
-    flex-direction: column;
+.logo-container img {
+    width: 100%;
+    max-width: 271px;
+    height: auto;
 }
 
-#register_button{
-    margin-top: 10px;
-    width: 150px;
+.data input {
+    width: 100%;
+    max-width: 592px;
+    height: 40px;
+    border: 1px solid black;
+    padding: 8px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    border-radius: 5px;
 }
 
-a{
-    margin-top: 10px;
-    display: flex;
+.data p {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 8px;
 }
 
-#avatar_btn{
-    /* width: 150px;
-    height: 100px;
-    margin-left:15px; */
-    color: white;
-    padding: 0.5rem;
-    font-family: sans-serif;
-    border-radius: 0.3rem;
+.password-container {
+    position: relative;
+}
+
+.eye-icon {
+    position: absolute;
+    right: 10px;
+    top: 48px;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    background: url('../../images/show_password.png') no-repeat center center;
+    background-size: contain;
     cursor: pointer;
-    margin-top: 1rem;
+}
+.eye-icon-confirm {
+    position: absolute;
+    right: 10px;
+    top: 20px;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    background: url('../../images/show_password.png') no-repeat center center;
+    background-size: contain;
+    cursor: pointer;
 }
 
-#avatar_choice{
-    margin-left:-15px;
+.button-container {
+    text-align: center;
 }
 
-#item_form{
-    display: flex;
-    flex-direction: column;
-    margin-top: 10px;
+button {
+    width: 100%;
+    max-width: 230px;
+    height: 45px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: white;
+    border: 2px solid black;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-input{
-    width: 200px;
+button:hover {
+    color: white;
+    background-color: #45a049;
+}
+
+.inscription-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.inscription-link a {
+    font-size: 18px;
+    color: #1855F1;
+    text-decoration: none;
+}
+
+.inscription-link a:hover {
+    color: #005580;
 }

@@ -1,52 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="register.css" rel="stylesheet">
-    <title>Register Web Page</title>
+    <title>Inscription</title>
     <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-<body>
-    <div id="block">
-        <!-- Image d'ajout d'un avatar -->
-        <div id="div_header">
-            <img id="logo" src="../../images/logo arosage.png" alt="Logo de l'app">
-            <!-- <button id="avatar_btn"><img id="avatar_choice" src="../../Images/Add_avatar.png" alt="Avatar Image"></button> -->
-            <!-- <button id="avatar_btnd">AVATAR</button> -->
-            <form id="form">
-
-                <div id="item_form">
-                    <label for="image_produit">Avatar</label>
-                    <input type="file" id="avatar_btn" name="image_avatar"/>
+<body>         
+    <section class="base">
+        <section class="logo-container">
+            <img src="../../images/logo arosage.png" alt="logo de l'app">
+        </section>
+        <form>
+            <section class="data" id="login">
+                <div id="avatar-container">
+                    <p>Avatar: </p>
+                    <input type="file" accept="image/png, image/jpeg">
                 </div>
-
-                <div id="item_form">
-                    <label for="firstname">Prénom</label>
-                    <input required="required" id="firstname" type="text"></input>
-                </div>
-                <div id="item_form">
-                    <label for="lastname">Nom</label>
-                    <input required type="text"  id="lastname"></input>
-                </div>
-                <div id="item_form">
-                    <label for="email">Email</label>
-                    <input required type="text" id="email"></input>
-                </div>
-                <div id="item_form">
-                    <label for="mdp">Mot de passe :</label>                    
-                    <input required type="password"  id="pwd"></input>
-                </div>
-                <div id="item_form">
-                    <label for="phonenumber">Téléphone</label>
-                    <input required type="text" id="phonenumber"></input>
+                <p>Prénom*: </p>
+                <input required pattern="[A-Za-z]+" title="Seules les lettres sont autorisées" type="text" placeholder="Entrez votre prénom..." oninput="capitalizeFirstLetter(this)">
+                <p>Nom*: </p>
+                <input required pattern="[A-Za-z]+" title="Seules les lettres sont autorisées" type="text" placeholder="Entrez votre nom..." oninput="capitalizeFirstLetter(this)">
+                <p>Email*: </p>
+                <input required type="email" id="emailInput" placeholder="Entrez votre email...">
+                <div class="password-container">
+                    <p>Mot de passe*: </p>
+                    <input required type="password" id="password" placeholder="Entrez un mot de passe...">
+                    <span class="eye-icon" onclick="togglePasswordVisibility('password')"></span>
                 </div>
                 
-                <button id="register_button">Inscription</button>
-                <a href="../LoginPage/login.html">Déja inscrit ? Connectez-vous</a>   
-            </form>
-
+                <p>Confirmer le mot de passe*: </p>
+                <div class="password-container">
+                    <input required type="password" id="confirmPassword" placeholder="Confirmez le mot de passe...">
+                    <span class="eye-icon-confirm" onclick="toggleConfirmPasswordVisibility('confirmPassword')"></span>
+                </div>
+                <p>Téléphone: </p>
+                <input type="tel" id="telephoneInput" placeholder="Entrez votre numéro de téléphone...">
+            </section>
+            <div class="button-container">
+                <button type="submit">INSCRIPTION</button>
+            </div>
+        </form>
+        <div class="inscription-link">
+            <a href="../LoginPage/login.html">Déja inscrit? Connecte-toi</a>
         </div>
-    </div>
+        <p><i>*Champs requis</i></p>
+    </section>
     <script src="register.js"></script>
 </body>
 </html>
