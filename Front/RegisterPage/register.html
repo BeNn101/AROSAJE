@@ -13,29 +13,34 @@
         </section>
         <form>
             <section class="data" id="login">
-                <div id="avatar-container">
-                    <p>Avatar: </p>
-                    <input type="file" accept="image/png, image/jpeg">
+                <div>
+                    <p>Email*: </p>
+                    <input required type="email" id="emailInput" placeholder="Entrez votre email...">
                 </div>
-                <p>Prénom*: </p>
-                <input required pattern="[A-Za-z]+" title="Seules les lettres sont autorisées" type="text" placeholder="Entrez votre prénom..." oninput="capitalizeFirstLetter(this)">
-                <p>Nom*: </p>
-                <input required pattern="[A-Za-z]+" title="Seules les lettres sont autorisées" type="text" placeholder="Entrez votre nom..." oninput="capitalizeFirstLetter(this)">
-                <p>Email*: </p>
-                <input required type="email" id="emailInput" placeholder="Entrez votre email...">
+                <div>
+                    <p>Nom*: </p>
+                    <input required pattern="[A-Za-z]+" title="Seules les lettres sont autorisées" type="text" placeholder="Entrez votre nom..." oninput="capitalizeFirstLetter(this)">
+                    <p>Prénom*: </p>
+                    <input required pattern="[A-Za-z]+" title="Seules les lettres sont autorisées" type="text" placeholder="Entrez votre prénom..." oninput="capitalizeFirstLetter(this)">
+                </div>
                 <div class="password-container">
                     <p>Mot de passe*: </p>
                     <input required type="password" id="password" placeholder="Entrez un mot de passe...">
                     <span class="eye-icon" onclick="togglePasswordVisibility('password')"></span>
+                    <p>Confirmer le mot de passe*: </p>
                 </div>
-                
-                <p>Confirmer le mot de passe*: </p>
                 <div class="password-container">
                     <input required type="password" id="confirmPassword" placeholder="Confirmez le mot de passe...">
                     <span class="eye-icon-confirm" onclick="toggleConfirmPasswordVisibility('confirmPassword')"></span>
                 </div>
-                <p>Téléphone: </p>
-                <input type="tel" id="telephoneInput" placeholder="Entrez votre numéro de téléphone...">
+                <div>
+                    <p>Téléphone: </p>
+                    <input type="tel" id="telephoneInput" placeholder="Entrez votre numéro de téléphone...">
+                </div>
+                <div id="avatar-container">
+                    <p>Avatar: </p>
+                    <input type="file" accept="image/png, image/jpeg">
+                </div>
             </section>
             <div class="button-container">
                 <button type="submit">INSCRIPTION</button>
