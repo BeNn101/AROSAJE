@@ -8,6 +8,7 @@ class LoginView extends GetView<LoginViewController> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
  
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +46,8 @@ class LoginView extends GetView<LoginViewController> {
         onPressed: () async {
           final String email = emailController.text;
           final String password = passwordController.text;
-
+         
+        await controller.fetchData();
           
         },
         child: Text('LOGIN'),
