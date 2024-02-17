@@ -46,6 +46,7 @@ class MainApp extends StatelessWidget {
           page: () => const MessageView(), // Utilisez la page qui affiche la liste de rarités
           binding: MessageBindings(), // Lier le contrôleur à la page
         ),
+ 
        
       ],
       initialRoute: '/login',

@@ -47,7 +47,7 @@ class LoginView extends GetView<LoginViewController> {
           final String email = emailController.text;
           final String password = passwordController.text;
          
-        await controller.fetchData();
+         controller.loginView(password,email);
           
         },
         child: Text('LOGIN'),

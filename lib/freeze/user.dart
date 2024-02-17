@@ -7,14 +7,14 @@ part 'user.g.dart';
 @freezed
 class User with _$User {
   const factory User({
-    @JsonKey(name: 'id_user') required String idUser,
+    @JsonKey(name: 'id_user') required int idUser,
     @JsonKey(name: 'nom') required String lastName,
     @JsonKey(name: 'prenom') required String firstName,
     @JsonKey(name: 'email') required String email,
     @JsonKey(name: 'mot_de_passe') required String password,
     @JsonKey(name: 'user_type') required int userType,
     @JsonKey(name: 'telephone') required int telephone,
-    @JsonKey(name: 'avatar') required String avatar,
+    @JsonKey(name: 'avatar')  String? avatar,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
