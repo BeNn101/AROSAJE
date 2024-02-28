@@ -1,7 +1,5 @@
 $("form").submit((event) => {
     event.preventDefault();
-    console.log($("#emailInput").val());
-    console.log($("#password").val());
     $.ajax({
         url:"../../Back/Login/login.php",
         type: 'POST',
@@ -12,13 +10,14 @@ $("form").submit((event) => {
         },
         success: (res) => {
             if (res.success) {
-                console.log(res)
+                console.log("Donnée récupérer")
             } else {
                 console.log(res.error)
+                alert("Echec de connexion")
             }
         },        
         error: () => {
-            console.log( $("#emailInput").val(),$("#password").val());
+            alert("Donnée manquante")
         }
     });
 })
