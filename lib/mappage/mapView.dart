@@ -1,6 +1,7 @@
 import 'package:arosaje_mobile/uiKit/XNavbar.dart';
 import 'package:arosaje_mobile/uiKit/XTextfiled.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:arosaje_mobile/mappage/mapViewController.dart';
 import 'package:get/get.dart';
@@ -18,12 +19,10 @@ class Flower {
 class MapView extends GetView<MapViewController> {
   MapView({Key? key}) : super(key: key);
   final List<Flower> flowers = [
+    Flower(position: LatLng(48.866667, 2.333333), imageUrl: 'assets/rose.jpg'),
     Flower(
-        position: LatLng(45.3367, 14.1594),
-        imageUrl: 'https://example.com/flower1.jpg'),
-    Flower(
-        position: LatLng(45.2641, 14.2525),
-        imageUrl: 'https://example.com/flower2.jpg'),
+        position: LatLng(48.85684190130435, 2.143681502360275),
+        imageUrl: 'assets/banzai.jpg'),
   ];
 
   @override
@@ -38,47 +37,20 @@ class MapView extends GetView<MapViewController> {
         elevation: 3,
         toolbarHeight: 70,
       ),
-      body: FlutterMap(
-        options: MapOptions(
-          center: LatLng(45.3, 14.2),
-          zoom: 10,
+      body: Container(
+        child: FlutterMap(
+          options: MapOptions(
+            center: LatLng(45.3, 14.2),
+            zoom: 10,
+          ),
+          children: [
+            TileLayer(
+              urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+              maxZoom: 19,
+            ),
+            CurrentLocationLayer(),
+          ],
         ),
-        layers: [
-          TileLayerOptions(
-            urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-            subdomains: ['a', 'b', 'c'],
-          ),
-          OverlayImageLayerOptions(
-            overlayImages: flowers.map((flower) {
-              return OverlayImage(
-                bounds: LatLngBounds(flower.position, flower.position),
-                imageProvider: NetworkImage(flower.imageUrl),
-                onTap: () {
-                  // Gérer le clic sur l'image ici
-                  // Par exemple, ouvrir une boîte de dialogue avec plus d'informations sur la fleur
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: Text('Flower Details'),
-                        content:
-                            Text('Additional information about the flower...'),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: Text('Close'),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
-              );
-            }).toList(),
-          ),
-        ],
       ),
     );
   }
