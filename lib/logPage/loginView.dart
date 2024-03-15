@@ -7,14 +7,14 @@ import 'package:get/get.dart';
 class LoginView extends GetView<LoginViewController> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
- 
- 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Arrosaje" ,),
+        title: Text(
+          "Arrosaje",
+        ),
         backgroundColor: Color.fromARGB(255, 11, 225, 3),
         elevation: 3,
         toolbarHeight: 70,
@@ -46,9 +46,7 @@ class LoginView extends GetView<LoginViewController> {
         onPressed: () async {
           final String email = emailController.text;
           final String password = passwordController.text;
-         
-         controller.loginView(password,email);
-          
+          Get.toNamed("/home");
         },
         child: Text('LOGIN'),
         style: ElevatedButton.styleFrom(

@@ -1,7 +1,7 @@
 import 'package:arosaje_mobile/accountpage/accountView.dart';
 import 'package:arosaje_mobile/accountpage/accountViewControllerBlindings.dart';
 import 'package:arosaje_mobile/homepage/homeBindings.dart';
-import 'package:arosaje_mobile/homepage/homeVeiw.dart';
+import 'package:arosaje_mobile/homepage/homeView.dart';
 import 'package:arosaje_mobile/logPage/loginBindings.dart';
 import 'package:arosaje_mobile/logPage/loginView.dart';
 import 'package:arosaje_mobile/messagepage/messageView.dart';
