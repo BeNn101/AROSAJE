@@ -3,7 +3,6 @@ import 'package:arosaje_mobile/homepage/homeViewController.dart';
 import 'package:arosaje_mobile/homepage/widget/plant-body.dart';
 import 'package:arosaje_mobile/uiKit/XNavbar.dart';
 import 'package:arosaje_mobile/uiKit/XTextfiled.dart';
-import 'package:arosaje_mobile/uiKit/Xnavbar_V2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';

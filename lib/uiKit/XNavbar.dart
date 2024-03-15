@@ -16,6 +16,7 @@ class _XNavbarState extends State<XNavbar> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+  
       items: [
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
@@ -25,10 +26,16 @@ class _XNavbarState extends State<XNavbar> {
           icon: Icon(Icons.account_circle_sharp),
           label: '',
         ),
+        BottomNavigationBarItem(icon: Icon(Icons.add), label: ''),
         BottomNavigationBarItem(
-          icon: Icon(Icons.send_rounded),
+          icon: Icon(Icons.home),
           label: '',
         ),
+        BottomNavigationBarItem(icon: Icon(Icons.place), label: ''),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.chat_bubble_outline),
+          label: '',
+        )
       ],
       onTap: (index) {
         setState(() {
@@ -44,6 +51,12 @@ class _XNavbarState extends State<XNavbar> {
             break;
           case 2:
             Get.toNamed('/message', arguments: {'userId': widget.userId});
+            break;
+          case 3:
+            Get.toNamed('/map', arguments: index);
+            break;
+          case 3:
+            Get.toNamed('/map', arguments: index);
             break;
         }
       },
