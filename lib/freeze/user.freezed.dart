@@ -31,7 +31,7 @@ mixin _$User {
   @JsonKey(name: 'mot_de_passe')
   String get password => throw _privateConstructorUsedError;
   @JsonKey(name: 'user_type')
-  int get userType => throw _privateConstructorUsedError;
+  int? get userType => throw _privateConstructorUsedError;
   @JsonKey(name: 'telephone')
   int get telephone => throw _privateConstructorUsedError;
   @JsonKey(name: 'avatar')
@@ -53,7 +53,7 @@ abstract class $UserCopyWith<$Res> {
       @JsonKey(name: 'prenom') String firstName,
       @JsonKey(name: 'email') String email,
       @JsonKey(name: 'mot_de_passe') String password,
-      @JsonKey(name: 'user_type') int userType,
+      @JsonKey(name: 'user_type') int? userType,
       @JsonKey(name: 'telephone') int telephone,
       @JsonKey(name: 'avatar') String? avatar});
 }
@@ -76,7 +76,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? firstName = null,
     Object? email = null,
     Object? password = null,
-    Object? userType = null,
+    Object? userType = freezed,
     Object? telephone = null,
     Object? avatar = freezed,
   }) {
@@ -101,10 +101,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
-      userType: null == userType
+      userType: freezed == userType
           ? _value.userType
           : userType // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       telephone: null == telephone
           ? _value.telephone
           : telephone // ignore: cast_nullable_to_non_nullable
@@ -130,7 +130,7 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       @JsonKey(name: 'prenom') String firstName,
       @JsonKey(name: 'email') String email,
       @JsonKey(name: 'mot_de_passe') String password,
-      @JsonKey(name: 'user_type') int userType,
+      @JsonKey(name: 'user_type') int? userType,
       @JsonKey(name: 'telephone') int telephone,
       @JsonKey(name: 'avatar') String? avatar});
 }
@@ -150,7 +150,7 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? firstName = null,
     Object? email = null,
     Object? password = null,
-    Object? userType = null,
+    Object? userType = freezed,
     Object? telephone = null,
     Object? avatar = freezed,
   }) {
@@ -175,10 +175,10 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String,
-      userType: null == userType
+      userType: freezed == userType
           ? _value.userType
           : userType // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       telephone: null == telephone
           ? _value.telephone
           : telephone // ignore: cast_nullable_to_non_nullable
@@ -200,7 +200,7 @@ class _$UserImpl implements _User {
       @JsonKey(name: 'prenom') required this.firstName,
       @JsonKey(name: 'email') required this.email,
       @JsonKey(name: 'mot_de_passe') required this.password,
-      @JsonKey(name: 'user_type') required this.userType,
+      @JsonKey(name: 'user_type') this.userType,
       @JsonKey(name: 'telephone') required this.telephone,
       @JsonKey(name: 'avatar') this.avatar});
 
@@ -224,7 +224,7 @@ class _$UserImpl implements _User {
   final String password;
   @override
   @JsonKey(name: 'user_type')
-  final int userType;
+  final int? userType;
   @override
   @JsonKey(name: 'telephone')
   final int telephone;
@@ -283,7 +283,7 @@ abstract class _User implements User {
       @JsonKey(name: 'prenom') required final String firstName,
       @JsonKey(name: 'email') required final String email,
       @JsonKey(name: 'mot_de_passe') required final String password,
-      @JsonKey(name: 'user_type') required final int userType,
+      @JsonKey(name: 'user_type') final int? userType,
       @JsonKey(name: 'telephone') required final int telephone,
       @JsonKey(name: 'avatar') final String? avatar}) = _$UserImpl;
 
@@ -306,7 +306,7 @@ abstract class _User implements User {
   String get password;
   @override
   @JsonKey(name: 'user_type')
-  int get userType;
+  int? get userType;
   @override
   @JsonKey(name: 'telephone')
   int get telephone;

@@ -6,12 +6,14 @@ import 'package:arosaje_mobile/logPage/loginBindings.dart';
 import 'package:arosaje_mobile/logPage/loginView.dart';
 import 'package:arosaje_mobile/messagepage/messageView.dart';
 import 'package:arosaje_mobile/messagepage/messageViewControllerBlindings.dart';
+import 'package:arosaje_mobile/model/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(MainApp(),);
 }
 
 class MainApp extends StatelessWidget {

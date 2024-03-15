@@ -12,7 +12,7 @@ _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
       firstName: json['prenom'] as String,
       email: json['email'] as String,
       password: json['mot_de_passe'] as String,
-      userType: json['user_type'] as int,
+      userType: json['user_type'] as int?,
       telephone: json['telephone'] as int,
       avatar: json['avatar'] as String?,
     );

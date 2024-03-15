@@ -12,7 +12,7 @@ class User with _$User {
     @JsonKey(name: 'prenom') required String firstName,
     @JsonKey(name: 'email') required String email,
     @JsonKey(name: 'mot_de_passe') required String password,
-    @JsonKey(name: 'user_type') required int userType,
+    @JsonKey(name: 'user_type')  int? userType,
     @JsonKey(name: 'telephone') required int telephone,
     @JsonKey(name: 'avatar')  String? avatar,
   }) = _User;

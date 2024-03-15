@@ -1,15 +1,21 @@
 import 'dart:convert';
 import 'package:arosaje_mobile/freeze/user.dart';
+import 'package:arosaje_mobile/model/user_provider.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+
 
 class LoginViewController extends GetxController {
-  var email, password;
+  var name, password;
   List<User> listUser = [];
-
+ 
+  
   @override
   void onInit() {
     getUsers(); 
+    loginView(password, name);
     super.onInit();
   }
 
@@ -25,13 +31,13 @@ class LoginViewController extends GetxController {
     }
   }
 
-    loginView(password, name) {
+   loginView(password, name) {
     for (var i = 0; i < listUser.length; i++) {
-      if (listUser[i].email==name && listUser[i].password==password) {
-          Get.offAllNamed('home' , arguments: listUser[i]);
-      }else{
-         Get.snackbar('Erreur', 'Identifiants invalides');
+      if (listUser[i].email == name && listUser[i].password == password) { 
+        int currentUSer=listUser[i].idUser;
+        Get.offAllNamed('home',arguments: currentUSer);
       }
     }
+    Get.snackbar('Erreur', 'Identifiants invalides');
   }
 }

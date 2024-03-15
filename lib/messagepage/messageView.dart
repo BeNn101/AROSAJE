@@ -1,4 +1,5 @@
 import 'package:arosaje_mobile/messagepage/messageViewController.dart';
+import 'package:arosaje_mobile/uiKit/XNavbar.dart';
 import 'package:arosaje_mobile/uiKit/Xappbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -18,7 +19,7 @@ class MessageView extends GetView<MessageViewController> {
         toolbarHeight: 70,
       ),
       body: ListView(),
-      bottomNavigationBar: XappBar(),//créer une classe card pour les messages
+      bottomNavigationBar: XNavbar(userId: controller.userId.value)
     );
   }
 }
