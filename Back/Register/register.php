@@ -1,4 +1,7 @@
 <?php
+
+// IL MANQUE LE MAIL LORS DE L'INSCRIPTION
+
 require_once('../../db_connect.php');
 require("../../mailer.php");
 if (isset($_POST["firstname"], $_POST["lastname"],$_POST["email"],$_POST["pwd"],$_POST["phonenumber"]) && !empty(trim($_POST["firstname"])) && !empty(trim($_POST["lastname"])) && !empty(trim($_POST["email"])) && !empty(trim($_POST["pwd"] && !empty(trim($_POST["phonenumber"]))))){
@@ -24,8 +27,6 @@ if (preg_match($regex, $_POST["pwd"])) {
     $req->bindValue(":email",$_POST["email"]);
     $req->bindValue(":mot_de_passe",$hash);
     $req->bindValue(":telephone",$_POST["phonenumber"]);
-    $req->bindValue(":avatar",$_POST["avatar"]);
-
     if (isset($_FILES['avatar'])) {
         // Récupère les informations sur le fichier
         $file_name = $_FILES['avatar']['name'];
@@ -41,6 +42,7 @@ if (preg_match($regex, $_POST["pwd"])) {
             if (in_array($file_ext, $allowed_ext)) {
                 // Déplace le fichier téléchargé vers un dossier de stockage
                 $destination = 'asset/' . $file_name;
+                print_r($file_tmp,$destination);
                 if (move_uploaded_file($file_tmp, $destination)) {
                     // Affiche l'image téléchargée
                     echo "<img src='$destination'>";
@@ -50,14 +52,15 @@ if (preg_match($regex, $_POST["pwd"])) {
             } else {
                 echo "Le fichier doit être une image de type JPG, JPEG, PNG ou GIF.";
             }
+            $req->bindValue(":avatar",$destination);
+            $req->execute();
+            echo json_encode(["success" => true, "msg" => "inscrit"]);
         } else {
             echo "Erreur lors de l'envoi du fichier.";
         }
     }
-    $req->execute();
-    echo json_encode(["success" => true, "msg" => "inscrit"]);
     // alert("Bienvenu sur Arosaje");
-    mailer("m.beaumet@gmail.com", "Bienvenu {$_POST["firstname"]} {$_POST["lastname"]}", "Merci de ton inscription");
+    // mailer("m.beaumet@gmail.com", "Bienvenu {$_POST["firstname"]} {$_POST["lastname"]}", "Merci de ton inscription");
 } else {
     echo json_encode(["success" => false, "error" => "Mot de passe au mauvais format"]);
     die;
