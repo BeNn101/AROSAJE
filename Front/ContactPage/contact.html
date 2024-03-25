@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="contact.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>Mon compte</title>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="accueil.html" class="navbar-logo">
+            <img src="../../images/logo arosage.png" alt="logo de l'app" class="logo">
+        </a>
+        <div class="navbar-links">
+            <a href="accueil.html"><i class="fas fa-home"></i> Accueil</a>
+            <a href="tchat.html"><i class="fas fa-comments"></i> Tchat</a>
+            <a href="../AccountPage/account.html"><i class="fas fa-user"></i> Compte</a>
+            <a href="#"><i class="fas fa-envelope"></i> Contact</a>
+            <a href="../LoginPage/login.html"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+        </div>
+    </nav>
+    <section class="base">
+        <h2>Contactez un modérateur</h2>
+        <form id="contactForm">
+            <div class="form-group">
+                <label for="userName">Votre nom* :</label>
+                <input type="text" id="userName" name="userName" required>
+            </div>
+            <div class="form-group">
+                <label for="userEmail">Votre email* :</label>
+                <input type="email" id="userEmail" name="userEmail" required>
+            </div>
+            <div class="form-group">
+                <label for="userMessage">Votre message* :</label>
+                <textarea id="userMessage" name="userMessage" rows="4" required></textarea>
+            </div>
+            <i>* Champs requis</i>
+            <section class="button-container">
+                <button type="submit">ENVOYER</button>
+            </section>
+            
+        </form>
+    </section>
+    <footer class="footer">
+        <p>© 2024 Tous droits réservés.</p>
+        <a href="https://www.instagram.com/arosajeprojet/" target="_blank">Contactez-nous sur Instagram <i class="fab fa-instagram"></i></a>
+    </footer>
+    <div id="logoutModal" class="modal">
+        <div class="modal-content">
+            <p>Voulez-vous vraiment vous déconnecter ?</p>
+            <button id="logoutConfirm">Oui</button>
+            <button id="logoutCancel">Non</button>
+        </div>
+    </div>
+    <script src="contact.js"></script>
+    <script src="../logout.js"></script>
+</body>
+</html> 
