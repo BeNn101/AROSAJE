@@ -5,16 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="account.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <title>Mon compte</title>
 </head>
 <body>
-    
-    <section class="logo-container">
-        <img src="../../images/logo arosage.png" alt="logo de l'app" class="logo"> <!-- Chemin vers votre image -->
-    </section>
-    <p class="main-text">AROSA-JE</p> 
+    <nav class="navbar">
+        <a href="accueil.html" class="navbar-logo">
+            <img src="../../images/logo arosage.png" alt="logo de l'app" class="logo">
+        </a>
+        <div class="navbar-links">
+            <a href="accueil.html"><i class="fas fa-home"></i> Accueil</a>
+            <a href="tchat.html"><i class="fas fa-comments"></i> Tchat</a>
+            <a href="#"><i class="fas fa-user"></i> Compte</a>
+            <a href="../ContactPage/contact.html"><i class="fas fa-envelope"></i> Contact</a>
+            <a href="../LoginPage/login.html"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+        </div>
+    </nav>
     <section class="base">
-        <p>fzefergezr</p>
+        <div class="tabs">
+            <button class="tab-button active" onclick="openTab(event, 'Compte')">Mon compte</button>
+            <button class="tab-button" onclick="openTab(event, 'Annonce')">Mes annonces</button>
+        </div>
+        <div id="Compte" class="tab-content active">
+            <div class="account-container">
+                <div class="account-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="account-details">
+                    <h2>Jean Dupont</h2>
+                    <p><strong>Email :</strong> jeandupont@example.com</p>
+                    <p><strong>Numéro de téléphone :</strong> +33 6 12 34 56 78</p>
+                </div>
+            </div>
+            <div class="button-container">
+                <button class="deco-btn" type="submit">DECONNEXION</button>
+            </div>
+        </div>
+        <div id="Annonce" class="tab-content">
+            <p id="no-annonces-message">Vous n'avez pas posté d'annonces.</p>
+            <div class="button-container">
+                <button class="add-plant" type="submit">AJOUTER UNE ANNONCE</button>
+            </div>
+        </div>
     </section>
+    <footer class="footer">
+        <p>© 2024 Tous droits réservés.</p>
+        <a href="https://www.instagram.com/arosajeprojet/" target="_blank">Contactez-nous sur Instagram <i class="fab fa-instagram"></i></a>
+    </footer>
+    <div id="logoutModal" class="modal">
+        <div class="modal-content">
+            <p>Voulez-vous vraiment vous déconnecter ?</p>
+            <div class="modal-buttons">
+                <button id="logoutConfirm">Oui</button>
+                <button id="logoutCancel">Non</button>
+            </div>
+        </div>
+    </div>
+    <script src="account.js"></script>
+    <script src="../logout.js"></script>
 </body>
 </html> 

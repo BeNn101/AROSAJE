@@ -1,4 +1,4 @@
-// Formulaire d'ajout dees fleurs
+// Formulaire d'ajout des fleurs
 $("#getLocation").on("click", function(){
     // Vérifier si le navigateur prend en charge la géolocalisation
     if ("geolocation" in navigator) {

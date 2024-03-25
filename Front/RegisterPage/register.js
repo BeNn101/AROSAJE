@@ -23,24 +23,20 @@ $("form").submit((event) => {
 });
 
 function capitalizeFirstLetter(input) {
-    //Met la premiere lettre en maj
     input.value = input.value.charAt(0).toUpperCase() + input.value.slice(1);
 }
 function togglePasswordVisibility() {
-    //vérifie le type actuel du mdp et le rend visible ou non avec la fonction update
     var passwordInput = document.getElementById("password");
     passwordInput.type = (passwordInput.type === "password") ? "text" : "password";
     updateEyeIcon();
 }
 function updateEyeIcon() {
-    //rend visible ou non le mdp
     var passwordInput = document.getElementById("password");
     var eyeIcon = document.querySelector(".eye-icon");
 
     eyeIcon.style.backgroundImage = (passwordInput.type === "password") ? "url('../../images/show_password.png')" : "url('../../images/hide_password.png')";
 }
 function toggleConfirmPasswordVisibility() {
-    //vérifie le type actuel du mdp confirm et le rend visible ou non avec la fonction update
     var passwordInput = document.getElementById("confirmPassword");
     passwordInput.type = (passwordInput.type === "password") ? "text" : "password";
     updateConfirmPasswordEyeIcon();
@@ -48,7 +44,6 @@ function toggleConfirmPasswordVisibility() {
 
 
 function updateConfirmPasswordEyeIcon() {
-    //rend visible ou non le mdp de confirmation
     var passwordInput = document.getElementById("confirmPassword");
     var eyeIcon = document.querySelector(".eye-icon-confirm");
 
@@ -57,7 +52,6 @@ function updateConfirmPasswordEyeIcon() {
 
 
 document.querySelector('form').addEventListener('submit', function(event) {
-    //vérifie les champs avant le clic du bouton 
     event.preventDefault();
 
     var emailInput = document.getElementById("emailInput").value;
@@ -102,7 +96,6 @@ document.querySelector('form').addEventListener('submit', function(event) {
 var telephoneInput = document.getElementById("telephoneInput");
 
 telephoneInput.addEventListener('input', function(event) {
-    //empeche de rentrer des caractères hors chiffres
     var inputValue = telephoneInput.value;
 
     var numericValue = inputValue.replace(/\D/g, '');
