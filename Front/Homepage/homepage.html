@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     <link rel="icon" href="../../images/logo arosage.png" type="image/png">
     <title>Accueil</title>
 </head>
@@ -19,7 +21,7 @@
         </a>
         <div class="navbar-links">
             <a href="homepage.html"><i class="fas fa-home"></i> Accueil</a>
-            <a href="tchat.html"><i class="fas fa-comments"></i> Tchat</a>
+            <a href="../TchatPage/tchat.html"><i class="fas fa-comments"></i> Tchat</a>
             <a href="../AccountPage/account.html"><i class="fas fa-user"></i> Compte</a>
             <a href="../ContactPage/contact.html"><i class="fas fa-envelope"></i> Contact</a>
             <a href="../LoginPage/login.html"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
@@ -27,6 +29,7 @@
     </nav>
     <section class="base">
         <div id="map" style="height: 400px;"></div>
+        <button id="position-btn" onclick="centerToUserLocation(map)">Revenir à ma position</button>
     </section>
     <footer class="footer">
         <p>© 2024 Tous droits réservés.</p>
@@ -44,4 +47,4 @@
     <script src="homepage.js"></script>
     <script src="../logout.js"></script>
 </body>
-</html> 
+</html>
