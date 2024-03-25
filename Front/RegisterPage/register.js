@@ -117,7 +117,7 @@ document.querySelector('form').addEventListener('submit', function(event) {
             return;
         }
     }
-    window.location.href = 'register.html';
+    window.location.href = '../LoginPage/login.html';
 });
 var telephoneInput = document.getElementById("telephoneInput");
 

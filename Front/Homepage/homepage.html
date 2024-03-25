@@ -7,10 +7,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <link rel="icon" href="../../images/logo arosage.png" type="image/png">
     <title>Accueil</title>
 </head>
-<body>
+<body onload="getLocation()">
     <nav class="navbar">
         <a href="homepage.html" class="navbar-logo">
             <img src="../../images/logo arosage.png" alt="logo de l'app" class="logo">
@@ -24,7 +26,7 @@
         </div>
     </nav>
     <section class="base">
-        <p>test de la page d'accueil</p>
+        <div id="map" style="height: 400px;"></div>
     </section>
     <footer class="footer">
         <p>© 2024 Tous droits réservés.</p>
@@ -39,6 +41,7 @@
             </div>
         </div>
     </div>
+    <script src="homepage.js"></script>
     <script src="../logout.js"></script>
 </body>
 </html> 

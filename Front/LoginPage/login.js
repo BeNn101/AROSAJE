@@ -1,3 +1,5 @@
+var homepageButton = document.querySelector('button[type="submit"]');
+
 function togglePasswordVisibility() {
     let passwordInput = document.getElementById("password");
     passwordInput.type = (passwordInput.type === "password") ? "text" : "password";
@@ -25,3 +27,7 @@ document.querySelectorAll('input').forEach(input => {
 });
 
 document.addEventListener('DOMContentLoaded', validateForm);
+homepageButton.addEventListener('click', function(event) {
+    event.preventDefault(); 
+    window.location.href = '../Homepage/homepage.html';
+});
