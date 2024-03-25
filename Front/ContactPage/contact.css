@@ -144,6 +144,7 @@ button {
     font-size: 20px;
     font-weight: bold;
     border: 2px solid black;
+    border-radius: 5px;
     margin-top: 20px;
     cursor: not-allowed; 
     transition: background-color 0.3s, color 0.3s;
@@ -226,24 +227,30 @@ button:enabled:hover {
 }
 
 .modal-content button {
-    border: none;
-    outline: none;
+    width: 100%;
+    max-width: 230px;
+    height: 45px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 5px;
+    margin-top: 20px;
     cursor: pointer;
-    padding: 10px 20px;
-    border-radius: 5px; 
-    margin-right: 10px; 
-    font-weight: 600; 
-    transition: all 0.3s ease; 
+    transition: background-color 0.3s, color 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .modal-content button#logoutConfirm {
-    margin-left: 10px;
-    background-color: #4CAF50; 
+    margin: auto 10px;    
+}
+.modal-content button#logoutConfirm:hover {
+    background-color: #45a049; 
     color: white; 
 }
 
-.modal-content button#logoutCancel {
-    background-color: #f44336; 
+.modal-content button#logoutCancel:hover {
+    background-color: #e60000; 
     color: white; 
 }
 

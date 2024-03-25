@@ -43,6 +43,7 @@
             </div>
         </div>
         <div id="Annonce" class="tab-content">
+            <div id="annoncesContainer"></div>
             <p id="no-annonces-message">Vous n'avez pas posté d'annonces.</p>
             <div class="button-container">
                 <button class="add-plant" type="submit">AJOUTER UNE ANNONCE</button>
@@ -53,8 +54,52 @@
         <p>© 2024 Tous droits réservés.</p>
         <a href="https://www.instagram.com/arosajeprojet/" target="_blank">Contactez-nous sur Instagram <i class="fab fa-instagram"></i></a>
     </footer>
-    <div id="logoutModal" class="modal">
+    <div id="addAnnonceModal" class="modal">
         <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Ajouter une annonce</h2>
+            <form id="addAnnonceForm">
+                <div class="form-group">
+                    <label for="plantName">Nom de la plante* :</label>
+                    <input type="text" id="plantName" name="plantName" required>
+                </div>
+                <div class="form-group">
+                    <label for="plantImage">Photo de la plante* :</label>
+                    <input type="file" id="plantImage" name="plantImage" accept="image/png, image/jpeg" required>
+                </div>
+                <div class="form-group">
+                    <label for="ownerName">Votre prénom* :</label>
+                    <input type="text" id="ownerFirstName" name="ownerFirstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="ownerName">Votre nom* :</label>
+                    <input type="text" id="ownerName" name="ownerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="ownerAddress">Adresse* :</label>
+                    <input type="text" id="ownerAddress" name="ownerAddress" required>
+                </div>
+                <div class="form-group">
+                    <label for="ownerAddress">Ville* :</label>
+                    <input type="text" id="ownerCity" name="ownerCity" required>
+                </div>
+                <div class="form-group form-group-inline">
+                    <div class="form-group-half">
+                        <label for="ownerPostalCode">Code postal* :</label>
+                        <input type="text" id="ownerPostalCode" name="ownerPostalCode" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ownerCountry">Pays* :</label>
+                        <select id="ownerCountry" name="ownerCountry" required></select>
+                    </div>
+                </div>
+                <i>*Champs requis</i>
+                <button type="submit" id="addAnnonceSubmit" disabled>AJOUTER</button>
+            </form>
+        </div>
+    </div>
+    <div id="logoutModal" class="modal">
+        <div class="decoModal-content">
             <p>Voulez-vous vraiment vous déconnecter ?</p>
             <div class="modal-buttons">
                 <button id="logoutConfirm">Oui</button>

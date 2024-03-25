@@ -25,6 +25,9 @@ $("form").submit((event) => {
 function capitalizeFirstLetter(input) {
     input.value = input.value.charAt(0).toUpperCase() + input.value.slice(1);
 }
+function capitalizeAllLetters(input) {
+    input.value = input.value.toUpperCase();
+}
 function togglePasswordVisibility() {
     var passwordInput = document.getElementById("password");
     passwordInput.type = (passwordInput.type === "password") ? "text" : "password";
@@ -49,6 +52,29 @@ function updateConfirmPasswordEyeIcon() {
 
     eyeIcon.style.backgroundImage = (passwordInput.type === "password") ? "url('../../images/show_password.png')" : "url('../../images/hide_password.png')";
 }
+
+function validateForm() {
+    var emailInput = document.getElementById("emailInput");
+    var passwordInput = document.getElementById("password");
+    var confirmPasswordInput = document.getElementById("confirmPassword");
+    var isValid = emailInput.checkValidity() && passwordInput.checkValidity() && confirmPasswordInput.checkValidity();
+
+    var submitButton = document.querySelector('button[type="submit"]');
+    submitButton.disabled = !isValid;
+
+    if (isValid) {
+        submitButton.classList.remove("disabled");
+    } else {
+        submitButton.classList.add("disabled");
+    }
+}
+
+document.querySelectorAll('input').forEach(input => {
+    input.addEventListener('input', validateForm);
+});
+
+document.addEventListener('DOMContentLoaded', validateForm);
+
 
 
 document.querySelector('form').addEventListener('submit', function(event) {
