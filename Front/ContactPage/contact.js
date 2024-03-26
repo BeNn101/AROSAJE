@@ -1,10 +1,11 @@
-const userName = document.getElementById('userName');
-
-userName.addEventListener('input', function(event) {
-    this.value = this.value.toUpperCase();
-});
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('contactForm');
+
+    if (!form) {
+        console.error('Le formulaire n\'a pas été trouvé sur la page.');
+        return; 
+    }
+
     const userName = document.getElementById('userName');
     const userEmail = document.getElementById('userEmail');
     const userMessage = document.getElementById('userMessage');
@@ -26,12 +27,17 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    userFirstName.addEventListener('input', function(event) {
+    userName.addEventListener('input', function() {
+        this.value = this.value.toUpperCase();
+        checkFormValidity();
+    });
+
+    userFirstName.addEventListener('input', function() {
         this.value = capitalizeEachWord(this.value);
         checkFormValidity();
     });
 
-    userMessage.addEventListener('input', function(event) {
+    userMessage.addEventListener('input', function() {
         this.value = capitalizeFirstLetter(this.value);
         checkFormValidity();
     });
@@ -44,8 +50,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
     form.addEventListener('submit', function (event) {
         event.preventDefault();
-        alert(`Merci ${userFirstName.value} ${userName.value}, votre message a été envoyé !`);
-        form.reset();
-        checkFormValidity();
+
+        var formData = {
+            firstName: userFirstName.value,
+            lastName: userName.value,
+            email: userEmail.value,
+            message: userMessage.value,
+        };
+
+        fetch('http://localhost:3000/send-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert('Message envoyé : ' + data.message); 
+            form.reset(); 
+            checkFormValidity(); 
+        })
+        .catch((error) => {
+            console.error('Erreur lors de l\'envoi:', error);
+        });
     });
 });
