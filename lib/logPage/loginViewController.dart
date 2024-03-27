@@ -27,7 +27,9 @@ class LoginViewController extends GetxController {
       final List<dynamic> userData = json.decode(response.body);
       listUser = List<User>.from(userData.map((user) => User.fromJson(user)));
     } else {
+      Get.snackbar('Erreur', 'Identifiants invalides');
       throw Exception('Erreur de chargement des données : ${response.statusCode}');
+      
     }
   }
 
@@ -38,6 +40,5 @@ class LoginViewController extends GetxController {
         Get.offAllNamed('home',arguments: currentUSer);
       }
     }
-    Get.snackbar('Erreur', 'Identifiants invalides');
   }
 }

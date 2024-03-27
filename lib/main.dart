@@ -2,6 +2,8 @@ import 'dart:collection';
 
 import 'package:arosaje_mobile/accountpage/accountView.dart';
 import 'package:arosaje_mobile/accountpage/accountViewControllerBlindings.dart';
+import 'package:arosaje_mobile/addPlante/publishBlindigs.dart';
+import 'package:arosaje_mobile/addPlante/publishView.dart';
 import 'package:arosaje_mobile/homepage/homeBindings.dart';
 import 'package:arosaje_mobile/homepage/homeView.dart';
 import 'package:arosaje_mobile/logPage/loginBindings.dart';
@@ -58,6 +60,12 @@ class MainApp extends StatelessWidget {
           title: 'Map',
           page: () => MapView(),
           binding: MapBindings(),
+        ),
+        GetPage(
+          name: '/publish',
+          title: 'Publish',
+          page: () => PublishView(),
+          binding: PublishBindings(),
         )
       ],
       initialRoute: '/login',

@@ -15,7 +15,14 @@ class AccountViewController extends GetxController  {
   User? currentUser ;
   @override
   
-  void onInit() {userId.value = Get.arguments['userId'] ?? 0; 
+    @override 
+  void onReady(){
+     getCurrentUser();
+    super.onReady();
+  }
+  
+  void onInit() {
+    userId.value = Get.arguments['userId'] ?? 0;
      getCurrentUser();
     super.onInit();
     // Exemple de récupération de l'userId des arguments de navigation
@@ -23,7 +30,7 @@ class AccountViewController extends GetxController  {
   }
 
  Future<void> getCurrentUser() async {
-  final url = Uri.parse('http://192.168.1.40:8000/api/users/${userId.value}');
+  final url = Uri.parse('http://192.168.23.13:8000/api/users/${userId.value}');
   final response = await http.get(url);
 
   if (response.statusCode == 200) {

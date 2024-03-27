@@ -38,48 +38,26 @@ class MapView extends GetView<MapViewController> {
         elevation: 3,
         toolbarHeight: 70,
       ),
-      body: FlutterMap(
-        options: MapOptions(
-          center: LatLng(45.3, 14.2),
-          zoom: 10,
-        ),
-        layers: [
-          TileLayerOptions(
-            urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-            subdomains: ['a', 'b', 'c'],
-          ),
-          OverlayImageLayerOptions(
-            overlayImages: flowers.map((flower) {
-              return OverlayImage(
-                bounds: LatLngBounds(flower.position, flower.position),
-                imageProvider: NetworkImage(flower.imageUrl),
-                onTap: () {
-                  // Gérer le clic sur l'image ici
-                  // Par exemple, ouvrir une boîte de dialogue avec plus d'informations sur la fleur
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: Text('Flower Details'),
-                        content:
-                            Text('Additional information about the flower...'),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: Text('Close'),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
-              );
-            }).toList(),
+      body:FlutterMap(
+    options: MapOptions(
+      initialCenter: LatLng(51.509364, -0.128928),
+      initialZoom: 9.2,
+    ),
+    children: [
+      TileLayer(
+        urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+        userAgentPackageName: 'com.example.app',
+      ),
+      RichAttributionWidget(
+        attributions: [
+          TextSourceAttribution(
+            'OpenStreetMap contributors',
+            onTap: () => launchUrl(Uri.parse('https://openstreetmap.org/copyright')),
           ),
         ],
       ),
+    ],
+  )
     );
   }
 }

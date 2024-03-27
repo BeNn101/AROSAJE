@@ -8,8 +8,10 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 
 class AccountView extends GetView<AccountViewController> {
+  
   const AccountView({super.key});
   @override
+  
   Widget build(BuildContext context) {
     return Scaffold(
     appBar: AppBar(
@@ -24,44 +26,66 @@ class AccountView extends GetView<AccountViewController> {
     body:  Center(
       child: Column(
         children: [
+              SizedBox(height: 10,),
           Text(
-            'Title',
+            'Mon profil :',
             textAlign: TextAlign.left,
           ),
           Expanded(
-            flex: 2,
-            child: SizedBox(             
-              width: 120,             
-              child: Container(
-                color: Colors.white60,
-                child: Text('${controller.currentUser?.email}')),
-            ),
+            flex: 1,
+            child: Container(
+              color: Colors.white60,
+              child: Row(
+                children: [
+                  Text('Email :'),
+                  Text('${controller.currentUser?.email.obs}'),
+                ],
+              )),
           )
           , Expanded(
-            flex: 2,
-            child: SizedBox(             
-              width: 120,             
-              child: Container(
-                color: Colors.white60,
-                child: Text('${controller.currentUser?.email}')),
-            ),
+            flex: 1,
+            child: Container(
+              
+              color: Colors.white60,
+              child: Row(
+                children: [
+                  Text('Nom :'),
+                  Text('${controller.currentUser?.lastName}'),
+                ],
+              )),
           )
           , Expanded(
-            flex: 2,
-            child: SizedBox(             
-              width: 120,             
-              child: Container(
-                color: Colors.white60,
-                child: Text('${controller.currentUser?.email}')),
-            ),
+            flex: 1,
+            child: Container(
+              color: Colors.white60,
+              child: Row(
+                children: [
+                  Text('Prénom:'),
+                  Text('${controller.currentUser?.firstName}'),
+                ],
+              )),
           )
           , Expanded(
-            flex: 2,
-            child: SizedBox(             
-              width: 120,             
+            flex: 1,
+            child: Container(
+              color: Colors.white60,
+              child: Row(
+                children: [
+                  Text('Téléphone :'),
+                  Text('${controller.currentUser?.telephone}'),
+                ],
+              )),
+          ),
+          Text("Mes annonces :"),
+          SizedBox(height: 10,),
+          Expanded(
+            flex: 6,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Container(
-                color: Colors.white60,
-                child: Text('${controller.currentUser?.email}')),
+                width: double.infinity,
+                color: const Color.fromARGB(153, 228, 222, 222),
+                child: Text('')),
             ),
           )
           

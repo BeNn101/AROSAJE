@@ -7,8 +7,12 @@ import 'package:get/get.dart';
 class LoginView extends GetView<LoginViewController> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  
+
   @override
   Widget build(BuildContext context) {
+  double screenWidth = MediaQuery.of(context).size.width;
+  double fontSize = screenWidth > 600 ? 16 : 14;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -28,9 +32,32 @@ class LoginView extends GetView<LoginViewController> {
               hintText: 'Email',
             ),
             SizedBox(height: 10),
-            XTextField(
-              controller: passwordController,
-              hintText: 'Password',
+            Padding(
+            
+              padding: const EdgeInsets.symmetric(horizontal: 98),
+              child: TextFormField(
+                        obscureText: true,
+                        controller: passwordController,
+                        autofocus: true,
+                        cursorColor: Colors.green,
+                        decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: const BorderSide(
+                  width: 0,
+                  style: BorderStyle.none,
+                ),
+              ),
+              hintText: 'password',
+              filled: true,
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.green),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              fillColor: Colors.grey.shade200,
+                        ),
+                        style: TextStyle(fontSize: screenWidth > 600 ? 16 : 14),
+                      ),
             ),
             boutton(),
           ],
@@ -46,7 +73,7 @@ class LoginView extends GetView<LoginViewController> {
         onPressed: () async {
           final String email = emailController.text;
           final String password = passwordController.text;
-          Get.toNamed("/home");
+          controller.loginView(password,email);
         },
         child: Text('LOGIN'),
         style: ElevatedButton.styleFrom(

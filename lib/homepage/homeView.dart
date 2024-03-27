@@ -27,11 +27,11 @@ class HomeView extends GetView<HomeViewController> {
         children: [
           Xtextfield(
             onPressed: () {
-              controller.search();
+              //controller.search();
             },
           ).build(),
            Text(
-            "Annonce ${controller.userId}",
+            "Annonce ",
             textAlign: TextAlign.left,
           ),
           Expanded(
@@ -41,7 +41,7 @@ class HomeView extends GetView<HomeViewController> {
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
               ),
-              itemCount: 10,
+              itemCount: controller.listPlant.length,
               itemBuilder: (context, index) {
                 return PlantBody();
               },
@@ -49,7 +49,7 @@ class HomeView extends GetView<HomeViewController> {
           ),
         ],
       ),
-      bottomNavigationBar:  XNavbar(userId: controller.userId.value!)
+      bottomNavigationBar:  XNavbar(userId: controller.userId.value!??1)
 
     );
   }
