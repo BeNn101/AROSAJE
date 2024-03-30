@@ -12,7 +12,7 @@ part of 'plantes.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 Plant _$PlantFromJson(Map<String, dynamic> json) {
   return _Plant.fromJson(json);
@@ -21,15 +21,15 @@ Plant _$PlantFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Plant {
   @JsonKey(name: 'id_plante')
-  String get idPlante => throw _privateConstructorUsedError;
+  int get idPlante => throw _privateConstructorUsedError;
   @JsonKey(name: 'name_plante')
-  String get lastName => throw _privateConstructorUsedError;
+  String get namePlante => throw _privateConstructorUsedError;
   @JsonKey(name: 'image')
-  String get firstName => throw _privateConstructorUsedError;
+  String get image => throw _privateConstructorUsedError;
   @JsonKey(name: 'localisation')
-  String get email => throw _privateConstructorUsedError;
+  String get localisationPlante => throw _privateConstructorUsedError;
   @JsonKey(name: 'id_user')
-  String get password => throw _privateConstructorUsedError;
+  int get idUser => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,11 +42,11 @@ abstract class $PlantCopyWith<$Res> {
       _$PlantCopyWithImpl<$Res, Plant>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'id_plante') String idPlante,
-      @JsonKey(name: 'name_plante') String lastName,
-      @JsonKey(name: 'image') String firstName,
-      @JsonKey(name: 'localisation') String email,
-      @JsonKey(name: 'id_user') String password});
+      {@JsonKey(name: 'id_plante') int idPlante,
+      @JsonKey(name: 'name_plante') String namePlante,
+      @JsonKey(name: 'image') String image,
+      @JsonKey(name: 'localisation') String localisationPlante,
+      @JsonKey(name: 'id_user') int idUser});
 }
 
 /// @nodoc
@@ -63,32 +63,32 @@ class _$PlantCopyWithImpl<$Res, $Val extends Plant>
   @override
   $Res call({
     Object? idPlante = null,
-    Object? lastName = null,
-    Object? firstName = null,
-    Object? email = null,
-    Object? password = null,
+    Object? namePlante = null,
+    Object? image = null,
+    Object? localisationPlante = null,
+    Object? idUser = null,
   }) {
     return _then(_value.copyWith(
       idPlante: null == idPlante
           ? _value.idPlante
           : idPlante // ignore: cast_nullable_to_non_nullable
+              as int,
+      namePlante: null == namePlante
+          ? _value.namePlante
+          : namePlante // ignore: cast_nullable_to_non_nullable
               as String,
-      lastName: null == lastName
-          ? _value.lastName
-          : lastName // ignore: cast_nullable_to_non_nullable
+      image: null == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
               as String,
-      firstName: null == firstName
-          ? _value.firstName
-          : firstName // ignore: cast_nullable_to_non_nullable
+      localisationPlante: null == localisationPlante
+          ? _value.localisationPlante
+          : localisationPlante // ignore: cast_nullable_to_non_nullable
               as String,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
+      idUser: null == idUser
+          ? _value.idUser
+          : idUser // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -101,11 +101,11 @@ abstract class _$$PlantImplCopyWith<$Res> implements $PlantCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'id_plante') String idPlante,
-      @JsonKey(name: 'name_plante') String lastName,
-      @JsonKey(name: 'image') String firstName,
-      @JsonKey(name: 'localisation') String email,
-      @JsonKey(name: 'id_user') String password});
+      {@JsonKey(name: 'id_plante') int idPlante,
+      @JsonKey(name: 'name_plante') String namePlante,
+      @JsonKey(name: 'image') String image,
+      @JsonKey(name: 'localisation') String localisationPlante,
+      @JsonKey(name: 'id_user') int idUser});
 }
 
 /// @nodoc
@@ -120,32 +120,32 @@ class __$$PlantImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? idPlante = null,
-    Object? lastName = null,
-    Object? firstName = null,
-    Object? email = null,
-    Object? password = null,
+    Object? namePlante = null,
+    Object? image = null,
+    Object? localisationPlante = null,
+    Object? idUser = null,
   }) {
     return _then(_$PlantImpl(
       idPlante: null == idPlante
           ? _value.idPlante
           : idPlante // ignore: cast_nullable_to_non_nullable
+              as int,
+      namePlante: null == namePlante
+          ? _value.namePlante
+          : namePlante // ignore: cast_nullable_to_non_nullable
               as String,
-      lastName: null == lastName
-          ? _value.lastName
-          : lastName // ignore: cast_nullable_to_non_nullable
+      image: null == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
               as String,
-      firstName: null == firstName
-          ? _value.firstName
-          : firstName // ignore: cast_nullable_to_non_nullable
+      localisationPlante: null == localisationPlante
+          ? _value.localisationPlante
+          : localisationPlante // ignore: cast_nullable_to_non_nullable
               as String,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
+      idUser: null == idUser
+          ? _value.idUser
+          : idUser // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -156,33 +156,33 @@ class __$$PlantImplCopyWithImpl<$Res>
 class _$PlantImpl implements _Plant {
   const _$PlantImpl(
       {@JsonKey(name: 'id_plante') required this.idPlante,
-      @JsonKey(name: 'name_plante') required this.lastName,
-      @JsonKey(name: 'image') required this.firstName,
-      @JsonKey(name: 'localisation') required this.email,
-      @JsonKey(name: 'id_user') required this.password});
+      @JsonKey(name: 'name_plante') required this.namePlante,
+      @JsonKey(name: 'image') required this.image,
+      @JsonKey(name: 'localisation') required this.localisationPlante,
+      @JsonKey(name: 'id_user') required this.idUser});
 
   factory _$PlantImpl.fromJson(Map<String, dynamic> json) =>
       _$$PlantImplFromJson(json);
 
   @override
   @JsonKey(name: 'id_plante')
-  final String idPlante;
+  final int idPlante;
   @override
   @JsonKey(name: 'name_plante')
-  final String lastName;
+  final String namePlante;
   @override
   @JsonKey(name: 'image')
-  final String firstName;
+  final String image;
   @override
   @JsonKey(name: 'localisation')
-  final String email;
+  final String localisationPlante;
   @override
   @JsonKey(name: 'id_user')
-  final String password;
+  final int idUser;
 
   @override
   String toString() {
-    return 'Plant(idPlante: $idPlante, lastName: $lastName, firstName: $firstName, email: $email, password: $password)';
+    return 'Plant(idPlante: $idPlante, namePlante: $namePlante, image: $image, localisationPlante: $localisationPlante, idUser: $idUser)';
   }
 
   @override
@@ -192,19 +192,18 @@ class _$PlantImpl implements _Plant {
             other is _$PlantImpl &&
             (identical(other.idPlante, idPlante) ||
                 other.idPlante == idPlante) &&
-            (identical(other.lastName, lastName) ||
-                other.lastName == lastName) &&
-            (identical(other.firstName, firstName) ||
-                other.firstName == firstName) &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.password, password) ||
-                other.password == password));
+            (identical(other.namePlante, namePlante) ||
+                other.namePlante == namePlante) &&
+            (identical(other.image, image) || other.image == image) &&
+            (identical(other.localisationPlante, localisationPlante) ||
+                other.localisationPlante == localisationPlante) &&
+            (identical(other.idUser, idUser) || other.idUser == idUser));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, idPlante, lastName, firstName, email, password);
+  int get hashCode => Object.hash(
+      runtimeType, idPlante, namePlante, image, localisationPlante, idUser);
 
   @JsonKey(ignore: true)
   @override
@@ -222,29 +221,29 @@ class _$PlantImpl implements _Plant {
 
 abstract class _Plant implements Plant {
   const factory _Plant(
-      {@JsonKey(name: 'id_plante') required final String idPlante,
-      @JsonKey(name: 'name_plante') required final String lastName,
-      @JsonKey(name: 'image') required final String firstName,
-      @JsonKey(name: 'localisation') required final String email,
-      @JsonKey(name: 'id_user') required final String password}) = _$PlantImpl;
+      {@JsonKey(name: 'id_plante') required final int idPlante,
+      @JsonKey(name: 'name_plante') required final String namePlante,
+      @JsonKey(name: 'image') required final String image,
+      @JsonKey(name: 'localisation') required final String localisationPlante,
+      @JsonKey(name: 'id_user') required final int idUser}) = _$PlantImpl;
 
   factory _Plant.fromJson(Map<String, dynamic> json) = _$PlantImpl.fromJson;
 
   @override
   @JsonKey(name: 'id_plante')
-  String get idPlante;
+  int get idPlante;
   @override
   @JsonKey(name: 'name_plante')
-  String get lastName;
+  String get namePlante;
   @override
   @JsonKey(name: 'image')
-  String get firstName;
+  String get image;
   @override
   @JsonKey(name: 'localisation')
-  String get email;
+  String get localisationPlante;
   @override
   @JsonKey(name: 'id_user')
-  String get password;
+  int get idUser;
   @override
   @JsonKey(ignore: true)
   _$$PlantImplCopyWith<_$PlantImpl> get copyWith =>

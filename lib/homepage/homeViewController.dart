@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:io';
+
 import 'package:http/http.dart' as http;
 import 'package:arosaje_mobile/freeze/plantes.dart';
 import 'package:get/get.dart';
@@ -6,18 +8,21 @@ import 'package:get/get.dart';
 class HomeViewController extends GetxController {
   var userId = Rxn<int>(); // Utilise Rxn pour une valeur pouvant être nulle.
    List<Plant> listPlant = [];
+  File imageFile = File('/data/user/0/com.example.arosaje_mobile/cache/af21ebb7-1f7d-481d-9bde-65a6dc03dd7a6648591903563287108.jpg');
 
   @override 
   void onReady(){
+    imageFile;
     getAllPlant();
     super.onReady();
   }
   @override
   void onInit() {
+    getAllPlant();
     super.onInit();
     // Récupération et vérification des arguments
     final argument = Get.arguments;
-    
+    imageFile;
     // Si l'argument est une map et contient la clé 'userId'
     if (argument is Map<String, dynamic> && argument.containsKey('userId')) {
       // S'assurer que la valeur de 'userId' est bien un int avant de la définir

@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:arosaje_mobile/freeze/user.dart';
 import 'package:arosaje_mobile/homepage/homeViewController.dart';
 import 'package:arosaje_mobile/homepage/widget/plant-body.dart';
@@ -43,7 +46,29 @@ class HomeView extends GetView<HomeViewController> {
               ),
               itemCount: controller.listPlant.length,
               itemBuilder: (context, index) {
-                return PlantBody();
+               String base64String = controller.listPlant[index].image; // Récupérer la chaîne Base64
+    if (base64String.length % 4 != 0) {
+      // Si la longueur n'est pas un multiple de 4, ajouter des signes "=" pour la compléter
+      while (base64String.length % 4 != 0) {
+        base64String += '=';
+      }
+    }
+    print(base64String);
+    // Décoder la chaîne Base64 et créer un widget Image à partir des bytes décodés
+    Uint8List imageBytes = base64Decode(base64String);
+                return Card(
+     child: Center(
+       child: Column(children: [
+        SizedBox(height: 10,),
+       Image.memory(imageBytes,
+       height: 100,
+       width: 100,),
+      /*   Text('data'), */
+        Text(controller.listPlant[index].namePlante),
+        /* Text('hgs69') */
+       ]),
+     ),
+    );
               },
             ),
           ),

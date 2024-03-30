@@ -17,6 +17,8 @@ class PublishViewViewController extends GetxController  {
   TextEditingController namePlanteTexting = TextEditingController();
    TextEditingController localisationTexting = TextEditingController();
   Rx<Uint8List?> imageBytes = Rx<Uint8List?>(null);
+
+  
   @override
   void onInit() {
     super.onInit();

@@ -12,11 +12,11 @@ class PlantBody extends StatelessWidget {
      child: Center(
        child: Column(children: [
         SizedBox(height: 10,),
-       Image.network(controller.listPlant.single.firstName,
+       Image.network('/data/user/0/com.example.arosaje_mobile/cache/af21ebb7-1f7d-481d-9bde-65a6dc03dd7a6648591903563287108.jpg',
        height: 100,
        width: 100,),
       /*   Text('data'), */
-        Text(controller.listPlant.single.email),
+        Text('r'),
         /* Text('hgs69') */
        ]),
      ),
