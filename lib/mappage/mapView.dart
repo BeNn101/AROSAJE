@@ -1,13 +1,11 @@
-import 'package:arosaje_mobile/uiKit/XNavbar.dart';
-import 'package:arosaje_mobile/uiKit/XTextfiled.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:arosaje_mobile/mappage/mapViewController.dart';
-import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
+import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class Flower {
   final LatLng position;
@@ -18,39 +16,39 @@ class Flower {
 
 class MapView extends GetView<MapViewController> {
   MapView({Key? key}) : super(key: key);
-  final List<Flower> flowers = [
-    Flower(position: LatLng(48.866667, 2.333333), imageUrl: 'assets/rose.jpg'),
-    Flower(
-        position: LatLng(48.85684190130435, 2.143681502360275),
-        imageUrl: 'assets/banzai.jpg'),
-  ];
+  final _positionStream =
+      const LocationMarkerDataStreamFactory().fromGeolocatorPositionStream(
+    stream: Geolocator.getPositionStream(
+      locationSettings: const LocationSettings(
+        timeLimit: Duration(minutes: 1),
+      ),
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          "Arrosaje",
-        ),
-        backgroundColor: const Color.fromARGB(255, 11, 225, 3),
-        elevation: 3,
-        toolbarHeight: 70,
+        title: const Text('Geolocator Settings Example'),
       ),
-      body: Container(
-        child: FlutterMap(
-          options: MapOptions(
-            center: LatLng(45.3, 14.2),
-            zoom: 10,
-          ),
-          children: [
-            TileLayer(
-              urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-              maxZoom: 19,
-            ),
-            CurrentLocationLayer(),
-          ],
+      body: FlutterMap(
+        options: const MapOptions(
+          initialCenter: LatLng(0, 0),
+          initialZoom: 15,
+          minZoom: 0,
+          maxZoom: 19,
         ),
+        children: [
+          TileLayer(
+            urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+            userAgentPackageName:
+                'net.tlserver6y.flutter_map_location_marker.example',
+            maxZoom: 19,
+          ),
+          CurrentLocationLayer(
+            positionStream: _positionStream,
+          ),
+        ],
       ),
     );
   }
