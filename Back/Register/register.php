@@ -1,6 +1,5 @@
 <?php
 
-// IL MANQUE LE MAIL LORS DE L'INSCRIPTION
 
 require_once('../../db_connect.php');
 require("../../mailer.php");
