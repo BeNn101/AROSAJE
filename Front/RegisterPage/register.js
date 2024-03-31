@@ -1,27 +1,3 @@
-$("form").submit((event) => {
-    console.log('test');
-    event.preventDefault();
-    $.ajax({
-        url:"../../Back/Register/register.php",
-        type: "POST",
-        dataType: "json",
-        data: {
-            firstname: $("#firstname").val(),
-            lastname: $("#lastname").val(),
-            email: $("#email").val(),
-            pwd: $("#pwd").val(),
-            phonenumber: $("#phonenumber").val(),
-            avatar: $("#avatar").val(),
-        },
-        success: (res) => {
-            if (res.success) {
-                console.log("res")
-                alert("Bien inscrit !")
-            } else console.log("error");
-        }
-    });
-});
-
 function capitalizeFirstLetter(input) {
     input.value = input.value.charAt(0).toUpperCase() + input.value.slice(1);
 }
@@ -117,14 +93,14 @@ document.querySelector('form').addEventListener('submit', function(event) {
             return;
         }
     }
-    window.location.href = '../LoginPage/login.html';
+    // window.location.href = '../LoginPage/login.html';
 });
 var telephoneInput = document.getElementById("telephoneInput");
 
-telephoneInput.addEventListener('input', function(event) {
-    var inputValue = telephoneInput.value;
+// telephoneInput.addEventListener('input', function(event) {
+//     var inputValue = telephoneInput.value;
 
-    var numericValue = inputValue.replace(/\D/g, '');
+//     var numericValue = inputValue.replace(/\D/g, '');
 
-    telephoneInput.value = numericValue;
-});
+//     telephoneInput.value = numericValue;
+// });
