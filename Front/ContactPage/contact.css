@@ -131,6 +131,7 @@ body {
 
 .form-group textarea {
     resize: vertical; 
+    margin-bottom: 10px;
 }
 
 .button-container {
