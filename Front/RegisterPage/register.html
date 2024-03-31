@@ -7,6 +7,8 @@
     <link rel="icon" href="../../images/logo arosage.png" type="image/png">
     <title>Inscription</title>
     <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+</head>
+
 <body>         
     <section class="base">
         <section class="logo-container">
@@ -16,31 +18,31 @@
             <section class="data" id="login">
                 <div>
                     <p>Email*: </p>
-                    <input required type="email" id="emailInput" placeholder="Entrez votre email...">
+                    <input required type="email" id="email" placeholder="Entrez votre email...">
                 </div>
                 <div>
                     <p>Prénom*: </p>
-                    <input required pattern="[A-Za-z]+" title="Seules les lettres sont autorisées" type="text" placeholder="Entrez votre prénom..." oninput="capitalizeFirstLetter(this)">
+                    <input id="firstname" required pattern="[A-Za-z]+" title="Seules les lettres sont autorisées" type="text" placeholder="Entrez votre prénom...">
                     <p>Nom*: </p>
-                    <input required pattern="[A-Za-z]+" title="Seules les lettres sont autorisées" type="text" placeholder="Entrez votre nom..." oninput="capitalizeAllLetters(this)">
+                    <input required id="lastname" pattern="[A-Za-z]+" title="Seules les lettres sont autorisées" type="text" placeholder="Entrez votre nom...">
                 </div>
                 <div class="password-container">
                     <p>Mot de passe*: </p>
-                    <input required type="password" id="password" placeholder="Entrez un mot de passe...">
-                    <span class="eye-icon" onclick="togglePasswordVisibility('password')"></span>
+                    <input required type="password" id="pwd" placeholder="Entrez un mot de passe...">
+                    <span class="eye-icon" ></span>
                     <p>Confirmer le mot de passe*: </p>
                 </div>
                 <div class="password-container">
                     <input required type="password" id="confirmPassword" placeholder="Confirmez le mot de passe...">
-                    <span class="eye-icon-confirm" onclick="toggleConfirmPasswordVisibility('confirmPassword')"></span>
+                    <span class="eye-icon-confirm"></span>
                 </div>
                 <div>
                     <p>Téléphone: </p>
-                    <input type="tel" id="telephoneInput" placeholder="Entrez votre numéro de téléphone...">
+                    <input type="tel" id="phonenumber" placeholder="Entrez votre numéro de téléphone...">
                 </div>
                 <div id="avatar-container">
                     <p>Avatar: </p>
-                    <input type="file" accept="image/png, image/jpeg">
+                    <input type="file" id="avatar">
                 </div>
             </section>
             <p><i>*Champs requis</i></p>
@@ -52,6 +54,6 @@
             <a href="../LoginPage/login.html">Déja inscrit? Connecte-toi</a>
         </div>
     </section>
-    <script src="register.js"></script>
+    <script src="logRegister.js"></script>
 </body>
 </html>

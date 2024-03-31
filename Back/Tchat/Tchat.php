@@ -29,14 +29,11 @@ if(isset($_SESSION["id_user"])){
         }
     }
     print_r($list_message);
-    // filtrer les messages par personnes a qui il les envoi et récuperer les information qui les concernent
-    // boucle qui va trier un message selon sont expediteur et le ranger dans une liste 
 
-    // Trier les messages par utilisateur 
 
-    // Si l'utilisateur existe déjà alors 
-    
-    // Envisager le cas ou pas de message 
+    // Reste a faire :
+    // Récuperer la date de l'écriture du message 
+    // 
 }
 
 // Cas ou l'utilisateur est inconnu de la BDD 

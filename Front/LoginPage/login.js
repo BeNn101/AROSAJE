@@ -29,5 +29,5 @@ document.querySelectorAll('input').forEach(input => {
 document.addEventListener('DOMContentLoaded', validateForm);
 homepageButton.addEventListener('click', function(event) {
     event.preventDefault(); 
-    window.location.href = '../Homepage/homepage.html';
+    // window.location.href = '../Homepage/homepage.html';
 });
