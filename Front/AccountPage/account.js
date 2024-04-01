@@ -117,9 +117,9 @@ document.addEventListener("DOMContentLoaded", function() {
         validateForm();
     });
 
-    decoBtn.addEventListener('click', function() {
-        window.location.href = '../LoginPage/login.html';
-    });
+    // decoBtn.addEventListener('click', function() {
+    //     window.location.href = '../LoginPage/login.html';
+    // });
 
     window.onclick = function(event) {
         if (event.target == addAnnonceModal) {
@@ -186,10 +186,10 @@ document.getElementById('addAnnonceForm').addEventListener('submit', function(e)
     addAnnonceForm.reset();
 });
 
-document.getElementById('cancelButton').addEventListener('click', function() {
-    addAnnonceModal.style.display = 'none';
-    addAnnonceForm.reset();
-});
+// document.getElementById('cancelButton').addEventListener('click', function() {
+//     addAnnonceModal.style.display = 'none';
+//     addAnnonceForm.reset();
+// });
 
 Array.from(addAnnonceForm.elements).forEach(function(element) {
     element.addEventListener('input', validateForm);

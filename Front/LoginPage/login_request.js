@@ -1,27 +1,50 @@
-console.log("TOTO")
-$(form).submit((event) => {
-    console.log("OKOKO")
+// $(form).submit((event) => {
+//     event.preventDefault();
+//     $.ajax({
+//         url: "../../Back/Login/login.php",
+//         type: 'POST',
+//         dataType: 'json',
+//         data: {
+//             email: $("#emailInput").val(),
+//             mot_de_passe: $("#mot_de_passe").val(),
+//         },
+//         success: (res) => {
+//             // Plus besoin de parser 'res', jQuery s'en occupe
+//             console.log(res);
+//             if (res.success) {
+//                 window.location.replace("http://localhost/Projet_Arosaje/AROSAJE/Front/Homepage/homepage.html");
+//                 // Supprimez le 'c' errant ici
+//                 console.log("Donnée récupérée");
+//             } else {
+//                 console.log(res.error);
+//                 alert("Échec de connexion");
+//             }
+//         },
+//         error: (jqXHR, textStatus, errorThrown) => {
+//             console.log("Erreur AJAX:", textStatus, errorThrown);
+//             alert("Erreur lors de la tentative de connexion. Veuillez réessayer.");
+//         }
+//     });
+// });
+
+$("form").submit((event) => {
     event.preventDefault();
     $.ajax({
         url:"../../Back/Login/login.php",
-        type: 'POST',
-        dataType: 'json',
+        type: "POST",
+        dataType:"json",
         data: {
             email: $("#emailInput").val(),
-            mot_de_passe: $("#password").val(),
+            mot_de_passe: $("#mot_de_passe").val(),
         },
         success: (res) => {
             if (res.success) {
+                localStorage.setItem("user",JSON.stringify(res.user));
                 window.location.replace("http://localhost/Projet_Arosaje/AROSAJE/Front/Homepage/homepage.html");
-                console.log("Conenxion réussi")
-                console.log("Donnée récupérer")
-            } else {
-                console.log(res.error)
-                alert("Echec de connexion")
+            }else{
+                alert(res.error);
+
             }
-        },        
-        error: () => {
-            alert("Donnée manquante")
         }
-    });
+    })
 })

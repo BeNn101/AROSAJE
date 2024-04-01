@@ -1,6 +1,8 @@
 <?php
 require_once("../../db_connect.php");
 session_start();
+require("../../function.php");
+is_connected();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") $method = $_POST;
 else $method = $_GET;

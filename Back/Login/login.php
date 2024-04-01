@@ -14,7 +14,7 @@ if (isset($_POST["email"]) && isset($_POST["mot_de_passe"]) && !empty(trim($_POS
         // Vérifier si le mot de passe correspond
         if (password_verify($_POST["mot_de_passe"], $user["mot_de_passe"])) {
             $_SESSION["id_user"]=$user["id_user"];
-            echo json_encode(["success" => true]);
+            echo json_encode(["success" => true, "user" => $user["id_user"]]);
             die;
         } else {
             echo json_encode(["success" => false, "error" => "Mot de passe erroné"]);
