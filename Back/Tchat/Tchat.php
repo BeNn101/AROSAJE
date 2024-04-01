@@ -1,6 +1,10 @@
 <?php
+session_start(); 
+
 require_once("../../db_connect.php");
-session_start(); // Permet de démarrer la session de l'utilisateur
+
+is_connected();
+
 $list_message=[];
 function findListIndex($list_message, $destinataire) {
     foreach ($list_message as $index => $list) {

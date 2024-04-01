@@ -9,3 +9,11 @@ try {
 } catch (ErrorException $e) {
     echo $e;
 }
+
+function is_connected(){
+    if(empty($_SESSION)){
+        echo json_encode(["success"=>"false", "error"=>"vous n'ètes pas connecté"]);
+        die;
+    }
+    
+}
