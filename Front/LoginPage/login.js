@@ -1,13 +1,13 @@
 var homepageButton = document.querySelector('button[type="submit"]');
 
 function togglePasswordVisibility() {
-    let passwordInput = document.getElementById("password");
+    let passwordInput = document.getElementById("mot_de_passe");
     passwordInput.type = (passwordInput.type === "password") ? "text" : "password";
     updateEyeIcon();
 }
 
 function updateEyeIcon() {
-    let passwordInput = document.getElementById("password");
+    let passwordInput = document.getElementById("mot_de_passe");
     let eyeIcon = document.querySelector(".eye-icon");
 
     eyeIcon.style.backgroundImage = (passwordInput.type === "password") ? "url('../../images/show_password.png')" : "url('../../images/hide_password.png')";
@@ -15,7 +15,7 @@ function updateEyeIcon() {
 
 function validateForm() {
     var emailInput = document.getElementById("emailInput");
-    var passwordInput = document.getElementById("password");
+    var passwordInput = document.getElementById("mot_de_passe");
     var submitButton = document.querySelector('button[type="submit"]');
     var isValid = emailInput.value.trim() !== "" && passwordInput.value.trim() !== "";
 
@@ -29,5 +29,11 @@ document.querySelectorAll('input').forEach(input => {
 document.addEventListener('DOMContentLoaded', validateForm);
 homepageButton.addEventListener('click', function(event) {
     event.preventDefault(); 
-    // window.location.href = '../Homepage/homepage.html';
+    var emailInput = document.getElementById("emailInput").value;
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(emailInput)) {
+        alert("Veuillez entrer une adresse email valide.");
+        return;
+    }
+    window.location.href = '../Homepage/homepage.html';
 });

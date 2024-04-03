@@ -1,15 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
-const cors = require('cors'); // Importez cors
 const app = express();
-const port = 3000;
+const cors = require('cors');
+const port = 3001;
 
 app.use(cors()); 
 app.use(bodyParser.json());
 
 app.post('/send-email', (req, res) => {
-    const { firstName, lastName, email, message } = req.body;
+    const { firstName, lastName, email } = req.body;
 
     let transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -23,14 +23,14 @@ app.post('/send-email', (req, res) => {
         from: email,
         to: 'salmon.hugo69330@gmail.com',
         subject: `Message de ${firstName} ${lastName}`,
-        text: `Nom: ${lastName}\nPrénom: ${firstName}\nEmail: ${email}\nMessage: ${message}`,
+        text: `Bonjour ${firstName} ${lastName},\n Merci de vous être inscrit. Bienvenue dans la famille Arosaje !`,
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
             res.status(500).send({ message: 'Erreur lors de l\'envoi de l\'email', error });
         } else {
-            res.status(200).send({ message: 'Email envoyé avec succès!' });
+            res.status(200).send({ message: 'Félicitations ! Vous êtes inscrit. Email de confirmation envoyé.' });
         }
     });
 });
