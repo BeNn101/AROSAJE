@@ -5,12 +5,12 @@ function capitalizeAllLetters(input) {
     input.value = input.value.toUpperCase();
 }
 function togglePasswordVisibility() {
-    var passwordInput = document.getElementById("password");
+    var passwordInput = document.getElementById("pwd");
     passwordInput.type = (passwordInput.type === "password") ? "text" : "password";
     updateEyeIcon();
 }
 function updateEyeIcon() {
-    var passwordInput = document.getElementById("password");
+    var passwordInput = document.getElementById("pwd");
     var eyeIcon = document.querySelector(".eye-icon");
 
     eyeIcon.style.backgroundImage = (passwordInput.type === "password") ? "url('../../images/show_password.png')" : "url('../../images/hide_password.png')";
@@ -30,8 +30,8 @@ function updateConfirmPasswordEyeIcon() {
 }
 
 function validateForm() {
-    var emailInput = document.getElementById("emailInput");
-    var passwordInput = document.getElementById("password");
+    var emailInput = document.getElementById("email");
+    var passwordInput = document.getElementById("pwd");
     var confirmPasswordInput = document.getElementById("confirmPassword");
     var isValid = emailInput.checkValidity() && passwordInput.checkValidity() && confirmPasswordInput.checkValidity();
 
@@ -56,9 +56,9 @@ document.addEventListener('DOMContentLoaded', validateForm);
 document.querySelector('form').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    var emailInput = document.getElementById("emailInput").value;
-    var passwordInput = document.getElementById("password").value;
-    var telephoneInput = document.getElementById("telephoneInput").value;
+    var emailInput = document.getElementById("email").value;
+    var passwordInput = document.getElementById("pwd").value;
+    var telephoneInput = document.getElementById("phonenumber").value;
     var confirmPasswordInput = document.getElementById("confirmPassword").value;
 
     var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -93,14 +93,14 @@ document.querySelector('form').addEventListener('submit', function(event) {
             return;
         }
     }
-    // window.location.href = '../LoginPage/login.html';
+    window.location.href = '../LoginPage/login.html';
 });
-var telephoneInput = document.getElementById("telephoneInput");
+var telephoneInput = document.getElementById("phonenumber");
 
-// telephoneInput.addEventListener('input', function(event) {
-//     var inputValue = telephoneInput.value;
+telephoneInput.addEventListener('input', function(event) {
+    var inputValue = telephoneInput.value;
 
-//     var numericValue = inputValue.replace(/\D/g, '');
+    var numericValue = inputValue.replace(/\D/g, '');
 
-//     telephoneInput.value = numericValue;
-// });
+    telephoneInput.value = numericValue;
+});

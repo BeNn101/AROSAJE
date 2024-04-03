@@ -22,19 +22,19 @@
                 </div>
                 <div>
                     <p>Prénom*: </p>
-                    <input id="firstname" required pattern="[A-Za-z]+" title="Seules les lettres sont autorisées" type="text" placeholder="Entrez votre prénom...">
+                    <input id="firstname" required pattern="[A-Za-z]+" title="Seules les lettres sont autorisées" type="text" placeholder="Entrez votre prénom..." oninput="capitalizeFirstLetter(this)">
                     <p>Nom*: </p>
-                    <input required id="lastname" pattern="[A-Za-z]+" title="Seules les lettres sont autorisées" type="text" placeholder="Entrez votre nom...">
+                    <input required id="lastname" pattern="[A-Za-z]+" title="Seules les lettres sont autorisées" type="text" placeholder="Entrez votre nom..." oninput="capitalizeAllLetters(this)">
                 </div>
                 <div class="password-container">
                     <p>Mot de passe*: </p>
                     <input required type="password" id="pwd" placeholder="Entrez un mot de passe...">
-                    <span class="eye-icon" ></span>
+                    <span class="eye-icon" onclick="togglePasswordVisibility()"></span>
                     <p>Confirmer le mot de passe*: </p>
                 </div>
                 <div class="password-container">
                     <input required type="password" id="confirmPassword" placeholder="Confirmez le mot de passe...">
-                    <span class="eye-icon-confirm"></span>
+                    <span class="eye-icon-confirm" onclick="toggleConfirmPasswordVisibility()"></span>
                 </div>
                 <div>
                     <p>Téléphone: </p>
@@ -42,7 +42,7 @@
                 </div>
                 <div id="avatar-container">
                     <p>Avatar: </p>
-                    <input type="file" id="avatar">
+                    <input type="file" id="avatar" accept="image/png, image/jpeg">
                 </div>
             </section>
             <p><i>*Champs requis</i></p>
@@ -55,5 +55,6 @@
         </div>
     </section>
     <script src="logRegister.js"></script>
+    <script src="register.js"></script>
 </body>
 </html>
