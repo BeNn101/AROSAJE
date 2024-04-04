@@ -1,7 +1,5 @@
 const ownerPostalCodeInput = document.getElementById('ownerPostalCode');
-const ownerName = document.getElementById('ownerName');
 const ownerCity = document.getElementById('ownerCity');
-const ownerFirstName = document.getElementById('ownerFirstName');
 const plantName = document.getElementById('plantName');
 const ownerAddress = document.getElementById('ownerAddress');
 
@@ -23,15 +21,9 @@ function capitalizeFirstLetter(input) {
 ownerPostalCodeInput.addEventListener('input', function(event) {
     this.value = this.value.toUpperCase();
 });
-ownerName.addEventListener('input', function(event) {
-    this.value = this.value.toUpperCase();
-});
+
 ownerCity.addEventListener('input', function(event) {
     this.value = this.value.toUpperCase();
-});
-
-ownerFirstName.addEventListener('input', function(event) {
-    this.value = capitalizeFirstLetter(this.value);
 });
 
 ownerAddress.addEventListener('input', function(event) {
@@ -134,8 +126,6 @@ document.getElementById('addAnnonceForm').addEventListener('submit', function(e)
     e.preventDefault();
 
     const plantName = document.getElementById('plantName').value;
-    const ownerName = document.getElementById('ownerName').value;
-    const ownerFirstName = document.getElementById('ownerFirstName').value;
     const ownerAddress = document.getElementById('ownerAddress').value;
     const ownerPostalCode = document.getElementById('ownerPostalCode').value;
     const ownerCity = document.getElementById('ownerCity').value;
@@ -164,7 +154,7 @@ document.getElementById('addAnnonceForm').addEventListener('submit', function(e)
 
     const detailsDiv = document.createElement('div');
     detailsDiv.className = 'annonce-details';
-    detailsDiv.innerHTML = `<p>${plantName}</p><p>${ownerFirstName} ${ownerName}</p><p>${ownerAddress}</p><p>${ownerPostalCode}</p><p>${ownerCity}</p><p>${ownerCountry}</p>`;
+    detailsDiv.innerHTML = `<p>${plantName}</p><p>${ownerAddress}</p><p>${ownerPostalCode}</p><p>${ownerCity}</p><p>${ownerCountry}</p>`;
     annonceContainer.appendChild(detailsDiv);
 
     const deleteButton = document.createElement('button');
