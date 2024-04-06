@@ -54,14 +54,14 @@ class PublishViewViewController extends GetxController  {
 
 Future<void> createPlante() async {
 
-  final url = Uri.parse('http://192.168.1.40:8000/api/plantes');
+  final url = Uri.parse('http://172.16.1.8:8000/api/plantes');
   
   var imageBase64 =base64Encode(imageBytes.value!);
- 
+  
   // Les données que vous souhaitez envoyer dans le corps de la requête
   Map<String, dynamic> data = {
     'name_plante': "namePlanteTexting.value.text",
-    'image': imageBase64, // Assurez-vous que imageFilePath contient le chemin valide de l'image
+    'image': '${imageBase64}', // Assurez-vous que imageFilePath contient le chemin valide de l'image
     'localisation': 'Loc5',
     'id_user': userId.value, // Assurez-vous que userId contient une valeur valide
     // Ajoutez d'autres données si nécessaire
@@ -80,7 +80,7 @@ Future<void> createPlante() async {
     print('Plante créée avec succès');
   } else {
     // Échec de la création de la plante
-  throw Exception('er');
+ 
   }
 }
 

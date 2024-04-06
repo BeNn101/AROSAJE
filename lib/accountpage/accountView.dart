@@ -22,80 +22,86 @@ class AccountView extends GetView<AccountViewController> {
       backgroundColor: const Color.fromARGB(255, 11, 225, 3),
       elevation: 3,
       toolbarHeight: 70,
+      shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              bottom: Radius.circular(20), // Spécifie le rayon de la partie inférieure de l'appbar
+            ))
     ),
     body:  Center(
-      child: Column(
-        children: [
-              SizedBox(height: 10,),
-          Text(
-            'Mon profil :',
-            textAlign: TextAlign.left,
-          ),
-          Expanded(
-            flex: 1,
-            child: Container(
-              color: Colors.white60,
-              child: Row(
-                children: [
-                  Text('Email :'),
-                  Text('${controller.currentUser?.email.obs}'),
-                ],
-              )),
-          )
-          , Expanded(
-            flex: 1,
-            child: Container(
-              
-              color: Colors.white60,
-              child: Row(
-                children: [
-                  Text('Nom :'),
-                  Text('${controller.currentUser?.lastName}'),
-                ],
-              )),
-          )
-          , Expanded(
-            flex: 1,
-            child: Container(
-              color: Colors.white60,
-              child: Row(
-                children: [
-                  Text('Prénom:'),
-                  Text('${controller.currentUser?.firstName}'),
-                ],
-              )),
-          )
-          , Expanded(
-            flex: 1,
-            child: Container(
-              color: Colors.white60,
-              child: Row(
-                children: [
-                  Text('Téléphone :'),
-                  Text('${controller.currentUser?.telephone}'),
-                ],
-              )),
-          ),
-          Text("Mes annonces :"),
-          SizedBox(height: 10,),
-          Expanded(
-            flex: 6,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Container(
-                width: double.infinity,
-                color: const Color.fromARGB(153, 228, 222, 222),
-                child: Text('')),
+      child: Obx(()=>
+        Column(
+          children: [
+                SizedBox(height: 10,),
+            Text(
+              'Mon profil :',
+              textAlign: TextAlign.left,
             ),
-          )
-          
-          
-        ],
+            Expanded(
+              flex: 1,
+              child: Container(
+                color: Colors.white60,
+                child: Row(
+                  children: [
+                    Text('Email :'),
+                    Text('${controller.currentUser?.value?.email.obs}'),
+                  ],
+                )),
+            )
+            , Expanded(
+              flex: 1,
+              child: Container(
+                
+                color: Colors.white60,
+                child: Row(
+                  children: [
+                    Text('Nom :'),
+                    Text('${controller.currentUser?.value?.lastName}'),
+                  ],
+                )),
+            )
+            , Expanded(
+              flex: 1,
+              child: Container(
+                color: Colors.white60,
+                child: Row(
+                  children: [
+                    Text('Prénom:'),
+                    Text('${controller.currentUser?.value?.firstName}'),
+                  ],
+                )),
+            )
+            , Expanded(
+              flex: 1,
+              child: Container(
+                color: Colors.white60,
+                child: Row(
+                  children: [
+                    Text('Téléphone :'),
+                    Text('${controller.currentUser?.value?.telephone}'),
+                  ],
+                )),
+            ),
+            Text("Mes annonces :"),
+            SizedBox(height: 10,),
+            Expanded(
+              flex: 6,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Container(
+                  width: double.infinity,
+                  color: const Color.fromARGB(153, 228, 222, 222),
+                  child: Text('')),
+              ),
+            )
+            
+            
+          ],
+        ),
       ),
     ),
   
     bottomNavigationBar: 
-   XNavbar(userId: controller.userId.value),
+   XNavbar(userId: controller.userId.value,currentIndex: 1),
   );
   }
 }

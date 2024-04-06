@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class HomeView extends GetView<HomeViewController> {
   const HomeView({Key? key});
@@ -25,6 +26,11 @@ class HomeView extends GetView<HomeViewController> {
         backgroundColor: const Color.fromARGB(255, 11, 225, 3),
         elevation: 3,
         toolbarHeight: 70,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              bottom: Radius.circular(20),
+            ),
+        ),
       ),
       body: Column(
         children: [
@@ -38,44 +44,41 @@ class HomeView extends GetView<HomeViewController> {
             textAlign: TextAlign.left,
           ),
           Expanded(
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
+            child: Obx(() => Skeletonizer(
+              enabled: controller.isSkeletonLoader.value,
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                ),
+                itemCount: controller.listPlant.length,
+                itemBuilder: (context, index) {
+                 String imagePath = controller.listPlant[index].image;
+                 String imageUrl = 'http://172.16.1.8:8000/'+imagePath;
+                  return Card(
+                    child: Center(
+                      child: Column(
+                        children: [
+                          SizedBox(height: 10,),
+                          Image.network(
+                            imageUrl,
+                            height: 80,
+                            width: 80,
+                          ),
+                          Text(controller.listPlant[index].namePlante),
+                        ],
+                      ),
+                    ),
+                  );
+                },
               ),
-              itemCount: controller.listPlant.length,
-              itemBuilder: (context, index) {
-               String base64String = controller.listPlant[index].image; // Récupérer la chaîne Base64
-    if (base64String.length % 4 != 0) {
-      // Si la longueur n'est pas un multiple de 4, ajouter des signes "=" pour la compléter
-      while (base64String.length % 4 != 0) {
-        base64String += '=';
-      }
-    }
-    print(base64String);
-    // Décoder la chaîne Base64 et créer un widget Image à partir des bytes décodés
-    Uint8List imageBytes = base64Decode(base64String);
-                return Card(
-     child: Center(
-       child: Column(children: [
-        SizedBox(height: 10,),
-       Image.memory(imageBytes,
-       height: 100,
-       width: 100,),
-      /*   Text('data'), */
-        Text(controller.listPlant[index].namePlante),
-        /* Text('hgs69') */
-       ]),
-     ),
-    );
-              },
-            ),
+            )),
           ),
         ],
       ),
-      bottomNavigationBar:  XNavbar(userId: controller.userId.value!??1)
-
+      bottomNavigationBar:  XNavbar(userId: controller.userId.value!??1, currentIndex: 0),
     );
   }
 }
+

@@ -37,6 +37,10 @@ class MapView extends GetView<MapViewController> {
         backgroundColor: const Color.fromARGB(255, 11, 225, 3),
         elevation: 3,
         toolbarHeight: 70,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              bottom: Radius.circular(20), 
+            ))
       ),
       body:FlutterMap(
     options: MapOptions(

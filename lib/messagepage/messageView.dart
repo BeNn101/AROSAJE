@@ -17,9 +17,13 @@ class MessageView extends GetView<MessageViewController> {
         backgroundColor: Color.fromARGB(255, 11, 225, 3),
         elevation: 3,
         toolbarHeight: 70,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              bottom: Radius.circular(20), 
+            ))
       ),
       body: ListView(),
-      bottomNavigationBar: XNavbar(userId: controller.userId.value)
+      bottomNavigationBar: XNavbar(userId: controller.userId.value, currentIndex: 4,)
     );
   }
 }

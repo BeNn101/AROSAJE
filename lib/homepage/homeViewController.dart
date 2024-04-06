@@ -6,47 +6,42 @@ import 'package:arosaje_mobile/freeze/plantes.dart';
 import 'package:get/get.dart';
 
 class HomeViewController extends GetxController {
-  var userId = Rxn<int>(); // Utilise Rxn pour une valeur pouvant être nulle.
-   List<Plant> listPlant = [];
-  File imageFile = File('/data/user/0/com.example.arosaje_mobile/cache/af21ebb7-1f7d-481d-9bde-65a6dc03dd7a6648591903563287108.jpg');
-
-  @override 
-  void onReady(){
-    imageFile;
-    getAllPlant();
-    super.onReady();
-  }
+  var userId = Rxn<int>();
+  var listPlant = <Plant>[].obs; // Utilisez RxList pour une liste observable
+  late File imageFile; // Utilisez late pour une initialisation différée de l'image
+  RxBool isSkeletonLoader= true.obs;
   @override
   void onInit() {
-    getAllPlant();
+    // Ne pas oublier d'appeler super.onInit()
     super.onInit();
-    // Récupération et vérification des arguments
+    // Charger les données des plantes lors de l'initialisation du contrôleur
+    getAllPlant();
+    // Récupérer et vérifier les arguments
     final argument = Get.arguments;
-    imageFile;
-    // Si l'argument est une map et contient la clé 'userId'
     if (argument is Map<String, dynamic> && argument.containsKey('userId')) {
-      // S'assurer que la valeur de 'userId' est bien un int avant de la définir
       userId.value = argument['userId'];
     } else if (argument is int) {
-      // Si l'argument passé est directement un int, l'utiliser directement
       userId.value = argument;
     } else {
-      // Logique par défaut ou gestion d'erreur si 'userId' n'est pas trouvé
       print("Erreur: L'userId n'est pas fourni dans les arguments de navigation.");
     }
+    isSkeletonLoader.value=false;
   }
-  Future<void> getAllPlant() async {
-    final url = Uri.parse('http://192.168.1.40:8000/api/getAllPlantes');
-    final response = await http.get(url);
 
-    if (response.statusCode == 200) {
-      final List<dynamic> plantData = json.decode(response.body);
-      listPlant = List<Plant>.from(plantData.map((plant) => Plant.fromJson(plant)));
-    } else {
-      Get.snackbar('Erreur', 'Identifiants invalides');
-      throw Exception('Erreur de chargement des données : ${response.statusCode}');
-      
+  Future<void> getAllPlant() async {
+    try {
+      final url = Uri.parse('http://172.16.1.8:8000/api/getAllPlantes');
+      final response = await http.get(url);
+      if (response.statusCode == 200) {
+        final List<dynamic> plantData = json.decode(response.body);
+        listPlant.value = List<Plant>.from(plantData.map((plant) => Plant.fromJson(plant)));
+      } else {
+        Get.snackbar('Erreur', 'Identifiants invalides');
+        throw Exception('Erreur de chargement des données : ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Erreur lors du chargement des plantes: $e');
+      Get.snackbar('Erreur', 'Erreur lors du chargement des plantes');
     }
   }
-
 }
