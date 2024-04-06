@@ -14,6 +14,9 @@ $(document).ready(function(){
     });
 })
 
+// $("#addAnnonceSubmit").click(function(){
+
+// })
 
 // $("#logout_button").click(function() {
 //     $.ajax({
