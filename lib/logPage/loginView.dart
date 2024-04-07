@@ -1,40 +1,61 @@
-import 'package:arosaje_mobile/logPage/loginViewController.dart';
-import 'package:arosaje_mobile/uiKit/Xappbar.dart';
 import 'package:arosaje_mobile/uiKit/Xtextfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class LoginView extends GetView<LoginViewController> {
+class LoginView extends GetView {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          "Arrosaje",
-        ),
-        backgroundColor: Color.fromARGB(255, 11, 225, 3),
-        elevation: 3,
-        toolbarHeight: 70,
-      ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            XTextField(
-              controller: emailController,
-              hintText: 'Email',
-            ),
-            SizedBox(height: 10),
-            XTextField(
-              controller: passwordController,
-              hintText: 'Password',
-            ),
-            boutton(),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                width: 170,
+                height: 170,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('logo.png'),
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              Text(
+                'Connexion',
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 30),
+              XTextField(
+                controller: emailController,
+                hintText: 'Email',
+              ),
+              SizedBox(height: 10),
+              XTextField(
+                controller: passwordController,
+                hintText: 'Password',
+              ),
+              SizedBox(height: 20),
+              GestureDetector(
+                onTap: () {
+                  Get.toNamed("/register");
+                },
+                child: Text(
+                  "Pas de compte ? Inscrivez-vous",
+                  style: TextStyle(
+                    color: Colors.blue,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ),
+              SizedBox(height: 10),
+              boutton(),
+            ],
+          ),
         ),
       ),
     );

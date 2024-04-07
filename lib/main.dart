@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:arosaje_mobile/accountpage/accountView.dart';
 import 'package:arosaje_mobile/accountpage/accountViewControllerBlindings.dart';
 import 'package:arosaje_mobile/homepage/homeBindings.dart';
@@ -12,8 +10,6 @@ import 'package:arosaje_mobile/messagepage/messageView.dart';
 import 'package:arosaje_mobile/messagepage/messageViewControllerBlindings.dart';
 import 'package:arosaje_mobile/registerPage/registerView.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get/get.dart';
 
 void main() {
@@ -55,11 +51,14 @@ class MyApp extends StatelessWidget {
           title: 'Map',
           page: () => MapView(),
           binding: MapBindings(),
+        ),
+        GetPage(
+          name: '/register',
+          title: 'Register',
+          page: () => RegisterView(),
         )
       ],
       initialRoute: '/login',
-    return MaterialApp(
-      home: RegisterView(),
     );
   }
 }
