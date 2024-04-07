@@ -19,6 +19,8 @@ dependencies:
   url_launcher: ^6.0.13
   latlong2: ^0.9.0
   flutter_map_location_marker: any # or latest verion
+  permission_handler: ^9.1.0
+  geolocator : ^10.0.1
 
 dev_dependencies:
   flutter_test:
@@ -30,3 +32,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/
+ 
