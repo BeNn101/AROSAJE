@@ -1,26 +1,29 @@
 function capitalizeFirstLetter(input) {
     input.value = input.value.charAt(0).toUpperCase() + input.value.slice(1);
 }
+
 function capitalizeAllLetters(input) {
     input.value = input.value.toUpperCase();
 }
+
 function togglePasswordVisibility() {
     var passwordInput = document.getElementById("pwd");
     passwordInput.type = (passwordInput.type === "password") ? "text" : "password";
     updateEyeIcon();
 }
+
 function updateEyeIcon() {
     var passwordInput = document.getElementById("pwd");
     var eyeIcon = document.querySelector(".eye-icon");
 
     eyeIcon.style.backgroundImage = (passwordInput.type === "password") ? "url('../../images/show_password.png')" : "url('../../images/hide_password.png')";
 }
+
 function toggleConfirmPasswordVisibility() {
     var passwordInput = document.getElementById("confirmPassword");
     passwordInput.type = (passwordInput.type === "password") ? "text" : "password";
     updateConfirmPasswordEyeIcon();
 }
-
 
 function updateConfirmPasswordEyeIcon() {
     var passwordInput = document.getElementById("confirmPassword");
@@ -50,8 +53,6 @@ document.querySelectorAll('input').forEach(input => {
 });
 
 document.addEventListener('DOMContentLoaded', validateForm);
-
-
 
 document.querySelector('form').addEventListener('submit', function(event) {
     event.preventDefault();
@@ -93,7 +94,29 @@ document.querySelector('form').addEventListener('submit', function(event) {
             return;
         }
     }
+
+    // Envoi de l'e-mail
+    var formData = {
+        email: emailInput,
+    };
+
+    fetch('http://localhost:3001/send-email', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert('Message envoyé : ' + data.message);
+        window.location.href = '../LoginPage/login.html';
+    })
+    .catch((error) => {
+        console.error('Erreur lors de l\'envoi:', error);
+    });
 });
+
 var telephoneInput = document.getElementById("phonenumber");
 
 telephoneInput.addEventListener('input', function(event) {
