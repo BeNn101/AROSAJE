@@ -181,16 +181,16 @@ document.getElementById('addAnnonceForm').addEventListener('submit', function(e)
 //     addAnnonceForm.reset();
 // });
 
-Array.from(addAnnonceForm.elements).forEach(function(element) {
-    element.addEventListener('input', validateForm);
-});
+// Array.from(addAnnonceForm.elements).forEach(function(element) {
+//     element.addEventListener('input', validateForm);
+// });
 
-function validateForm() {
-    let isValid = true;
-    Array.from(addAnnonceForm.elements).forEach(function(element) {
-        if (!element.checkValidity()) {
-            isValid = false;
-        }
-    });
-    submitButton.disabled = !isValid;
-}
+// function validateForm() {
+//     let isValid = true;
+//     Array.from(addAnnonceForm.elements).forEach(function(element) {
+//         if (!element.checkValidity()) {
+//             isValid = false;
+//         }
+//     });
+//     submitButton.disabled = !isValid;
+// }

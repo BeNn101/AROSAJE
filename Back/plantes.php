@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         echo json_encode($response);
     }
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST["name"], $_POST["firstname"], $_POST['lastname'], $_POST["adresse"], $_POST["ville"], $_POST["code_postal"], $_POST["pays"], $_SESSION["id_user"], $_FILES['image_plante'])) {
+    if (isset($_POST["name"], $_POST["adresse"], $_POST["ville"], $_POST["code_postal"], $_POST["pays"], $_SESSION["id_user"], $_FILES['image_plante'])) {
         $file_name = $_FILES['image_plante']['name'];
         $file_tmp = $_FILES['image_plante']['tmp_name'];
         $file_size = $_FILES['image_plante']['size'];
@@ -105,7 +105,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
             $allowed_ext = array('jpg', 'jpeg', 'png', 'gif');
             if (in_array($file_ext, $allowed_ext)) {
-                $destination = 'plante_image/' . uniqid('', true) . '.' . $file_ext;
+                // $destination = 'plante_image/' . uniqid('', true) . '.' .$file_ext;
+                $destination = $_FILES['image_plante']['name'];
                 if (move_uploaded_file($file_tmp, $destination)) {
                     $adresse = $_POST["adresse"] . ' ' . $_POST["ville"] . ' ' . $_POST["code_postal"] . ' ' . $_POST["pays"];
                     $req = $db->prepare("INSERT INTO plantes (name_plante,localisation,image,id_user) VALUES (:name,:localisation,:image_plante,:id_user)");
@@ -113,13 +114,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                     $req->bindValue(":id_user", $_SESSION["id_user"]);
                     $req->bindValue(":localisation", $adresse);
                     $req->bindValue(":image_plante", $destination);
-                    $success = $req->execute();
-
-                    if ($success) {
-                        $response = ["success" => true, "message" => "Plante added successfully"];
-                    } else {
-                        $response = ["success" => false, "error" => "Insertion failed"];
-                    }
+                    $res = $req->execute();
+                    echo json_encode(["success" => true, "response" => $res]);
                 } else {
                     $response = ["success" => false, "error" => "Erreur lors de l'enregistrement de l'image"];
                 }
@@ -132,7 +128,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     } else {
         $response = ["success" => false, "error" => "Missing required fields or no file selected"];
     }
-    echo json_encode($response); // S'assurer de toujours envoyer la réponse en JSON
 } else {
     $response = ["success" => false, "error" => "Unknown request"];
     echo json_encode($response);

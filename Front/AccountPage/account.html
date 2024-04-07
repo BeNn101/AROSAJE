@@ -96,10 +96,10 @@
                         success: function(res) {
                             console.log(res);
                             if (res.plantes && res.plantes.length > 0) {
+                                const plantes = $("<div></div>");
                                 for (var i = 0; i < res.plantes.length; i++) {
-                                    console.log(res.plantes[i].localisation)
-                                    $("#annonce_title").text(res.plantes[i].name_plante);
-                                    $("#image_plante").attr("src", res.plantes[i].image);
+                                    $("<h3></h3>").text(res.plantes[i].name_plante);
+                                    $("<img>").attr("src", res.plantes[i].image);
                                     $("#adresse").text(res.plantes[i].localisation);
                                 }
 
@@ -111,8 +111,7 @@
                     });
                 });
             </script>        
-            
-            <p id="no-annonces-message">Vous n'avez pas posté d'annonces.</p>
+<!--         <p id="no-annonces-message">Vous n'avez pas posté d'annonces.</p> -->
             <div class="button-container">
                 <button class="add-plant" type="submit">AJOUTER UNE ANNONCE</button>
             </div>
