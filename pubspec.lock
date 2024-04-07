@@ -738,8 +738,10 @@ packages:
     description:
       name: stack_trace
       sha256: "73713990125a6d93122541237550ee3352a2d84baad52d375a4cad2eb9b7ce0b"
+      sha256: "73713990125a6d93122541237550ee3352a2d84baad52d375a4cad2eb9b7ce0b"
       url: "https://pub.dev"
     source: hosted
+    version: "1.11.1"
     version: "1.11.1"
   stream_channel:
     dependency: transitive
@@ -926,5 +928,7 @@ packages:
     source: hosted
     version: "3.1.2"
 sdks:
+  dart: ">=3.2.0-194.0.dev <4.0.0"
+  flutter: ">=3.13.0"
   dart: ">=3.2.0-194.0.dev <4.0.0"
   flutter: ">=3.13.0"
