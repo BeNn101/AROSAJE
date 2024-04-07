@@ -89,7 +89,7 @@ class PublishView extends GetView<PublishViewViewController> {
         onPressed: () async {
           controller.test();
         },
-        child: Text('LOGIN'),
+        child: Text('Post'),
         style: ElevatedButton.styleFrom(
 
           shape: RoundedRectangleBorder(

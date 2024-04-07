@@ -60,7 +60,7 @@ Future<void> createPlante() async {
   
   // Les données que vous souhaitez envoyer dans le corps de la requête
   Map<String, dynamic> data = {
-    'name_plante': "namePlanteTexting.value.text",
+    'name_plante': namePlanteTextingController.value.text,
     'image': '${imageBase64}', // Assurez-vous que imageFilePath contient le chemin valide de l'image
     'localisation': 'Loc5',
     'id_user': userId.value, // Assurez-vous que userId contient une valeur valide

@@ -18,7 +18,6 @@ class RegisterViewController extends GetxController {
     super.onInit();
   }
 
-
     Future<void> register() async {
 
   final url = Uri.parse('http://192.168.1.40:8000/api/users/createUser');
@@ -39,7 +38,7 @@ class RegisterViewController extends GetxController {
     body: jsonEncode(data), 
   );
 
-  if (response.statusCode == 200) {
+  if (response.statusCode == 201) {
      Get.snackbar('Succes', 'Utilisateurs créé');
     Get.offAllNamed('/login');
    

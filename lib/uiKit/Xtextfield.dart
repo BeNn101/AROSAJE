@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 class XTextField extends StatelessWidget {
   final String? hintText;
   final TextEditingController? controller;
+  final bool obscuroty = false;
   //final Function()? onTap;
 
-  const XTextField({Key? key, this.hintText, this.controller})
+  const XTextField({Key? key, this.hintText, this.controller, })
       : super(key: key);
 
   @override
@@ -19,6 +20,7 @@ class XTextField extends StatelessWidget {
       child: GestureDetector(
         //onTap: onTap,
         child: TextFormField(
+          obscureText: obscuroty,
           controller: controller,
           autofocus: true,
           cursorColor: Colors.green,

@@ -27,23 +27,54 @@ class MessageView extends GetView<MessageViewController> {
         children: [
           const Text("Mes messages:"),
           const SizedBox(height: 10,),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              height: 70,
-              width: double.infinity,
-            color: Colors.grey.shade300,
-            child: InkWell(
-              onTap: () {
-                 Get.to(const ChatView());
-              },
-              child: const Column(children: [
-                Text('Title'),
-                SizedBox(height: 8,),
-                Text('Sous titres')
-              ]),
-            ),),
-          ),
+         Padding(
+  padding: const EdgeInsets.all(8.0),
+  child: Container(
+    height: 70,
+    width: double.infinity,
+    decoration: BoxDecoration(
+      color: Colors.grey.shade300,
+      borderRadius: BorderRadius.circular(10), 
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey.withOpacity(0.5),
+          spreadRadius: 2,
+          blurRadius: 5,
+          offset: Offset(0, 3), 
+        ),
+      ],
+    ),
+    child: InkWell(
+      onTap: () {
+        Get.to(const ChatView());
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16), 
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start, 
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Jean',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+            SizedBox(height: 4),
+            Text(
+              'Tulipe',
+              style: TextStyle(
+                color: Colors.grey,
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  ),
+),
+
         ],
       ),
       bottomNavigationBar: XNavbar(userId: controller.userId.value, currentIndex: 4,)

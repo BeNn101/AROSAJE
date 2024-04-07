@@ -8,17 +8,14 @@ import 'package:get/get.dart';
 
 class HomeViewController extends GetxController {
   var userId = Rxn<int>();
-  var listPlant = <Plant>[].obs; // Utilisez RxList pour une liste observable
-  late File imageFile; // Utilisez late pour une initialisation différée de l'image
+  var listPlant = <Plant>[].obs; 
+  late File imageFile; 
   RxBool isSkeletonLoader= true.obs;
   String ip =Constants.ipAddress;
   @override
   void onInit() {
-    // Ne pas oublier d'appeler super.onInit()
     super.onInit();
-    // Charger les données des plantes lors de l'initialisation du contrôleur
     getAllPlant();
-    // Récupérer et vérifier les arguments
     final argument = Get.arguments;
     if (argument is Map<String, dynamic> && argument.containsKey('userId')) {
       userId.value = argument['userId'];

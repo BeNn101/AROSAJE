@@ -39,53 +39,54 @@ class HomeView extends GetView<HomeViewController> {
               //controller.search();
             },
           ).build(),
-           Text(
+          Text(
             "Annonce ",
             textAlign: TextAlign.left,
           ),
           Expanded(
-            child: Obx(() => Skeletonizer(
-              enabled: controller.isSkeletonLoader.value,
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                ),
-                itemCount: controller.listPlant.length,
-                itemBuilder: (context, index) {
-                 String imagePath = controller.listPlant[index].image;
-                 String imageUrl = 'http://192.168.1.40:8000/'+imagePath;
-                  return Card(
-                    child: Center(
-                      child: Column(
-                        children: [
-                          SizedBox(height: 10,),
-                          Image.network(
-                             loadingBuilder: (context, child, loadingProgress) {
-                            if (loadingProgress == null) {
-                  return child;
-                }
-                return CircularProgressIndicator();
-              
-                          },
-                            imageUrl,
-                            height: 80,
-                            width: 80,
-                          ),
-                          Text(controller.listPlant[index].namePlante),
-                        ],
+            child: Obx(() => RefreshIndicator(
+              onRefresh: () => controller.getAllPlant(), // Fonction à appeler lors du rafraîchissement
+              child: Skeletonizer(
+                enabled: controller.isSkeletonLoader.value,
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                  ),
+                  itemCount: controller.listPlant.length,
+                  itemBuilder: (context, index) {
+                    String imagePath = controller.listPlant[index].image;
+                    String imageUrl = 'http://192.168.1.40:8000/'+imagePath;
+                    return Card(
+                      child: Center(
+                        child: Column(
+                          children: [
+                            SizedBox(height: 10,),
+                            Image.network(
+                              loadingBuilder: (context, child, loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child;
+                                }
+                                return CircularProgressIndicator();
+                              },
+                              imageUrl,
+                              height: 80,
+                              width: 80,
+                            ),
+                            Text(controller.listPlant[index].namePlante),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
             )),
           ),
         ],
       ),
-      bottomNavigationBar:  XNavbar(userId: controller.userId.value!??1, currentIndex: 0),
+      bottomNavigationBar: XNavbar(userId: controller.userId.value!??1, currentIndex: 0),
     );
   }
 }
-

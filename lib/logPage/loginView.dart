@@ -1,5 +1,4 @@
 import 'package:arosaje_mobile/logPage/loginViewController.dart';
-import 'package:arosaje_mobile/uiKit/Xappbar.dart';
 import 'package:arosaje_mobile/uiKit/Xtextfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,29 +13,33 @@ class LoginView extends GetView<LoginViewController> {
   double screenWidth = MediaQuery.of(context).size.width;
   double fontSize = screenWidth > 600 ? 16 : 14;
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          "Arrosaje",
-        ),
-        backgroundColor: Color.fromARGB(255, 11, 225, 3),
-        elevation: 3,
-        toolbarHeight: 70,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(
-              bottom: Radius.circular(20),
-            ))
-      ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            XTextField(
-              controller: emailController,
-              hintText: 'Email',
-            ),
-            SizedBox(height: 10),
-            Padding(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                width: 170,
+                height: 170,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('lib/assets/logo.png'),
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              Text(
+                'Connexion',
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 30),
+              XTextField(
+                controller: emailController,
+                hintText: 'Email',
+              ),
+              SizedBox(height: 10),
+              Padding(
             
               padding: const EdgeInsets.symmetric(horizontal: 98),
               child: TextFormField(
@@ -63,10 +66,23 @@ class LoginView extends GetView<LoginViewController> {
                         style: TextStyle(fontSize: screenWidth > 600 ? 16 : 14),
                       ),
             ),
-            boutton(),
-            SizedBox(height: 10,),
-            InkWell(onTap: () =>Get.toNamed("/register") ,child: Text("S'incrire ?"),)
-          ]
+              SizedBox(height: 20),
+              GestureDetector(
+                onTap: () {
+                  Get.toNamed("/register");
+                },
+                child: Text(
+                  "Pas de compte ? Inscrivez-vous",
+                  style: TextStyle(
+                    color: Colors.blue,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ),
+              SizedBox(height: 10),
+              boutton(),
+            ],
+          ),
         ),
       ),
     );

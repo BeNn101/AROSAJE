@@ -19,6 +19,9 @@ dependencies:
   url_launcher: ^6.2.5
   image_picker: ^1.0.7
   skeletonizer: ^1.1.1
+  flutter_map_location_marker: any # or latest verion
+  permission_handler: ^9.1.0
+  geolocator : ^10.0.1
 
 dev_dependencies:
   flutter_test:
@@ -30,3 +33,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - lib/assets/
+

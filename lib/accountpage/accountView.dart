@@ -36,53 +36,128 @@ class AccountView extends GetView<AccountViewController> {
               'Mon profil :',
               textAlign: TextAlign.left,
             ),
-            Expanded(
-              flex: 1,
-              child: Container(
-                color: Colors.white60,
-                child: Row(
-                  children: [
-                    Text('Email :'),
-                    Text('${controller.currentUser?.value?.email.obs}'),
-                  ],
-                )),
-            )
-            , Expanded(
-              flex: 1,
-              child: Container(
-                
-                color: Colors.white60,
-                child: Row(
-                  children: [
-                    Text('Nom :'),
-                    Text('${controller.currentUser?.value?.lastName}'),
-                  ],
-                )),
-            )
-            , Expanded(
-              flex: 1,
-              child: Container(
-                color: Colors.white60,
-                child: Row(
-                  children: [
-                    Text('Prénom:'),
-                    Text('${controller.currentUser?.value?.firstName}'),
-                  ],
-                )),
-            )
-            , Expanded(
-              flex: 1,
-              child: Container(
-                color: Colors.white60,
-                child: Row(
-                  children: [
-                    Text('Téléphone :'),
-                    Text('${controller.currentUser?.value?.telephone}'),
-                  ],
-                )),
-            ),
-            Text("Mes annonces :"),
-            SizedBox(height: 10,),
+          Expanded(
+  flex: 1,
+  child: Container(
+    decoration: BoxDecoration(
+      color: Colors.grey[200],
+      borderRadius: BorderRadius.circular(10),
+    ),
+    padding: EdgeInsets.all(10),
+    margin: EdgeInsets.all(5),
+    child: Row(
+      children: [
+        Text(
+          'Email :',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(width: 10),
+        Text(
+          '${controller.currentUser?.value?.email.obs}',
+          style: TextStyle(
+            fontStyle: FontStyle.italic,
+          ),
+        ),
+      ],
+    ),
+  ),
+),
+Expanded(
+  flex: 1,
+  child: Container(
+    decoration: BoxDecoration(
+      color: Colors.grey[200],
+      borderRadius: BorderRadius.circular(10),
+    ),
+    padding: EdgeInsets.all(10),
+    margin: EdgeInsets.all(5),
+    child: Row(
+      children: [
+        Text(
+          'Nom :',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(width: 10),
+        Text(
+          '${controller.currentUser?.value?.lastName}',
+          style: TextStyle(
+            fontStyle: FontStyle.italic,
+          ),
+        ),
+      ],
+    ),
+  ),
+),
+Expanded(
+  flex: 1,
+  child: Container(
+    decoration: BoxDecoration(
+      color: Colors.grey[200],
+      borderRadius: BorderRadius.circular(10),
+    ),
+    padding: EdgeInsets.all(10),
+    margin: EdgeInsets.all(5),
+    child: Row(
+      children: [
+        Text(
+          'Prénom :',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(width: 10),
+        Text(
+          '${controller.currentUser?.value?.firstName}',
+          style: TextStyle(
+            fontStyle: FontStyle.italic,
+          ),
+        ),
+      ],
+    ),
+  ),
+),
+Expanded(
+  flex: 1,
+  child: Container(
+    decoration: BoxDecoration(
+      color: Colors.grey[200],
+      borderRadius: BorderRadius.circular(10),
+    ),
+    padding: EdgeInsets.all(10),
+    margin: EdgeInsets.all(5),
+    child: Row(
+      children: [
+        Text(
+          'Téléphone :',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(width: 10),
+        Text(
+          '${controller.currentUser?.value?.telephone}',
+          style: TextStyle(
+            fontStyle: FontStyle.italic,
+          ),
+        ),
+      ],
+    ),
+  ),
+),
+
+Text(
+  "Mes annonces :",
+  style: TextStyle(
+    fontWeight: FontWeight.bold,
+    fontSize: 16,
+  ),
+),
+SizedBox(height: 10),
+
             Expanded(
   flex: 6,
   child: Padding(
@@ -90,42 +165,50 @@ class AccountView extends GetView<AccountViewController> {
     child: Container(
       width: double.infinity,
       color: Colors.white70,
-      child: controller.listUserPlant.isEmpty
-          ? Center(child: Text('Aucune annonce disponible'))
-          : GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-              ),
-              itemCount: controller.listUserPlant.length,
-              itemBuilder: (context, index) {
-                String imagePath = controller.listUserPlant[index].image;
-                String imageUrl = 'http://192.168.1.40:8000/' + imagePath;
-                return Card(
-                  child: Center(
-                    child: Column(
-                      children: [
-                        SizedBox(height: 10,),
-                        Image.network(
-                          loadingBuilder: (context, child, loadingProgress) {
-                            if (loadingProgress == null) {
-                  return child;
-                }
-                return CircularProgressIndicator();
-              
-                          },
-                          imageUrl,
-                          height: 80,
-                          width: 80,
-                        ),
-                        Text(controller.listUserPlant[index].namePlante),
-                      ],
+      child: RefreshIndicator(
+          onRefresh: () => controller.getAllPlant(), 
+        child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                ),
+                itemCount: controller.listUserPlant.length,
+                itemBuilder: (context, index) {
+                  String imagePath = controller.listUserPlant[index].image;
+                  String imageUrl = 'http://192.168.1.40:8000/' + imagePath;
+                  if (controller.listUserPlant[index].idUser==controller.currentUser.value?.idUser) {
+                  return   Card(
+                    child: Center(
+                      child: Column(
+                        children: [
+                          SizedBox(height: 10,),
+                          Image.network(
+                            loadingBuilder: (context, child, loadingProgress) {
+                              if (loadingProgress == null) {
+                    return child;
+                  }
+                  return CircularProgressIndicator();
+                
+                            },
+                            imageUrl,
+                            height: 80,
+                            width: 80,
+                          ),
+                          Text(controller.listUserPlant[index].namePlante),
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              },
-            ),
+                  );
+                  }
+                  else {
+        // Retourne un widget vide si la condition n'est pas vérifiée
+        return SizedBox.shrink();
+            }
+                  
+                },
+              ),
+      ),
     ),
   ),
 )
