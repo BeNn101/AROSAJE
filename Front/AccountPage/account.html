@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="icon" href="../../images/logo arosage.png" type="image/png">
     <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>    <link rel="icon" href="../../images/logo arosage.png" type="image/png">
+    <link rel="icon" href="../../images/logo arosage.png" type="image/png">
     <title>Mon compte</title>
 </head>
 <body>
@@ -30,23 +31,87 @@
             <button class="tab-button" onclick="openTab(event, 'Annonce')">Mes annonces</button>
         </div>
         <div id="Compte" class="tab-content active">
-            <div class="account-container">
+            <!-- <div class="account-container">
                 <div class="account-avatar">
-                    <!-- <i class="fas fa-user-circle"></i> -->
-                    <img id="img_user" class="avatar">
-                </div>
+                    <i class="fas fa-user-circle"></i>
+                    <img id="img_user" class="avatar"> -->
+                <!-- </div>
                 <div class="account-details" id="account_information">
                     <h2 id="account_name"></h2>
                     <p id="account_email"></p>
                     <p id="account_num_tel"></p>
                 </div>
+            </div> -->
+
+            <div id="your_profil">
+                <h3 id="your_name"></h3> <!-- Assurez-vous que l'ID correspond -->
+                <p id="your_email"></p>
+                <p id="your_adresse"></p>
+                <p id="your_phone"></p>
             </div>
+            
+            <script>
+                $(document).ready(function() {
+                    $.ajax({
+                        url: "../../Back/Account/account.php",
+                        type: "GET",
+                        dataType: "json",
+                        success: function(res) {
+                            console.log(res.user);
+                            // Code à exécuter en cas de succès de la requête
+                            $("#your_name").text(res.user.prenom + " " + res.user.nom);
+                            $("#your_email").text(res.user.email);
+                            $("#your_phone").text("0"+res.user.telephone);
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            console.error("Erreur lors de la requête AJAX : ", textStatus, errorThrown);
+                        }
+                    });
+                });
+            </script>
+            
             <div class="button-container">
                 <button class="deco-btn" type="submit" id="logout_button">DECONNEXION</button>
             </div>
         </div>
+        
         <div id="Annonce" class="tab-content">
             <div id="annoncesContainer"></div>
+
+            <div id="your_annonce">
+                <h3 id="annonce_title"></h3> <!-- Assurez-vous que l'ID correspond -->
+                <img id='image_plante' src="">
+                <p id="adresse"></p>
+            </div>
+            
+            <script>
+                $(document).ready(function() {
+                    $.ajax({
+                        url: "../../Back/plantes.php",
+                        type: "GET",
+                        dataType: "json",
+                        data: {
+                            opt: "select_id"
+                        },
+                        success: function(res) {
+                            console.log(res);
+                            if (res.plantes && res.plantes.length > 0) {
+                                for (var i = 0; i < res.plantes.length; i++) {
+                                    console.log(res.plantes[i].localisation)
+                                    $("#annonce_title").text(res.plantes[i].name_plante);
+                                    $("#image_plante").attr("src", res.plantes[i].image);
+                                    $("#adresse").text(res.plantes[i].localisation);
+                                }
+
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            console.error("Erreur lors de la requête AJAX : ", textStatus, errorThrown);
+                        }
+                    });
+                });
+            </script>        
+            
             <p id="no-annonces-message">Vous n'avez pas posté d'annonces.</p>
             <div class="button-container">
                 <button class="add-plant" type="submit">AJOUTER UNE ANNONCE</button>

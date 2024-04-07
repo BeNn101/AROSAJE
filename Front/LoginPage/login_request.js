@@ -39,6 +39,7 @@ $("form").submit((event) => {
         },
         success: (res) => {
             if (res.success) {
+                console.log(res.user)
                 localStorage.setItem("user",JSON.stringify(res.user));
                 window.location.replace("http://localhost/Projet_Arosaje/AROSAJE/Front/Homepage/homepage.html");
             }else{
