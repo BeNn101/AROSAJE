@@ -9,8 +9,8 @@ class ChatHistorical with _$ChatHistorical {
   const factory ChatHistorical({
     @JsonKey(name: 'id_user') required int idUser,
     @JsonKey(name: 'id_destinataire') required int idAdresse,
-    @JsonKey(name: 'message') required int message,
-    @JsonKey(name: 'image') required int imageChat,
+    @JsonKey(name: 'message') required String message,
+    @JsonKey(name: 'image')  String? imageChat,
   }) = _ChatHistorical;
 
   factory ChatHistorical.fromJson(Map<String, dynamic> json) => _$ChatHistoricalFromJson(json);

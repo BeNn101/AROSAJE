@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:arosaje_mobile/uiKit/const.dart';
 import 'package:http/http.dart' as http;
 import 'package:arosaje_mobile/freeze/plantes.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,7 @@ class HomeViewController extends GetxController {
   var listPlant = <Plant>[].obs; // Utilisez RxList pour une liste observable
   late File imageFile; // Utilisez late pour une initialisation différée de l'image
   RxBool isSkeletonLoader= true.obs;
+  String ip =Constants.ipAddress;
   @override
   void onInit() {
     // Ne pas oublier d'appeler super.onInit()
@@ -30,7 +32,7 @@ class HomeViewController extends GetxController {
 
   Future<void> getAllPlant() async {
     try {
-      final url = Uri.parse('http://172.16.1.8:8000/api/getAllPlantes');
+      final url = Uri.parse('http://192.168.1.40:8000/api/getAllPlantes');
       final response = await http.get(url);
       if (response.statusCode == 200) {
         final List<dynamic> plantData = json.decode(response.body);

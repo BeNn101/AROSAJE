@@ -25,9 +25,9 @@ mixin _$ChatHistorical {
   @JsonKey(name: 'id_destinataire')
   int get idAdresse => throw _privateConstructorUsedError;
   @JsonKey(name: 'message')
-  int get message => throw _privateConstructorUsedError;
+  String get message => throw _privateConstructorUsedError;
   @JsonKey(name: 'image')
-  int get imageChat => throw _privateConstructorUsedError;
+  String? get imageChat => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -44,8 +44,8 @@ abstract class $ChatHistoricalCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'id_user') int idUser,
       @JsonKey(name: 'id_destinataire') int idAdresse,
-      @JsonKey(name: 'message') int message,
-      @JsonKey(name: 'image') int imageChat});
+      @JsonKey(name: 'message') String message,
+      @JsonKey(name: 'image') String? imageChat});
 }
 
 /// @nodoc
@@ -64,7 +64,7 @@ class _$ChatHistoricalCopyWithImpl<$Res, $Val extends ChatHistorical>
     Object? idUser = null,
     Object? idAdresse = null,
     Object? message = null,
-    Object? imageChat = null,
+    Object? imageChat = freezed,
   }) {
     return _then(_value.copyWith(
       idUser: null == idUser
@@ -78,11 +78,11 @@ class _$ChatHistoricalCopyWithImpl<$Res, $Val extends ChatHistorical>
       message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
-              as int,
-      imageChat: null == imageChat
+              as String,
+      imageChat: freezed == imageChat
           ? _value.imageChat
           : imageChat // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String?,
     ) as $Val);
   }
 }
@@ -98,8 +98,8 @@ abstract class _$$ChatHistoricalImplCopyWith<$Res>
   $Res call(
       {@JsonKey(name: 'id_user') int idUser,
       @JsonKey(name: 'id_destinataire') int idAdresse,
-      @JsonKey(name: 'message') int message,
-      @JsonKey(name: 'image') int imageChat});
+      @JsonKey(name: 'message') String message,
+      @JsonKey(name: 'image') String? imageChat});
 }
 
 /// @nodoc
@@ -116,7 +116,7 @@ class __$$ChatHistoricalImplCopyWithImpl<$Res>
     Object? idUser = null,
     Object? idAdresse = null,
     Object? message = null,
-    Object? imageChat = null,
+    Object? imageChat = freezed,
   }) {
     return _then(_$ChatHistoricalImpl(
       idUser: null == idUser
@@ -130,11 +130,11 @@ class __$$ChatHistoricalImplCopyWithImpl<$Res>
       message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
-              as int,
-      imageChat: null == imageChat
+              as String,
+      imageChat: freezed == imageChat
           ? _value.imageChat
           : imageChat // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String?,
     ));
   }
 }
@@ -147,7 +147,7 @@ class _$ChatHistoricalImpl implements _ChatHistorical {
       {@JsonKey(name: 'id_user') required this.idUser,
       @JsonKey(name: 'id_destinataire') required this.idAdresse,
       @JsonKey(name: 'message') required this.message,
-      @JsonKey(name: 'image') required this.imageChat});
+      @JsonKey(name: 'image') this.imageChat});
 
   factory _$ChatHistoricalImpl.fromJson(Map<String, dynamic> json) =>
       _$$ChatHistoricalImplFromJson(json);
@@ -160,10 +160,10 @@ class _$ChatHistoricalImpl implements _ChatHistorical {
   final int idAdresse;
   @override
   @JsonKey(name: 'message')
-  final int message;
+  final String message;
   @override
   @JsonKey(name: 'image')
-  final int imageChat;
+  final String? imageChat;
 
   @override
   String toString() {
@@ -205,11 +205,10 @@ class _$ChatHistoricalImpl implements _ChatHistorical {
 
 abstract class _ChatHistorical implements ChatHistorical {
   const factory _ChatHistorical(
-          {@JsonKey(name: 'id_user') required final int idUser,
-          @JsonKey(name: 'id_destinataire') required final int idAdresse,
-          @JsonKey(name: 'message') required final int message,
-          @JsonKey(name: 'image') required final int imageChat}) =
-      _$ChatHistoricalImpl;
+      {@JsonKey(name: 'id_user') required final int idUser,
+      @JsonKey(name: 'id_destinataire') required final int idAdresse,
+      @JsonKey(name: 'message') required final String message,
+      @JsonKey(name: 'image') final String? imageChat}) = _$ChatHistoricalImpl;
 
   factory _ChatHistorical.fromJson(Map<String, dynamic> json) =
       _$ChatHistoricalImpl.fromJson;
@@ -222,10 +221,10 @@ abstract class _ChatHistorical implements ChatHistorical {
   int get idAdresse;
   @override
   @JsonKey(name: 'message')
-  int get message;
+  String get message;
   @override
   @JsonKey(name: 'image')
-  int get imageChat;
+  String? get imageChat;
   @override
   @JsonKey(ignore: true)
   _$$ChatHistoricalImplCopyWith<_$ChatHistoricalImpl> get copyWith =>

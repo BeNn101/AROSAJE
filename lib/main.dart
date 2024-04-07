@@ -10,9 +10,12 @@ import 'package:arosaje_mobile/logPage/loginBindings.dart';
 import 'package:arosaje_mobile/logPage/loginView.dart';
 import 'package:arosaje_mobile/mappage/mapBindings.dart';
 import 'package:arosaje_mobile/mappage/mapView.dart';
+import 'package:arosaje_mobile/messagepage/char.dart';
 import 'package:arosaje_mobile/messagepage/messageView.dart';
 import 'package:arosaje_mobile/messagepage/messageViewControllerBlindings.dart';
 import 'package:arosaje_mobile/model/user_provider.dart';
+import 'package:arosaje_mobile/registerPage/registerBlndings.dart';
+import 'package:arosaje_mobile/registerPage/registerView.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
@@ -66,6 +69,18 @@ class MainApp extends StatelessWidget {
           title: 'Publish',
           page: () => PublishView(),
           binding: PublishBindings(),
+        ),
+        GetPage(
+          name: '/register',
+          title: 'Register',
+          page: () => RegisterView(),
+          binding: RegisterBindings(),
+        ),
+        GetPage(
+          name: '/chat',
+          title: 'Chat',
+          page: () => ChatView(),
+          binding: RegisterBindings(),
         )
       ],
       initialRoute: '/login',

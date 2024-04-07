@@ -54,7 +54,7 @@ class PublishViewViewController extends GetxController  {
 
 Future<void> createPlante() async {
 
-  final url = Uri.parse('http://172.16.1.8:8000/api/plantes');
+  final url = Uri.parse('http://192.168.1.40:8000/api/plantes');
   
   var imageBase64 =base64Encode(imageBytes.value!);
   
@@ -72,14 +72,15 @@ Future<void> createPlante() async {
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
-    body: jsonEncode(data), // Convertit les données en JSON
+    body: jsonEncode(data), 
   );
 
   if (response.statusCode == 200) {
-    // Plante créée avec succès
+
+     Get.snackbar('Succes', 'Plante poster');
     print('Plante créée avec succès');
   } else {
-    // Échec de la création de la plante
+   
  
   }
 }

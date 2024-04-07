@@ -84,15 +84,52 @@ class AccountView extends GetView<AccountViewController> {
             Text("Mes annonces :"),
             SizedBox(height: 10,),
             Expanded(
-              flex: 6,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Container(
-                  width: double.infinity,
-                  color: const Color.fromARGB(153, 228, 222, 222),
-                  child: Text('')),
+  flex: 6,
+  child: Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 10),
+    child: Container(
+      width: double.infinity,
+      color: Colors.white70,
+      child: controller.listUserPlant.isEmpty
+          ? Center(child: Text('Aucune annonce disponible'))
+          : GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
               ),
-            )
+              itemCount: controller.listUserPlant.length,
+              itemBuilder: (context, index) {
+                String imagePath = controller.listUserPlant[index].image;
+                String imageUrl = 'http://192.168.1.40:8000/' + imagePath;
+                return Card(
+                  child: Center(
+                    child: Column(
+                      children: [
+                        SizedBox(height: 10,),
+                        Image.network(
+                          loadingBuilder: (context, child, loadingProgress) {
+                            if (loadingProgress == null) {
+                  return child;
+                }
+                return CircularProgressIndicator();
+              
+                          },
+                          imageUrl,
+                          height: 80,
+                          width: 80,
+                        ),
+                        Text(controller.listUserPlant[index].namePlante),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+    ),
+  ),
+)
+
             
             
           ],

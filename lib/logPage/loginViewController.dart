@@ -20,7 +20,7 @@ class LoginViewController extends GetxController {
   }
 
   Future<void> getUsers() async {
-    final url = Uri.parse('http://172.16.1.8:8000/api/users/alluser');
+    final url = Uri.parse('http://192.168.1.40:8000/api/users/alluser');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {

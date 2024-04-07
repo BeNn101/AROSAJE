@@ -1,3 +1,4 @@
+import 'package:arosaje_mobile/messagepage/char.dart';
 import 'package:arosaje_mobile/messagepage/messageViewController.dart';
 import 'package:arosaje_mobile/uiKit/XNavbar.dart';
 import 'package:arosaje_mobile/uiKit/Xappbar.dart';
@@ -13,16 +14,38 @@ class MessageView extends GetView<MessageViewController> {
     return Scaffold(
        appBar:AppBar(
         centerTitle: true,
-        title: Text("Arrosaje" ,),
-        backgroundColor: Color.fromARGB(255, 11, 225, 3),
+        title: const Text("Arrosaje" ,),
+        backgroundColor: const Color.fromARGB(255, 11, 225, 3),
         elevation: 3,
         toolbarHeight: 70,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(
               bottom: Radius.circular(20), 
             ))
       ),
-      body: ListView(),
+      body:Column(
+        children: [
+          const Text("Mes messages:"),
+          const SizedBox(height: 10,),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              height: 70,
+              width: double.infinity,
+            color: Colors.grey.shade300,
+            child: InkWell(
+              onTap: () {
+                 Get.to(const ChatView());
+              },
+              child: const Column(children: [
+                Text('Title'),
+                SizedBox(height: 8,),
+                Text('Sous titres')
+              ]),
+            ),),
+          ),
+        ],
+      ),
       bottomNavigationBar: XNavbar(userId: controller.userId.value, currentIndex: 4,)
     );
   }

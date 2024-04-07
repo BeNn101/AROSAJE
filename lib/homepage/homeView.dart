@@ -55,13 +55,20 @@ class HomeView extends GetView<HomeViewController> {
                 itemCount: controller.listPlant.length,
                 itemBuilder: (context, index) {
                  String imagePath = controller.listPlant[index].image;
-                 String imageUrl = 'http://172.16.1.8:8000/'+imagePath;
+                 String imageUrl = 'http://192.168.1.40:8000/'+imagePath;
                   return Card(
                     child: Center(
                       child: Column(
                         children: [
                           SizedBox(height: 10,),
                           Image.network(
+                             loadingBuilder: (context, child, loadingProgress) {
+                            if (loadingProgress == null) {
+                  return child;
+                }
+                return CircularProgressIndicator();
+              
+                          },
                             imageUrl,
                             height: 80,
                             width: 80,

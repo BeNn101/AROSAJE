@@ -10,8 +10,8 @@ _$ChatHistoricalImpl _$$ChatHistoricalImplFromJson(Map<String, dynamic> json) =>
     _$ChatHistoricalImpl(
       idUser: json['id_user'] as int,
       idAdresse: json['id_destinataire'] as int,
-      message: json['message'] as int,
-      imageChat: json['image'] as int,
+      message: json['message'] as String,
+      imageChat: json['image'] as String?,
     );
 
 Map<String, dynamic> _$$ChatHistoricalImplToJson(

@@ -64,7 +64,9 @@ class LoginView extends GetView<LoginViewController> {
                       ),
             ),
             boutton(),
-          ],
+            SizedBox(height: 10,),
+            InkWell(onTap: () =>Get.toNamed("/register") ,child: Text("S'incrire ?"),)
+          ]
         ),
       ),
     );
