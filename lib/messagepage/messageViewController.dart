@@ -20,7 +20,7 @@ class MessageViewController extends GetxController  {
   }
 
     Future<void> getMessage() async {
-    final url = Uri.parse('http://192.168.1.40:8000/api/getAllMessages');
+    final url = Uri.parse('http://172.16.1.8:8000/api/getAllMessages');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -35,7 +35,7 @@ class MessageViewController extends GetxController  {
 
 
   Future<void> postMessage(message) async {
-  final url = Uri.parse('http://192.168.1.40:8000/api/postMessages');
+  final url = Uri.parse('http://172.16.1.8:8000/api/postMessages');
   // Les données que vous souhaitez envoyer dans le corps de la requête
   Map<String, dynamic> data = {
     'id_user':userId.value,

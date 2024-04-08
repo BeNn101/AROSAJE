@@ -206,3 +206,4 @@ return e;
 
 Uint8List fileData = Uint8List(0);
 Uint8List imageData = Uint8List(0);
+php artisan serve --host=0.0.0.0
