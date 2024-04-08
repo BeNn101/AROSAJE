@@ -15,7 +15,8 @@ $("form").submit((event) => {
             console.log(res)
             if (res.success) {
                 alert("Bien inscrit !");
-                window.location.href = "http://localhost/Projet_Arosaje/AROSAJE/Front/LoginPage/login.html";
+                // window.location.href = "http://localhost/Projet_Arosaje/AROSAJE/Front/LoginPage/login.html";
+                window.location.href = "http://localhost/AROSAJE/Front/LoginPage/login.html";
             } else {
                 console.log("error");
             }

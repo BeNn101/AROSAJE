@@ -67,7 +67,8 @@ $("#logoutConfirm").click(function() {
             if (res.success) {
                 // Suppression de l'élément 'user' du localStorage
                 localStorage.removeItem("user");
-                window.location.replace("http://localhost/Projet_Arosaje/AROSAJE/Front/LoginPage/login.html");
+                // window.location.replace("http://localhost/Projet_Arosaje/AROSAJE/Front/LoginPage/login.html");
+                window.location.replace("http://localhost/AROSAJE/Front/LoginPage/login.html");
                 console.log("Déconnecté");
             } else {
                 console.log("Erreur lors de la déconnexion");

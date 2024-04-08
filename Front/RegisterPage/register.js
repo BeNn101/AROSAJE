@@ -61,6 +61,8 @@ document.querySelector('form').addEventListener('submit', function(event) {
     var passwordInput = document.getElementById("pwd").value;
     var telephoneInput = document.getElementById("phonenumber").value;
     var confirmPasswordInput = document.getElementById("confirmPassword").value;
+    var firstName = document.getElementById("firstname").value;
+    var lastName = document.getElementById("lastname").value;
 
     var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(emailInput)) {
@@ -96,25 +98,27 @@ document.querySelector('form').addEventListener('submit', function(event) {
     }
 
     // Envoi de l'e-mail
-    var formData = {
-        email: emailInput,
-    };
+    // var formData = {
+    //     email: emailInput,
+    //     firstName: firstName,
+    //     lastName: lastName
+    // };
 
-    fetch('http://localhost:3001/send-email', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-    })
-    .then(response => response.json())
-    .then(data => {
-        alert('Message envoyé : ' + data.message);
-        window.location.href = '../LoginPage/login.html';
-    })
-    .catch((error) => {
-        console.error('Erreur lors de l\'envoi:', error);
-    });
+    // fetch('http://localhost:3001/send-email', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(formData),
+    // })
+    // .then(response => response.json())
+    // .then(data => {
+    //     alert('Message envoyé : ' + data.message);
+    //     window.location.href = '../LoginPage/login.html';
+    // })
+    // .catch((error) => {
+    //     console.error('Erreur lors de l\'envoi:', error);
+    // });
 });
 
 var telephoneInput = document.getElementById("phonenumber");
