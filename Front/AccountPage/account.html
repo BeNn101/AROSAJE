@@ -57,8 +57,6 @@
                         type: "GET",
                         dataType: "json",
                         success: function(res) {
-                            console.log(res.user);
-                            // Code à exécuter en cas de succès de la requête
                             $("#your_name").text(res.user.prenom + " " + res.user.nom);
                             $("#your_email").text(res.user.email);
                             $("#your_phone").text("0"+res.user.telephone);
@@ -80,7 +78,6 @@
 
             <div id="your_annonce">
                 <h3 id="annonce_title"></h3> <!-- Assurez-vous que l'ID correspond -->
-                <img id='image_plante' src="">
                 <p id="adresse"></p>
             </div>
             
@@ -94,15 +91,23 @@
                             opt: "select_id"
                         },
                         success: function(res) {
-                            console.log(res);
                             if (res.plantes && res.plantes.length > 0) {
-                                const plantes = $("<div></div>");
-                                for (var i = 0; i < res.plantes.length; i++) {
-                                    $("<h3></h3>").text(res.plantes[i].name_plante);
-                                    $("<img>").attr("src", res.plantes[i].image);
-                                    $("#adresse").text(res.plantes[i].localisation);
+                                for (let i = 0; i < res.plantes.length; i++) {
+                                    console.log(res.plantes[i].name_plante)
+                                    const name_plante = $("<h3></h3>").text(res.plantes[i].name_plante);
+                                    const img_plante = $("<img>").attr("src","../../images/Rose.jpg");
+                                    if (res.plantes[i].name_plante == "Cactus"){
+                                        const img_plante = $("<img>").attr("src","../../images/cactus.jpg");
+                                    } else if (res.plantes[i].name_plante == "Lilla"){
+                                        const img_plante = $("<img>").attr("src","../../images/lilla.jpg");
+                                    } else if (res.plantes[i].name_plante == "Pissenli"){
+                                        const img_plante = $("<img>").attr("src","../../images/pissenli.jpg");
+                                    } else if (res.plantes[i].name_plante == "Rose") {
+                                        const img_plante = $("<img>").attr("src","../../images/Rose.jpg");
+                                    }
+                                    const loc = $("<p></p>").text(res.plantes[i].localisation);
+                                    $("#your_annonce").append(name_plante,img_plante,loc)
                                 }
-
                             }
                         },
                         error: function(jqXHR, textStatus, errorThrown) {

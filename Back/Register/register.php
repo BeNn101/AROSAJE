@@ -13,7 +13,6 @@ if(!preg_match($regex,$_POST["email"])){
     die;
 }
 
-// $regex = "/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])[a-zA-Z0-9]{8,12}$/";
 $regex = '/^[A-Z](?=.*\d)(?=.*[@#$%^+=!])(?=.*[a-zA-Z])[a-zA-Z0-9@#$%^+=!]{7,}$/';
 
 if (preg_match($regex, $_POST["pwd"])) {
