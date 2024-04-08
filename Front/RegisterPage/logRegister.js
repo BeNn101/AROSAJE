@@ -18,7 +18,9 @@ $("form").submit((event) => {
                 // window.location.href = "http://localhost/Projet_Arosaje/AROSAJE/Front/LoginPage/login.html";
                 window.location.href = "http://localhost/AROSAJE/Front/LoginPage/login.html";
             } else {
-                alert("Cet utilisateur existe déjà.");
+                if (res.error === "L'e-mail est déjà utilisé.") {
+                    alert("Cet utilisateur existe déjà.");
+                }
             }
         }
     });
