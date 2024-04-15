@@ -26,7 +26,8 @@ switch($method["opt"]) {
     
             if(isset($_POST["pwd"]) && !empty(trim($_POST["pwd"]))) {
                 $password=",pwd = :pwd";
-                $regex = "/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])[a-zA-Z0-9]{8,12}$/";
+                // $regex = "/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])[a-zA-Z0-9]{8,12}$/";
+                $regex = '/^[A-Z](?=.*\d)(?=.*[@#$%^+=!])(?=.*[a-zA-Z])[a-zA-Z0-9@#$%^+=!]{7,}$/';
                 if (!preg_match($regex, $_POST["pwd"])) {
                     echo json_encode(["success" => false, "error" => "Mot de passe au mauvais format"]);
                     die;

@@ -27,7 +27,7 @@ $("form").submit((event) => {
                 console.log(res);
                 console.log(res.user);
                 localStorage.setItem("user",JSON.stringify(res.user));
-                // window.location.replace("http://localhost/projet_fin_annee/site/welcome_page/welcome_page.html");
+                window.location.replace("http://localhost/Site-World-Wide-Sneakers-bac-2-DWWM-develop/site/welcome_page/welcome_page.html");
             }else{
                 alert(res.error);
             }
