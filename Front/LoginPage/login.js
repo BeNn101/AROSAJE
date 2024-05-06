@@ -16,9 +16,10 @@ function updateEyeIcon() {
 function validateForm() {
     var emailInput = document.getElementById("emailInput");
     var passwordInput = document.getElementById("mot_de_passe");
-    var submitButton = document.querySelector('button[type="submit"]');
     var isValid = emailInput.value.trim() !== "" && passwordInput.value.trim() !== "";
 
+    // Afficher ou masquer le bouton de soumission en fonction de la validité du formulaire
+    var submitButton = document.querySelector('button[type="submit"]');
     submitButton.disabled = !isValid;
 }
 
@@ -27,15 +28,35 @@ document.querySelectorAll('input').forEach(input => {
 });
 
 document.addEventListener('DOMContentLoaded', validateForm);
-homepageButton.addEventListener('click', function(event) {
-    event.preventDefault(); 
+
+// Empêcher la soumission du formulaire par défaut
+document.getElementById('form').addEventListener('submit', function(event) {
+    event.preventDefault();
     var emailInput = document.getElementById("emailInput").value;
     var mdpInput = document.getElementById("mot_de_passe").value;
     var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    var mdpRegex = '/^[A-Z](?=.*\d)(?=.*[@#$%^+=!])(?=.*[a-zA-Z])[a-zA-Z0-9@#$%^+=!]{7,}$/';
+    var mdpRegex = /^[A-Z](?=.*\d)(?=.*[@#$%^+=!])(?=.*[a-zA-Z])[a-zA-Z0-9@#$%^+=!]{7,}$/;
+    
     if (!emailRegex.test(emailInput)) {
         alert("Veuillez entrer une adresse email valide.");
         return;
     } 
-        window.location.href = '../Homepage/homepage.html';
+
+    $.ajax({
+        type: "POST",
+        url: "login_request.js", 
+        data: { email: emailInput, mot_de_passe: mdpInput },
+        dataType: "json",
+        success: function(response) {
+            if (response.success) {
+                
+                window.location.href = '../Homepage/homepage.html';
+            } else {
+                alert("Erreur: " + response.error);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
 });
