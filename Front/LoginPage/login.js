@@ -37,5 +37,5 @@ homepageButton.addEventListener('click', function(event) {
         alert("Veuillez entrer une adresse email valide.");
         return;
     } 
-        // window.location.href = '../Homepage/homepage.html';
+        window.location.href = '../Homepage/homepage.html';
 });
