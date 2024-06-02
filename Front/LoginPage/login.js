@@ -1,3 +1,9 @@
+const notyf = new Notyf({
+    position: {
+        x: 'right',
+        y: 'top',
+    }
+});
 var homepageButton = document.querySelector('button[type="submit"]');
 
 function togglePasswordVisibility() {
@@ -38,7 +44,7 @@ document.getElementById('form').addEventListener('submit', function(event) {
     var mdpRegex = /^[A-Z](?=.*\d)(?=.*[@#$%^+=!])(?=.*[a-zA-Z])[a-zA-Z0-9@#$%^+=!]{7,}$/;
     
     if (!emailRegex.test(emailInput)) {
-        alert("Veuillez entrer une adresse email valide.");
+        notyf.error("Veuillez entrer une adresse email valide.");
         return;
     } 
 
@@ -52,7 +58,7 @@ document.getElementById('form').addEventListener('submit', function(event) {
                 
                 window.location.href = '../Homepage/homepage.html';
             } else {
-                alert("Erreur: " + response.error);
+                notyf.error("Erreur: " + response.error);
             }
         },
         error: function(xhr, status, error) {
@@ -60,3 +66,26 @@ document.getElementById('form').addEventListener('submit', function(event) {
         }
     });
 });
+
+$("form").submit((event) => {
+    event.preventDefault();
+    $.ajax({
+        url:"../../Back/Login/login.php",
+        type: "POST",
+        dataType:"json",
+        data: {
+            email: $("#emailInput").val(),
+            mot_de_passe: $("#mot_de_passe").val(),
+        },
+        success: (res) => {
+            console.log(res)
+            if (res.success) {
+                localStorage.setItem("user",JSON.stringify(res.user));
+                // window.location.replace("http://localhost/Projet_Arosaje/AROSAJE/Front/Homepage/homepage.html");
+                window.location.replace("http://localhost/AROSAJE/Front/Homepage/homepage.html");
+            }else{
+                notyf.error(res.error);
+            }
+        }
+    })
+})

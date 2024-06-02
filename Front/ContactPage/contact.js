@@ -11,6 +11,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const userMessage = document.getElementById('userMessage');
     const userFirstName = document.getElementById('userFirstName');
     const submitButton = form.querySelector('button[type="submit"]');
+    
+    const notyf = new Notyf({
+        duration: 3000,
+        position: {
+            x: 'right',
+            y: 'top',
+        }
+    });
 
     function checkFormValidity() {
         const isFormValid = userName.value.trim() !== '' && userEmail.value.trim() !== '' && userMessage.value.trim() !== '';
@@ -67,11 +75,12 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(response => response.json())
         .then(data => {
-            alert('Message envoyé : ' + data.message); 
+            notyf.success(data.message);
             form.reset(); 
             checkFormValidity(); 
         })
         .catch((error) => {
+            notyf.error('Erreur lors de l\'envoi');
             console.error('Erreur lors de l\'envoi:', error);
         });
     });
@@ -83,15 +92,12 @@ $("#logoutConfirm").click(function() {
         type: "GET",
         dataType: "json",
         success: function(res) {
-            console.log("Ciao")
-            // Vérification si la déconnexion a réussi
             if (res.success) {
-                // Suppression de l'élément 'user' du localStorage
                 localStorage.removeItem("user");
                 window.location.replace("http://localhost/Projet_Arosaje/AROSAJE/Front/LoginPage/login.html");
-                console.log("Déconnecté");
+                notyf.success("Déconnecté avec succès");
             } else {
-                console.log("Erreur lors de la déconnexion");
+                notyf.error("Erreur lors de la déconnexion");
             }
         },
     });

@@ -8,8 +8,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="icon" href="../../images/logo arosage.png" type="image/png">
-    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>    <link rel="icon" href="../../images/logo arosage.png" type="image/png">
-    <link rel="icon" href="../../images/logo arosage.png" type="image/png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf/notyf.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
     <title>Mon compte</title>
 </head>
 <body>
@@ -19,7 +20,6 @@
         </a>
         <div class="navbar-links">
             <a href="../Homepage/homepage.html"><i class="fas fa-home"></i> Accueil</a>
-            <!-- <a href="../TchatPage/tchat.html"><i class="fas fa-comments"></i> Tchat</a> -->
             <a href="account.html"><i class="fas fa-user"></i> Compte</a>
             <a href="../ContactPage/contact.html"><i class="fas fa-envelope"></i> Contact</a>
             <a href="../LoginPage/login.html"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
@@ -31,25 +31,14 @@
             <button class="tab-button" onclick="openTab(event, 'Annonce')">Mes annonces</button>
         </div>
         <div id="Compte" class="tab-content active">
-            <!-- <div class="account-container">
-                <div class="account-avatar">
-                    <i class="fas fa-user-circle"></i>
-                    <img id="img_user" class="avatar"> -->
-                <!-- </div>
-                <div class="account-details" id="account_information">
-                    <h2 id="account_name"></h2>
-                    <p id="account_email"></p>
-                    <p id="account_num_tel"></p>
+            <div id="your_profil" class="account-container">
+                <div class="account-details">
+                    <h2 id="your_name"></h2>
+                    <p id="your_email"></p>
+                    <p id="your_adresse"></p>
+                    <p id="your_phone"></p>
                 </div>
-            </div> -->
-
-            <div id="your_profil">
-                <h3 id="your_name"></h3> <!-- Assurez-vous que l'ID correspond -->
-                <p id="your_email"></p>
-                <p id="your_adresse"></p>
-                <p id="your_phone"></p>
             </div>
-            
             <script>
                 $(document).ready(function() {
                     $.ajax({
@@ -60,6 +49,9 @@
                             $("#your_name").text(res.user.prenom + " " + res.user.nom);
                             $("#your_email").text(res.user.email);
                             $("#your_phone").text("0"+res.user.telephone);
+                            if (res.user.adresse) {
+                                $("#your_adresse").text(res.user.adresse);
+                            }
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
                             console.error("Erreur lors de la requête AJAX : ", textStatus, errorThrown);
@@ -67,20 +59,17 @@
                     });
                 });
             </script>
-            
             <div class="button-container">
                 <button class="deco-btn" type="submit" id="logout_button">DECONNEXION</button>
             </div>
         </div>
-        
         <div id="Annonce" class="tab-content">
             <div id="annoncesContainer"></div>
-
+            <div id="no-annonces-message" style="display: none;">Vous n'avez pas posté d'annonces.</div>
             <div id="your_annonce">
-                <h3 id="annonce_title"></h3> <!-- Assurez-vous que l'ID correspond -->
+                <h3 id="annonce_title"></h3>
                 <p id="adresse"></p>
             </div>
-            
             <script>
                 $(document).ready(function() {
                     $.ajax({
@@ -93,21 +82,22 @@
                         success: function(res) {
                             if (res.plantes && res.plantes.length > 0) {
                                 for (let i = 0; i < res.plantes.length; i++) {
-                                    console.log(res.plantes[i].name_plante)
                                     const name_plante = $("<h3></h3>").text(res.plantes[i].name_plante);
                                     const img_plante = $("<img>").attr("src","../../images/Rose.jpg");
                                     if (res.plantes[i].name_plante == "Cactus"){
-                                        const img_plante = $("<img>").attr("src","../../images/cactus.jpg");
+                                        img_plante.attr("src","../../images/cactus.jpg");
                                     } else if (res.plantes[i].name_plante == "Lilla"){
-                                        const img_plante = $("<img>").attr("src","../../images/lilla.jpg");
+                                        img_plante.attr("src","../../images/lilla.jpg");
                                     } else if (res.plantes[i].name_plante == "Pissenli"){
-                                        const img_plante = $("<img>").attr("src","../../images/pissenli.jpg");
+                                        img_plante.attr("src","../../images/pissenli.jpg");
                                     } else if (res.plantes[i].name_plante == "Rose") {
-                                        const img_plante = $("<img>").attr("src","../../images/Rose.jpg");
+                                        img_plante.attr("src","../../images/Rose.jpg");
                                     }
                                     const loc = $("<p></p>").text(res.plantes[i].localisation);
-                                    $("#your_annonce").append(name_plante,img_plante,loc)
+                                    $("#your_annonce").append(name_plante, img_plante, loc);
                                 }
+                            } else {
+                                $("#no-annonces-message").show();
                             }
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
@@ -115,8 +105,8 @@
                         }
                     });
                 });
-            </script>        
-        <p id="no-annonces-message">Vous n'avez pas posté d'annonces.</p>
+            </script>
+            <!-- <p id="no-annonces-message">Vous n'avez pas posté d'annonces.</p> -->
             <div class="button-container">
                 <button class="add-plant" type="submit">AJOUTER UNE ANNONCE</button>
             </div>
@@ -144,7 +134,7 @@
                     <input type="text" id="ownerAddress" name="ownerAddress" required>
                 </div>
                 <div class="form-group">
-                    <label for="ownerAddress">Ville* :</label>
+                    <label for="ownerCity">Ville* :</label>
                     <input type="text" id="ownerCity" name="ownerCity" required>
                 </div>
                 <div class="form-group form-group-inline">
@@ -152,7 +142,7 @@
                         <label for="ownerPostalCode">Code postal* :</label>
                         <input type="text" id="ownerPostalCode" name="ownerPostalCode" required>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group-half">
                         <label for="ownerCountry">Pays* :</label>
                         <select id="ownerCountry" name="ownerCountry" required></select>
                     </div>
@@ -172,7 +162,6 @@
         </div>
     </div>
     <script src="account.js"></script>
-    <script src="accountTest.js"></script>
     <script src="../logout.js"></script>
 </body>
-</html> 
+</html>

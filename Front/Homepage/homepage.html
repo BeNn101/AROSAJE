@@ -1,3 +1,14 @@
+<?php
+require_once("../../db_connect.php");
+session_start();
+require("../../function.php");
+
+if (!is_connected()) {
+    header('Location: ../LoginPage/login.html');
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -16,12 +27,11 @@
 </head>
 <body onload="getLocation()">
     <nav class="navbar">
-        <a href="homepage.html" class="navbar-logo">
+        <a href="homepage.php" class="navbar-logo">
             <img src="../../images/logo arosage.png" alt="logo de l'app" class="logo">
         </a>
         <div class="navbar-links">
-            <a href="homepage.html"><i class="fas fa-home"></i> Accueil</a>
-            <!-- <a href="../TchatPage/tchat.html"><i class="fas fa-comments"></i> Tchat</a> -->
+            <a href="homepage.php"><i class="fas fa-home"></i> Accueil</a>
             <a href="../AccountPage/account.html"><i class="fas fa-user"></i> Compte</a>
             <a href="../ContactPage/contact.html"><i class="fas fa-envelope"></i> Contact</a>
             <a href="../LoginPage/login.html"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>

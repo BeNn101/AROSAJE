@@ -2,25 +2,29 @@
 require_once("../../db_connect.php");
 session_start();
 require("../../function.php");
-is_connected();
+
+if (!is_connected()) {
+    header('Location: ../LoginPage/login.html');
+    exit;
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") $method = $_POST;
 else $method = $_GET;
 
-switch($method["opt"]){
+switch($method["opt"]) {
     case 'select_all':
-        $req=$db->prepare("SELECT * FROM plantes");
+        $req = $db->prepare("SELECT * FROM plantes");
         $req->execute();
-        $plantes=$req->fetch(PDO::FETCH_ASSOC);
+        $plantes = $req->fetch(PDO::FETCH_ASSOC);
         echo json_encode(["success"=> true, "plantes"=>$plantes]); 
         break;
     case 'add':
-            // Insertion d'une nouvelle plante
-            if (isset($_POST["coord"], $_POST["name_plante"], $_SESSION["id_user"], $_FILES["plante_img"])) {
-                $req = $db->prepare("INSERT INTO plantes (name_plante, image, localisation, id_user) VALUES (:name_plante, :image, :localisation, :id_user)");
-                $req->bindValue(":name_plante", $_POST["name_plante"]);
-                $req->bindValue(":localisation", $_POST["coord"]);
-                $req->bindValue(":id_user", $_SESSION["id_user"]);
+        // Insertion d'une nouvelle plante
+        if (isset($_POST["coord"], $_POST["name_plante"], $_SESSION["id_user"], $_FILES["plante_img"])) {
+            $req = $db->prepare("INSERT INTO plantes (name_plante, image, localisation, id_user) VALUES (:name_plante, :image, :localisation, :id_user)");
+            $req->bindValue(":name_plante", $_POST["name_plante"]);
+            $req->bindValue(":localisation", $_POST["coord"]);
+            $req->bindValue(":id_user", $_SESSION["id_user"]);
 
             if (isset($_FILES['plante_img'])) {
                 // Récupère les informations sur le fichier
@@ -64,10 +68,10 @@ switch($method["opt"]){
                 echo json_encode((["success"=>true]));
             }
         }            
-            break;
+        break;
     
-        default:
-            echo json_encode(["success" => false, "error" => "Demande inconnue"]);
-            break;
-    } 
+    default:
+        echo json_encode(["success" => false, "error" => "Demande inconnue"]);
+        break;
+}
 ?>

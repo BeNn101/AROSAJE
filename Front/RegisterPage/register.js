@@ -1,3 +1,11 @@
+const notyf = new Notyf({
+    duration: 3000,
+    position: {
+        x: 'right',
+        y: 'top',
+    }
+});
+
 function capitalizeFirstLetter(input) {
     input.value = input.value.charAt(0).toUpperCase() + input.value.slice(1);
 }
@@ -66,59 +74,83 @@ document.querySelector('form').addEventListener('submit', function(event) {
 
     var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(emailInput)) {
-        alert("Veuillez entrer une adresse email valide.");
+        notyf.error("Veuillez entrer une adresse email valide.");
         return;
     }
     if (passwordInput.length < 8) {
-        alert("Le mot de passe doit contenir au moins 8 caractères.");
+        notyf.error("Le mot de passe doit contenir au moins 8 caractères.");
         return; 
     }
     if (!passwordInput.match(/[a-z]/) || !passwordInput.match(/[A-Z]/)) {
-        alert("Le mot de passe doit contenir au moins une lettre majuscule et une lettre minuscule.");
+        notyf.error("Le mot de passe doit contenir au moins une lettre majuscule et une lettre minuscule.");
         return;
     }
     if (!passwordInput.match(/[0-9]/)) {
-        alert("Le mot de passe doit contenir au moins un chiffre.");
+        notyf.error("Le mot de passe doit contenir au moins un chiffre.");
         return;
     }
     if (!passwordInput.match(/[!@#$%^&*]/)) {
-        alert("Le mot de passe doit contenir au moins un caractère spécial parmi : !@#$%^&*.");
+        notyf.error("Le mot de passe doit contenir au moins un caractère spécial parmi : !@#$%^&*.");
         return;
     }
     if (passwordInput !== confirmPasswordInput) {
-        alert("Les mots de passe ne correspondent pas.");
+        notyf.error("Les mots de passe ne correspondent pas.");
         return;
     }
     if (telephoneInput.trim() !== '') {
         var telephoneRegex = /^(0|\+33)[1-9]([-. ]?[0-9]{2}){4}$/;
         if (!telephoneRegex.test(telephoneInput)) {
-            alert("Veuillez entrer un numéro de téléphone valide (format français).");
+            notyf.error("Veuillez entrer un numéro de téléphone valide (format français).");
             return;
         }
     }
 
-    // Envoi de l'e-mail
-    // var formData = {
-    //     email: emailInput,
-    //     firstName: firstName,
-    //     lastName: lastName
-    // };
+    var formData = {
+        email: emailInput,
+        firstName: firstName,
+        lastName: lastName
+    };
 
-    // fetch('http://localhost:3001/send-email', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(formData),
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //     alert('Message envoyé : ' + data.message);
-    //     window.location.href = '../LoginPage/login.html';
-    // })
-    // .catch((error) => {
-    //     console.error('Erreur lors de l\'envoi:', error);
-    // });
+    $.ajax({
+        url: "../../Back/Register/register.php",
+        type: "POST",
+        dataType: "json",
+        data: {
+            firstname: $("#firstname").val(),
+            lastname: $("#lastname").val(),
+            email: $("#email").val(),
+            pwd: $("#pwd").val(),
+            phonenumber: $("#phonenumber").val(),
+        },
+        success: (res) => {
+            console.log(res)
+            if (res.success) {
+                setTimeout(() => {
+                    fetch('http://localhost:3001/send-email', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formData),
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        notyf.success(data.message);
+                        setTimeout(() => {
+                            window.location.href = "http://localhost/AROSAJE/Front/LoginPage/login.html";
+                        }, 3000); // Delay to allow notification to be seen
+                    })
+                    .catch((error) => {
+                        console.error('Erreur lors de l\'envoi:', error);
+                    });
+                }, 3000); // Delay to allow notification to be seen
+            } else {
+                if (res.error === "L'e-mail est déjà utilisé.") {
+                    notyf.error("Cet utilisateur existe déjà.");
+                }
+            }
+        }
+    });
 });
 
 var telephoneInput = document.getElementById("phonenumber");

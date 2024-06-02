@@ -17,7 +17,7 @@ if (isset($_POST["email"]) && isset($_POST["mot_de_passe"]) && !empty(trim($_POS
             echo json_encode(["success" => true, "user" => $user["id_user"]]);
             die;
         } else {
-            echo json_encode(["success" => false, "error" => "Un des champs n'est pas correct"]);
+            echo json_encode(["success" => false, "error" => "Nom d'utilisateur/mot de passe incorrect"]);
         }
     } else {
         echo json_encode(["success" => false, "error" => "Utilisateur non trouvé"]);

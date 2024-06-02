@@ -1,4 +1,4 @@
-var map; 
+var map;
 
 function getLocation() {
     if (navigator.geolocation) {
@@ -38,7 +38,6 @@ function centerToUserLocation(map) {
     }
 }
 
-
 function showError(error) {
     switch(error.code) {
         case error.PERMISSION_DENIED:
@@ -62,12 +61,8 @@ $("#logoutConfirm").click(function() {
         type: "GET",
         dataType: "json",
         success: function(res) {
-            console.log("Ciao")
-            // Vérification si la déconnexion a réussi
             if (res.success) {
-                // Suppression de l'élément 'user' du localStorage
                 localStorage.removeItem("user");
-                // window.location.replace("http://localhost/Projet_Arosaje/AROSAJE/Front/LoginPage/login.html");
                 window.location.replace("http://localhost/AROSAJE/Front/LoginPage/login.html");
                 console.log("Déconnecté");
             } else {
