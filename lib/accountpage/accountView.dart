@@ -176,7 +176,7 @@ SizedBox(height: 10),
                 itemCount: controller.listUserPlant.length,
                 itemBuilder: (context, index) {
                   String imagePath = controller.listUserPlant[index].image;
-                  String imageUrl = 'http://172.16.1.8:8000/' + imagePath;
+                  String imageUrl = 'http:/172.16.1.49:8000/' + imagePath;
                   if (controller.listUserPlant[index].idUser==controller.currentUser.value?.idUser) {
                   return   Card(
                     child: Center(

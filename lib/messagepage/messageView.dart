@@ -1,4 +1,4 @@
-import 'package:arosaje_mobile/messagepage/char.dart';
+import 'package:arosaje_mobile/messagepage/chat.dart';
 import 'package:arosaje_mobile/messagepage/messageViewController.dart';
 import 'package:arosaje_mobile/uiKit/XNavbar.dart';
 import 'package:arosaje_mobile/uiKit/Xappbar.dart';
@@ -46,6 +46,7 @@ class MessageView extends GetView<MessageViewController> {
     ),
     child: InkWell(
       onTap: () {
+        controller.getMessage();
         Get.to(const ChatView());
       },
       child: Padding(

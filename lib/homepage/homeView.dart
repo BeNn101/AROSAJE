@@ -57,7 +57,7 @@ class HomeView extends GetView<HomeViewController> {
                   itemCount: controller.listPlant.length,
                   itemBuilder: (context, index) {
                     String imagePath = controller.listPlant[index].image;
-                    String imageUrl = 'http://172.16.1.8:8000/'+imagePath;
+                    String imageUrl = 'http://172.16.1.49:8000/'+imagePath;
                     return Card(
                       child: Center(
                         child: Column(

@@ -10,7 +10,7 @@ import 'package:arosaje_mobile/logPage/loginBindings.dart';
 import 'package:arosaje_mobile/logPage/loginView.dart';
 import 'package:arosaje_mobile/mappage/mapBindings.dart';
 import 'package:arosaje_mobile/mappage/mapView.dart';
-import 'package:arosaje_mobile/messagepage/char.dart';
+import 'package:arosaje_mobile/messagepage/chat.dart';
 import 'package:arosaje_mobile/messagepage/messageView.dart';
 import 'package:arosaje_mobile/messagepage/messageViewControllerBlindings.dart';
 import 'package:arosaje_mobile/model/user_provider.dart';

@@ -4,26 +4,28 @@ import 'dart:convert';
 import 'package:arosaje_mobile/freeze/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get/route_manager.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:latlong2/latlong.dart';
 
 
 class PublishViewViewController extends GetxController  {
   var userId = 0.obs; // Utilisez Rx<int> si vous souhaitez que les modifications soient observables.
   TextEditingController namePlanteTextingController =TextEditingController();
   TextEditingController namePlanteTexting = TextEditingController();
-   TextEditingController localisationTexting = TextEditingController();
+  TextEditingController localisationTexting = TextEditingController();
   Rx<Uint8List?> imageBytes = Rx<Uint8List?>(null);
-
+  LatLng currentLocation = LatLng(0, 0);
   
   @override
   void onInit() {
     super.onInit();
-    // Exemple de récupération de l'userId des arguments de navigation
-    userId.value = Get.arguments['userId'] ?? 0; // Assurez-vous que cela est un int
+    getLocation();
+    userId.value = Get.arguments['userId'] ?? 0; 
   }
   final ImagePicker _picker = ImagePicker();
   Rx<String?> imageFilePath = Rx<String?>(null);
@@ -54,7 +56,7 @@ class PublishViewViewController extends GetxController  {
 
 Future<void> createPlante() async {
 
-  final url = Uri.parse('http://172.16.1.8:8000/api/plantes');
+  final url = Uri.parse('http://172.16.1.49:8000/api/plantes');
   
   var imageBase64 =base64Encode(imageBytes.value!);
   
@@ -62,7 +64,7 @@ Future<void> createPlante() async {
   Map<String, dynamic> data = {
     'name_plante': namePlanteTextingController.value.text,
     'image': '${imageBase64}', // Assurez-vous que imageFilePath contient le chemin valide de l'image
-    'localisation': 'Loc5',
+    'localisation': 'currentLocation',
     'id_user': userId.value, // Assurez-vous que userId contient une valeur valide
     // Ajoutez d'autres données si nécessaire
   };
@@ -92,5 +94,15 @@ Future<void> createPlante() async {
       // Handle empty text case if needed
     }
   }
-  
+
+  Future<void> getLocation() async {
+    try {
+      Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
+        currentLocation = LatLng(position.latitude, position.longitude);
+    } catch (e) {
+      print("Error: $e");
+    }
+  }
 }

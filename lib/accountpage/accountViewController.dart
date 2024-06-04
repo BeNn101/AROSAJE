@@ -24,7 +24,7 @@ class AccountViewController extends GetxController {
   }
 
   Future<void> getCurrentUser() async {
-    final url = Uri.parse('http://172.16.1.8:8000/api/users/${userId.value}');
+    final url = Uri.parse('http://172.16.1.49:8000/api/users/${userId.value}');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -39,7 +39,7 @@ class AccountViewController extends GetxController {
 
   Future<void> getAllPlant() async {
     try {
-      final url = Uri.parse('http://172.16.1.8:8000/api/getAllPlantes');
+      final url = Uri.parse('http://172.16.1.49:8000/api/getAllPlantes');
       final response = await http.get(url);
       if (response.statusCode == 200) {
         final List<dynamic> plantData = json.decode(response.body);
