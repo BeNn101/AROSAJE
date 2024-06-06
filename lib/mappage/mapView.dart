@@ -43,16 +43,27 @@ class _MapViewState extends State<MapView> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          "Arrosaje",
+        title: Image.asset(
+          'lib/assets/logo.png', // Assurez-vous que votre logo est dans le répertoire 'assets' et référencé dans pubspec.yaml
+          height: 60, // Augmenter la taille du logo
         ),
-        backgroundColor: Color.fromARGB(0, 137, 51, 51),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.green, Colors.white],
+              begin: Alignment.topCenter, // Dégradé vertical de haut en bas
+              end: Alignment.bottomCenter,
+            ),
+          ),
+        ),
+        backgroundColor: Colors.transparent,
         elevation: 3,
         toolbarHeight: 70,
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(
-              bottom: Radius.circular(20), 
-            ))
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(20),
+          ),
+        ),
       ),
       body: _isLoading
           ? Center(child: CircularProgressIndicator())
@@ -144,6 +155,7 @@ class _MapViewState extends State<MapView> {
                 ),
               ],
             ),
+      bottomNavigationBar: XNavbar(userId: 1, currentIndex: 3),
     );
   }
 }

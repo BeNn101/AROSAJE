@@ -12,6 +12,7 @@ import 'package:arosaje_mobile/mappage/mapBindings.dart';
 import 'package:arosaje_mobile/mappage/mapView.dart';
 import 'package:arosaje_mobile/messagepage/chat.dart';
 import 'package:arosaje_mobile/messagepage/messageView.dart';
+import 'package:arosaje_mobile/rgpdpage/rgpdpageView.dart';
 import 'package:arosaje_mobile/messagepage/messageViewControllerBlindings.dart';
 import 'package:arosaje_mobile/model/user_provider.dart';
 import 'package:arosaje_mobile/registerPage/registerBlndings.dart';
@@ -23,7 +24,9 @@ import 'package:provider/provider.dart';
 import 'package:get/get.dart';
 
 void main() {
-  runApp(MainApp(),);
+  runApp(
+    MainApp(),
+  );
 }
 
 class MainApp extends StatelessWidget {
@@ -81,7 +84,8 @@ class MainApp extends StatelessWidget {
           title: 'Chat',
           page: () => ChatView(),
           binding: RegisterBindings(),
-        )
+        ),
+        GetPage(name: '/cgu', page: () => RgpdView()),
       ],
       initialRoute: '/login',
     );

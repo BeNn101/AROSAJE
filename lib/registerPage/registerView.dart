@@ -27,17 +27,57 @@ class RegisterView extends GetView<RegisterViewController> {
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 30),
-              RegistrationFormField(label: 'Prénom' ,controller: controller.surnameTextController,),
-              const SizedBox(height: 12),
-              RegistrationFormField(label: 'Nom',controller: controller.nameTextController,),
+              RegistrationFormField(
+                label: 'Prénom',
+                controller: controller.surnameTextController,
+              ),
               const SizedBox(height: 12),
               RegistrationFormField(
-                  label: 'Email', keyboardType: TextInputType.emailAddress,controller: controller.emailTextController,),
-              const SizedBox(height: 12),
-              RegistrationFormField(label: 'Mot de passe', obscureText: true,controller: controller.passwordTextController,),
+                label: 'Nom',
+                controller: controller.nameTextController,
+              ),
               const SizedBox(height: 12),
               RegistrationFormField(
-                  label: 'Téléphone', keyboardType: TextInputType.phone,controller: controller.phoneTextController,),
+                label: 'Email',
+                keyboardType: TextInputType.emailAddress,
+                controller: controller.emailTextController,
+              ),
+              const SizedBox(height: 12),
+              RegistrationFormField(
+                label: 'Mot de passe',
+                obscureText: true,
+                controller: controller.passwordTextController,
+              ),
+              const SizedBox(height: 12),
+              RegistrationFormField(
+                label: 'Téléphone',
+                keyboardType: TextInputType.phone,
+                controller: controller.phoneTextController,
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Obx(() => Checkbox(
+                        value: controller.acceptsRgpd.value,
+                        onChanged: (bool? value) {
+                          controller.acceptsRgpd.value = value ?? false;
+                        },
+                      )),
+                  GestureDetector(
+                    onTap: () {
+                      Get.toNamed("/cgu");
+                    },
+                    child: const Text(
+                      'J\'accepte les termes et conditions CGU',
+                      style: TextStyle(
+                        color: Colors.blue,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
               const SizedBox(height: 20),
               GestureDetector(
                 onTap: () {
@@ -52,24 +92,31 @@ class RegisterView extends GetView<RegisterViewController> {
                 ),
               ),
               const SizedBox(height: 20),
-              // Bouton d'inscription personnalisé
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: ElevatedButton(
                   onPressed: () {
-                    controller.register();
+                    if (controller.acceptsRgpd.value) {
+                      controller.register();
+                    } else {
+                      Get.snackbar(
+                        "Erreur",
+                        "Vous devez accepter les termes et conditions CGU",
+                        snackPosition: SnackPosition.BOTTOM,
+                        backgroundColor: Colors.red,
+                        colorText: Colors.white,
+                      );
+                    }
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.white, // Fond blanc
-                    onPrimary: Colors.black, // Texte noir
-                    elevation: 5, // Ombre noire
-                    shadowColor: Colors.black, // Couleur de l'ombre
+                    foregroundColor: Colors.black,
+                    backgroundColor: Colors.white,
+                    elevation: 5,
+                    shadowColor: Colors.black,
                     shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(8.0), // Bords arrondis
-                      side: const BorderSide(
-                          color: Colors.black, width: 2), // Bordure noire
+                      borderRadius: BorderRadius.circular(8.0),
+                      side: const BorderSide(color: Colors.black, width: 2),
                     ),
                   ),
                   child: const Padding(
@@ -96,10 +143,11 @@ class RegistrationFormField extends StatelessWidget {
   final bool obscureText;
   final TextInputType keyboardType;
   final TextEditingController controller;
+
   const RegistrationFormField({
     required this.label,
     this.obscureText = false,
-    this.keyboardType = TextInputType.text, 
+    this.keyboardType = TextInputType.text,
     required this.controller,
   });
 
@@ -108,18 +156,13 @@ class RegistrationFormField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: TextFormField(
-        validator: (value) {
-          if(value!=null)  false;
-        },
         controller: controller,
         decoration: InputDecoration(
           labelText: label,
-          labelStyle: const TextStyle(color: Colors.black), // Couleur du label
+          labelStyle: const TextStyle(color: Colors.black),
           border: const OutlineInputBorder(),
           focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(
-                color: Colors.green,
-                width: 2), // Bordure verte lorsque le champ est sélectionné
+            borderSide: BorderSide(color: Colors.green, width: 2),
           ),
         ),
         obscureText: obscureText,
