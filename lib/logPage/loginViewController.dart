@@ -33,11 +33,36 @@ class LoginViewController extends GetxController {
     }
   }
 
+   Future<void> postLogin(name, password,currentUSer) async {
+    final url = Uri.parse('http://172.16.1.49:8000/api/login');
+    Map<String, dynamic> data = {
+      'email': name,
+      'mot_de_passe': password,
+    };
+
+    final response = await http.post(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(data),
+    );
+    if (response.statusCode == 200) {
+      print('Message envoyé avec succès');
+        Get.offAllNamed('home',arguments: currentUSer);
+
+    } else {
+      Get.snackbar('Erreur', 'Identifiants invalides');
+      throw Exception('Erreur de chargement des données : ${response.statusCode}');
+      
+    }
+  }
+
    loginView(password, name) {
     for (var i = 0; i < listUser.length; i++) {
-      if (listUser[i].email == name && listUser[i].password == password) { 
+      if (listUser[i].email == name ) { 
         int currentUSer=listUser[i].idUser;
-        Get.offAllNamed('home',arguments: currentUSer);
+        postLogin(name,password,currentUSer);
       }
     }
   }
