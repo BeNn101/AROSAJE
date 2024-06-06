@@ -45,7 +45,8 @@ function validateForm() {
     var passwordInput = document.getElementById("pwd");
     var confirmPasswordInput = document.getElementById("confirmPassword");
     var phoneNumberInput = document.getElementById("phonenumber");
-    var isValid = emailInput.checkValidity() && passwordInput.checkValidity() && confirmPasswordInput.checkValidity() && phoneNumberInput.checkValidity(); 
+    var acceptTerms = document.getElementById("acceptTerms");
+    var isValid = emailInput.checkValidity() && passwordInput.checkValidity() && confirmPasswordInput.checkValidity() && phoneNumberInput.checkValidity() && acceptTerms.checked; 
     var submitButton = document.querySelector('button[type="submit"]');
     submitButton.disabled = !isValid;
 

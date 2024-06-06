@@ -120,7 +120,8 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Ajouter une annonce</h2>
-            <form id="addAnnonceForm">
+            <form id="addAnnonceForm" method="POST" action="../../Back/Plantes/add_plante.php" enctype="multipart/form-data">
+                <input type="hidden" name="id_user" value="<?php echo $_SESSION['id_user']; ?>">
                 <div class="form-group">
                     <label for="plantName">Nom de la plante* :</label>
                     <input type="text" id="plantName" name="plantName" required>
@@ -150,6 +151,7 @@
                 <i>*Champs requis</i>
                 <button type="submit" id="addAnnonceSubmit" disabled>AJOUTER</button>
             </form>
+            
         </div>
     </div>
     <div id="logoutModal" class="modal">

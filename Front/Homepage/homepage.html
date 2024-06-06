@@ -1,14 +1,3 @@
-<?php
-require_once("../../db_connect.php");
-session_start();
-require("../../function.php");
-
-if (!is_connected()) {
-    header('Location: ../LoginPage/login.html');
-    exit;
-}
-?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -27,21 +16,32 @@ if (!is_connected()) {
 </head>
 <body onload="getLocation()">
     <nav class="navbar">
-        <a href="homepage.php" class="navbar-logo">
+        <a href="homepage.html" class="navbar-logo">
             <img src="../../images/logo arosage.png" alt="logo de l'app" class="logo">
         </a>
         <div class="navbar-links">
-            <a href="homepage.php"><i class="fas fa-home"></i> Accueil</a>
+            <a href="homepage.html"><i class="fas fa-home"></i> Accueil</a>
             <a href="../AccountPage/account.html"><i class="fas fa-user"></i> Compte</a>
             <a href="../ContactPage/contact.html"><i class="fas fa-envelope"></i> Contact</a>
             <a href="../LoginPage/login.html"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
         </div>
     </nav>
     <section class="base">
-        <div id="map" style="height: 400px;"></div>
-        <button id="position-btn" onclick="centerToUserLocation(map)">
-            <i class="fas fa-map-marker-alt"></i>
-        </button>
+        <div id="annonce-details" class="annonce-details-popup" style="display: none;">
+            <button id="close-details" class="close-btn">X</button>
+            <h3 id="details-plant-name"></h3>
+            <p id="details-address"></p>
+            <p id="details-city"></p>
+            <p id="details-postal-code"></p>
+            <p id="details-country"></p>
+            <img id="details-image" src="" alt="Image de la plante" style="max-width: 100%;">
+        </div>
+        
+        <div id="map">
+            <button id="position-btn" onclick="centerToUserLocation(map)">
+                <i class="fas fa-map-marker-alt"></i>
+            </button>
+        </div>
     </section>
     <footer class="footer">
         <p>© 2024 Tous droits réservés.</p>
@@ -57,6 +57,7 @@ if (!is_connected()) {
         </div>
     </div>
     <script src="homepage.js"></script>
+    <script src="account.js"></script> <!-- Charger après homepage.js -->
     <script src="../logout.js"></script>
 </body>
 </html>

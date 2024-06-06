@@ -80,20 +80,6 @@ body {
 
 }
 
-.base {
-    margin-top: 30px;
-    padding: 20px; 
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
-    position: relative;
-    width: 80%;
-    max-width: 600px;
-    left: 50%;
-    transform: translateX(-50%);
-    overflow: hidden; 
-}
-
 
 
 .footer {
@@ -209,10 +195,33 @@ body {
 .decoModal-content button:hover {
     opacity: 0.9; 
 }
+/* Styles existants */
+
+.base {
+    margin-top: 30px;
+    padding: 20px; 
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+    position: relative;
+    width: 90%; /* Augmenter la largeur */
+    max-width: 800px; /* Augmenter la largeur max */
+    height: 70vh; /* Augmenter la hauteur */
+    left: 50%;
+    transform: translateX(-50%);
+    overflow: hidden; 
+}
+
+#map {
+    height: 60vh; /* Ajuster la hauteur de la carte pour occuper plus d'espace */
+    width: 100%; /* Assurer que la carte prend toute la largeur de la base */
+    position: relative; /* S'assurer que les éléments enfants peuvent être positionnés absolument par rapport à cette div */
+}
+
 #position-btn {
     position: absolute;
-    bottom: 25px;
-    left: 25px;
+    bottom: 10px; /* Positionnement en bas de la carte */
+    left: 10px; /* Positionnement à gauche de la carte */
     z-index: 1000;
     background-color: #007BFF; 
     color: white;
@@ -232,4 +241,53 @@ body {
 
 #position-btn:hover {
     background-color: #0056b3; 
+}
+
+/* Autres styles existants */
+
+.annonce-details-popup {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    max-width: 300px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.annonce-details-popup h3 {
+    margin-top: 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.annonce-details-popup p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.annonce-details-popup img {
+    max-width: 100%;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.close-btn {
+    background-color: transparent;
+    border: none;
+    color: #ff0000;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.close-btn:hover {
+    color: #cc0000;
 }

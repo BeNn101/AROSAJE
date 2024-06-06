@@ -147,11 +147,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
             saveAnnonceToLocalStorage(annonce);
             displayAnnonce(annonce);
-
             notyf.success('Annonce ajoutée avec succès!');
             addAnnonceModal.style.display = 'none';
             addAnnonceForm.reset();
             validateForm();
+
+            // Ajoutez le marqueur sur la carte
+            window.geocodeAndAddMarker(annonce); // Utilisez `window` pour appeler la fonction dans le contexte global
         };
 
         if (plantImageFile) {
@@ -168,18 +170,26 @@ document.addEventListener("DOMContentLoaded", function() {
 
             saveAnnonceToLocalStorage(annonce);
             displayAnnonce(annonce);
-
             notyf.success('Annonce ajoutée avec succès!');
             addAnnonceModal.style.display = 'none';
             addAnnonceForm.reset();
             validateForm();
+
+            // Ajoutez le marqueur sur la carte
+            window.geocodeAndAddMarker(annonce); // Utilisez `window` pour appeler la fonction dans le contexte global
         }
     });
 
     function saveAnnonceToLocalStorage(annonce) {
         let annonces = JSON.parse(localStorage.getItem('annonces')) || [];
         annonces.push(annonce);
-        localStorage.setItem('annonces', JSON.stringify(annonces));
+        try {
+            localStorage.setItem('annonces', JSON.stringify(annonces));
+        } catch (e) {
+            if (e.name === 'QuotaExceededError') {
+                notyf.error("Le quota de stockage local a été dépassé. Veuillez supprimer certaines annonces.");
+            }
+        }
         toggleNoAnnoncesMessage();
     }
 
@@ -216,7 +226,7 @@ document.addEventListener("DOMContentLoaded", function() {
         deleteButton.addEventListener('click', function() {
             removeAnnonceFromLocalStorage(annonce);
             annonceContainer.remove();
-            notyf.error('Annonce supprimée avec succès!');
+            notyf.success('Annonce supprimée avec succès!');
             toggleNoAnnoncesMessage();
         });
         annonceContainer.appendChild(deleteButton);

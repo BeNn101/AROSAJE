@@ -10,7 +10,6 @@
     <title>Inscription</title>
     <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 </head>
-
 <body>         
     <section class="base">
         <section class="logo-container">
@@ -42,18 +41,18 @@
                     <p>Téléphone*: </p>
                     <input required type="tel" id="phonenumber" placeholder="Entrez votre numéro de téléphone...">
                 </div>
-                <!-- <div id="avatar-container">
-                    <p>Avatar: </p>
-                    <input type="file" id="avatar" accept="image/png, image/jpeg">
-                </div> -->
+                <div class="checkbox-container">
+                    <input type="checkbox" id="acceptTerms" required>
+                    <label for="acceptTerms">J'accepte les <a href="cgu.html">conditions générales de sécurité</a>*</label>
+                </div>
             </section>
             <p><i>*Champs requis</i></p>
             <div class="button-container">
-                <button type="submit">INSCRIPTION</button>
+                <button type="submit" class="disabled" disabled>INSCRIPTION</button>
             </div>
         </form>
         <div class="inscription-link">
-            <a href="../LoginPage/login.html">Déja inscrit? Connecte-toi</a>
+            <a href="../LoginPage/login.html">Déjà inscrit? Connecte-toi</a>
         </div>
     </section>
     <script src="register.js"></script>

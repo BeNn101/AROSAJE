@@ -19,18 +19,17 @@ function showPosition(position) {
     var marker = L.marker([latitude, longitude]).addTo(map);
     marker.bindPopup("<b>Votre position</b>").openPopup();
     L.Control.geocoder().addTo(map);
+
+    loadAnnonces();
 }
 
 function centerToUserLocation(map) {
-    console.log("Trying to center to user location...");
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
             var latitude = position.coords.latitude;
             var longitude = position.coords.longitude;
-            console.log("Current position:", latitude, longitude);
             map.setView([latitude, longitude], 13);
         }, function(error) {
-            console.error("Error while getting current position:", error);
             alert("Erreur lors de la récupération de la position actuelle.");
         });
     } else {
@@ -55,6 +54,53 @@ function showError(error) {
     }
 }
 
+function loadAnnonces() {
+    const annonces = JSON.parse(localStorage.getItem('annonces')) || [];
+    annonces.forEach(annonce => {
+        console.log('Loading annonce:', annonce); // Debug message
+        geocodeAndAddMarker(annonce);
+    });
+}
+
+function geocodeAndAddMarker(annonce) {
+    const address = `${annonce.ownerAddress}, ${annonce.ownerCity}, ${annonce.ownerPostalCode}, ${annonce.ownerCountry}`;
+    console.log('Geocoding address:', address); // Debug message
+    L.Control.Geocoder.nominatim().geocode(address, function(results) {
+        if (results.length > 0) {
+            console.log('Geocoding results:', results); // Debug message
+            const latLng = results[0].center;
+            const marker = L.marker(latLng).addTo(map);
+            marker.bindPopup(`<b>${annonce.plantName}</b>`).on('click', function() {
+                showAnnonceDetails(annonce);
+            });
+        } else {
+            console.error('No results found for geocoding address:', address); // Debug message
+        }
+    });
+}
+
+window.geocodeAndAddMarker = geocodeAndAddMarker; // Make the function accessible globally
+
+function showAnnonceDetails(annonce) {
+    document.getElementById('details-plant-name').textContent = annonce.plantName;
+    document.getElementById('details-address').textContent = annonce.ownerAddress;
+    document.getElementById('details-city').textContent = annonce.ownerCity;
+    document.getElementById('details-postal-code').textContent = annonce.ownerPostalCode;
+    document.getElementById('details-country').textContent = annonce.ownerCountry;
+    const detailsImage = document.getElementById('details-image');
+    if (annonce.imageSrc) {
+        detailsImage.src = annonce.imageSrc;
+        detailsImage.style.display = 'block';
+    } else {
+        detailsImage.style.display = 'none';
+    }
+    document.getElementById('annonce-details').style.display = 'block';
+}
+
+document.getElementById('close-details').addEventListener('click', function() {
+    document.getElementById('annonce-details').style.display = 'none';
+});
+
 $("#logoutConfirm").click(function() {
     $.ajax({
         url: "../../logout.php",
@@ -64,9 +110,6 @@ $("#logoutConfirm").click(function() {
             if (res.success) {
                 localStorage.removeItem("user");
                 window.location.replace("http://localhost/AROSAJE/Front/LoginPage/login.html");
-                console.log("Déconnecté");
-            } else {
-                console.log("Erreur lors de la déconnexion");
             }
         },
     });

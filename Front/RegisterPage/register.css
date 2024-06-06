@@ -26,9 +26,11 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
 .base::-webkit-scrollbar {
     display: none; 
 }
+
 .logo-container {
     display: flex;
     justify-content: center;
@@ -72,6 +74,7 @@ body {
     background-size: contain;
     cursor: pointer;
 }
+
 .eye-icon-confirm {
     position: absolute;
     right: 10px;
@@ -82,6 +85,33 @@ body {
     background: url('../../images/show_password.png') no-repeat center center;
     background-size: contain;
     cursor: pointer;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    white-space: nowrap;
+}
+
+.checkbox-container input[type="checkbox"] {
+    margin-right: 5px; /* Reduced margin */
+}
+
+.checkbox-container label {
+    font-size: 16px;
+    display: inline-block;
+    margin-bottom: 10px;
+    margin-left: -510px; /* Ensure there is a small space between checkbox and text */
+}
+
+.checkbox-container a {
+    color: #1855F1;
+    text-decoration: none;
+}
+
+.checkbox-container a:hover {
+    text-decoration: underline;
 }
 
 .button-container {
@@ -102,6 +132,7 @@ button {
     transition: background-color 0.3s, color 0.3s;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
 button.disabled {
     background-color: #ccc; 
     border-color: #ccc; 
