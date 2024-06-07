@@ -12,6 +12,7 @@ import 'package:arosaje_mobile/mappage/mapBindings.dart';
 import 'package:arosaje_mobile/mappage/mapView.dart';
 import 'package:arosaje_mobile/messagepage/chat.dart';
 import 'package:arosaje_mobile/messagepage/messageView.dart';
+import 'package:arosaje_mobile/rgpdpage/rgpdpageView.dart';
 import 'package:arosaje_mobile/messagepage/messageViewControllerBlindings.dart';
 import 'package:arosaje_mobile/registerPage/registerBlndings.dart';
 import 'package:arosaje_mobile/registerPage/registerView.dart';
@@ -23,7 +24,9 @@ import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get/get.dart';
 
 void main() {
-  runApp(MainApp(),);
+  runApp(
+    MainApp(),
+  );
 }
 
 class MainApp extends StatelessWidget {
@@ -87,7 +90,8 @@ class MainApp extends StatelessWidget {
           title: 'PlantView',
           page: () => CardPage(),
           binding: CardBindings(),
-        )
+        ),
+        GetPage(name: '/cgu', page: () => RgpdView()),
       ],
       initialRoute: '/login',
     );

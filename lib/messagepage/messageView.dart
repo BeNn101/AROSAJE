@@ -12,13 +12,25 @@ class MessageView extends GetView<MessageViewController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       appBar:AppBar(
-        centerTitle: true,
-        title: const Text("Arrosaje" ,),
-        backgroundColor: const Color.fromARGB(255, 11, 225, 3),
-        elevation: 3,
-        toolbarHeight: 70,
-        shape: const RoundedRectangleBorder(
+        appBar: AppBar(
+          centerTitle: true,
+          title: Image.asset(
+            'lib/assets/logo.png', // Assurez-vous que votre logo est dans le répertoire 'assets' et référencé dans pubspec.yaml
+            height: 60, // Augmenter la taille du logo
+          ),
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.green, Colors.white],
+                begin: Alignment.topCenter, // Dégradé vertical de haut en bas
+                end: Alignment.bottomCenter,
+              ),
+            ),
+          ),
+          backgroundColor: Colors.transparent,
+          elevation: 3,
+          toolbarHeight: 70,
+          shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(
               bottom: Radius.circular(20), 
             ))
@@ -40,7 +52,7 @@ class MessageView extends GetView<MessageViewController> {
           color: Colors.grey.withOpacity(0.5),
           spreadRadius: 2,
           blurRadius: 5,
-          offset: const Offset(0, 3), 
+          offset: Offset(0, 3), 
         ),
       ],
     ),
@@ -49,8 +61,8 @@ class MessageView extends GetView<MessageViewController> {
         controller.getMessage();
         Get.to(const ChatView());
       },
-      child: const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16), 
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16), 
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start, 
           mainAxisAlignment: MainAxisAlignment.center,
