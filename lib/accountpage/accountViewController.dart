@@ -14,6 +14,7 @@ class AccountViewController extends GetxController {
   var userId = 0.obs;
  var currentUser = Rx<User?>(null);
  RxList<Plant> listUserPlant = <Plant>[].obs;
+ RxList<Plant> listUserMyPlant = <Plant>[].obs;
 
   @override
   void onInit() {
@@ -43,7 +44,8 @@ class AccountViewController extends GetxController {
       final response = await http.get(url);
       if (response.statusCode == 200) {
         final List<dynamic> plantData = json.decode(response.body);
-        listUserPlant.value = List<Plant>.from(plantData.map((plant) => Plant.fromJson(plant)));
+        listUserMyPlant.value = List<Plant>.from(plantData.map((plant)  => Plant.fromJson(plant)).where((element) => element.idUser==userId.value));
+
       } else {
         Get.snackbar('Erreur', 'Identifiants invalides');
         throw Exception('Erreur de chargement des données : ${response.statusCode}');
@@ -53,4 +55,5 @@ class AccountViewController extends GetxController {
       Get.snackbar('Erreur', 'Erreur lors du chargement des plantes');
     }
   }
+
 }

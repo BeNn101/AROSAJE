@@ -1,4 +1,4 @@
-import 'dart:collection';
+
 
 import 'package:arosaje_mobile/accountpage/accountView.dart';
 import 'package:arosaje_mobile/accountpage/accountViewControllerBlindings.dart';
@@ -13,13 +13,13 @@ import 'package:arosaje_mobile/mappage/mapView.dart';
 import 'package:arosaje_mobile/messagepage/chat.dart';
 import 'package:arosaje_mobile/messagepage/messageView.dart';
 import 'package:arosaje_mobile/messagepage/messageViewControllerBlindings.dart';
-import 'package:arosaje_mobile/model/user_provider.dart';
 import 'package:arosaje_mobile/registerPage/registerBlndings.dart';
 import 'package:arosaje_mobile/registerPage/registerView.dart';
+import 'package:arosaje_mobile/cardPage/cardPageBlindings.dart';
+import 'package:arosaje_mobile/cardPage/cardPageView.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
-import 'package:provider/provider.dart';
 import 'package:get/get.dart';
 
 void main() {
@@ -81,6 +81,12 @@ class MainApp extends StatelessWidget {
           title: 'Chat',
           page: () => ChatView(),
           binding: RegisterBindings(),
+        ),
+        GetPage(
+          name: '/plantView',
+          title: 'PlantView',
+          page: () => CardPage(),
+          binding: CardBindings(),
         )
       ],
       initialRoute: '/login',

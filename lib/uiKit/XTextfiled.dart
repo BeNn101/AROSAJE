@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter/material.dart';
-
 class Xtextfield {
   final Function onPressed;
   final Function? onTap;

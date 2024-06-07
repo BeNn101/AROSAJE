@@ -61,8 +61,7 @@ class RegisterView extends GetView<RegisterViewController> {
                     controller.register();
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.white, // Fond blanc
-                    onPrimary: Colors.black, // Texte noir
+                    foregroundColor: Colors.black, backgroundColor: Colors.white, // Texte noir
                     elevation: 5, // Ombre noire
                     shadowColor: Colors.black, // Couleur de l'ombre
                     shape: RoundedRectangleBorder(

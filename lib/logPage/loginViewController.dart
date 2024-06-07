@@ -15,8 +15,12 @@ class LoginViewController extends GetxController {
   @override
   void onInit() {
     getUsers(); 
-    loginView(password, name);
     super.onInit();
+  }
+   @override
+  void onReady(){
+     loginView(password, name);
+      super.onReady();
   }
 
   Future<void> getUsers() async {
@@ -53,8 +57,6 @@ class LoginViewController extends GetxController {
 
     } else {
       Get.snackbar('Erreur', 'Identifiants invalides');
-      throw Exception('Erreur de chargement des données : ${response.statusCode}');
-      
     }
   }
 
@@ -63,6 +65,8 @@ class LoginViewController extends GetxController {
       if (listUser[i].email == name ) { 
         int currentUSer=listUser[i].idUser;
         postLogin(name,password,currentUSer);
+      }else{
+         Get.snackbar('Erreur', 'Identifiants invalides');
       }
     }
   }

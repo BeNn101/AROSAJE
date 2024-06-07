@@ -101,8 +101,7 @@ class LoginView extends GetView<LoginViewController> {
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
-          ),
-          primary: const Color.fromARGB(255, 42, 228, 49),
+          ), backgroundColor: const Color.fromARGB(255, 42, 228, 49),
         ),
       ),
     );

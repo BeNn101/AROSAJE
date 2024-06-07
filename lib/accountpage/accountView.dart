@@ -173,11 +173,11 @@ SizedBox(height: 10),
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
                 ),
-                itemCount: controller.listUserPlant.length,
+                itemCount: controller.listUserMyPlant.length,
                 itemBuilder: (context, index) {
-                  String imagePath = controller.listUserPlant[index].image;
-                  String imageUrl = 'http:/172.16.1.49:8000/' + imagePath;
-                  if (controller.listUserPlant[index].idUser==controller.currentUser.value?.idUser) {
+                  String imagePath = controller.listUserMyPlant[index].image;
+                  String imageUrl = 'http://172.16.1.49:8000/$imagePath';
+                 
                   return   Card(
                     child: Center(
                       child: Column(
@@ -195,16 +195,13 @@ SizedBox(height: 10),
                             height: 80,
                             width: 80,
                           ),
-                          Text(controller.listUserPlant[index].namePlante),
+                          Text(controller.listUserMyPlant[index].namePlante),
                         ],
                       ),
                     ),
                   );
-                  }
-                  else {
-        // Retourne un widget vide si la condition n'est pas vérifiée
-        return SizedBox.shrink();
-            }
+                  
+                  
                   
                 },
               ),

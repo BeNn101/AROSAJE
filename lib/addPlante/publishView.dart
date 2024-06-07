@@ -95,7 +95,7 @@ class PublishView extends GetView<PublishViewViewController> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          primary: const Color.fromARGB(255, 42, 228, 49),
+          shadowColor: const Color.fromARGB(255, 42, 228, 49),
         ),
       ),
     ),

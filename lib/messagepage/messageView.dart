@@ -40,7 +40,7 @@ class MessageView extends GetView<MessageViewController> {
           color: Colors.grey.withOpacity(0.5),
           spreadRadius: 2,
           blurRadius: 5,
-          offset: Offset(0, 3), 
+          offset: const Offset(0, 3), 
         ),
       ],
     ),
@@ -49,8 +49,8 @@ class MessageView extends GetView<MessageViewController> {
         controller.getMessage();
         Get.to(const ChatView());
       },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16), 
+      child: const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16), 
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start, 
           mainAxisAlignment: MainAxisAlignment.center,

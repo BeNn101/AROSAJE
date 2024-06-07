@@ -58,24 +58,29 @@ class HomeView extends GetView<HomeViewController> {
                   itemBuilder: (context, index) {
                     String imagePath = controller.listPlant[index].image;
                     String imageUrl = 'http://172.16.1.49:8000/'+imagePath;
-                    return Card(
-                      child: Center(
-                        child: Column(
-                          children: [
-                            SizedBox(height: 10,),
-                            Image.network(
-                              loadingBuilder: (context, child, loadingProgress) {
-                                if (loadingProgress == null) {
-                                  return child;
-                                }
-                                return CircularProgressIndicator();
-                              },
-                              imageUrl,
-                              height: 80,
-                              width: 80,
-                            ),
-                            Text(controller.listPlant[index].namePlante),
-                          ],
+                    return InkWell(
+                      onTap: () {
+                         Get.offAllNamed('plantView',arguments: controller.listPlant[index]);
+                      },
+                      child: Card(
+                        child: Center(
+                          child: Column(
+                            children: [
+                              SizedBox(height: 10,),
+                              Image.network(
+                                loadingBuilder: (context, child, loadingProgress) {
+                                  if (loadingProgress == null) {
+                                    return child;
+                                  }
+                                  return CircularProgressIndicator();
+                                },
+                                imageUrl,
+                                height: 80,
+                                width: 80,
+                              ),
+                              Text(controller.listPlant[index].namePlante),
+                            ],
+                          ),
                         ),
                       ),
                     );
@@ -86,7 +91,7 @@ class HomeView extends GetView<HomeViewController> {
           ),
         ],
       ),
-      bottomNavigationBar: XNavbar(userId: controller.userId.value!??1, currentIndex: 0),
+      bottomNavigationBar: XNavbar(userId: controller.userId.value!, currentIndex: 0),
     );
   }
 }
