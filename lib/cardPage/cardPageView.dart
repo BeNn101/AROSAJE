@@ -99,8 +99,6 @@ class CardPage extends GetView<CardPageController> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    primary: const Color.fromARGB(255, 42, 228, 49),
-                    onPrimary: Colors.white,
                     padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
                     shadowColor: Colors.grey.withOpacity(0.5),
                     elevation: 5,

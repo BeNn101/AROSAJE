@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 class RegisterViewController extends GetxController {
   TextEditingController emailTextController = TextEditingController();
   TextEditingController passwordTextController = TextEditingController();
+  TextEditingController confirmPasswordTextController = TextEditingController();
   TextEditingController phoneTextController = TextEditingController();
   TextEditingController nameTextController = TextEditingController();
   TextEditingController surnameTextController = TextEditingController();
@@ -22,7 +23,7 @@ class RegisterViewController extends GetxController {
 
   Future<void> register() async {
     
-  final url = Uri.parse('http://172.16.1.49:8000/api/users/createUser');
+  final url = Uri.parse('http://192.168.1.40:8000/api/users/createUser');
 
     Map<String, dynamic> data = {
       'mot_de_passe': passwordTextController.value.text,

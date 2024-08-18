@@ -16,7 +16,7 @@ class CardPageController extends GetxController {
   void onInit() {
     url = Get.arguments;
     if (url!.image.isNotEmpty) {
-    imageUrl = 'http://172.16.1.49:8000/' + url!.image;
+    imageUrl = 'http://192.168.1.40:8000/' + url!.image;
   }
   imageTitle=url!.namePlante;
     //userId.value = Get.arguments['userId'] ?? 0;

@@ -70,7 +70,7 @@ class HomeView extends GetView<HomeViewController> {
                   itemCount: controller.listPlant.length,
                   itemBuilder: (context, index) {
                     String imagePath = controller.listPlant[index].image;
-                    String imageUrl = 'http://172.16.1.49:8000/'+imagePath;
+                    String imageUrl = 'http://192.168.1.40:8000/'+imagePath;
                     return InkWell(
                       onTap: () {
                          Get.offAllNamed('plantView',arguments: controller.listPlant[index]);

@@ -24,21 +24,21 @@ class LoginViewController extends GetxController {
   }
 
   Future<void> getUsers() async {
-    final url = Uri.parse('http://172.16.1.49:8000/api/users/alluser');
+    final url = Uri.parse('http://192.168.1.40:8000/api/users/alluser');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
       final List<dynamic> userData = json.decode(response.body);
       listUser = List<User>.from(userData.map((user) => User.fromJson(user)));
     } else {
-      Get.snackbar('Erreur', 'Identifiants invalides');
+      Get.snackbar('Erreur', 'chargement des donnéess');
       throw Exception('Erreur de chargement des données : ${response.statusCode}');
       
     }
   }
 
    Future<void> postLogin(name, password,currentUSer) async {
-    final url = Uri.parse('http://172.16.1.49:8000/api/login');
+    final url = Uri.parse('http://192.168.1.40:8000/api/login');
     Map<String, dynamic> data = {
       'email': name,
       'mot_de_passe': password,
@@ -52,22 +52,27 @@ class LoginViewController extends GetxController {
       body: jsonEncode(data),
     );
     if (response.statusCode == 200) {
-      print('Message envoyé avec succès');
         Get.offAllNamed('home',arguments: currentUSer);
-
-    } else {
-      Get.snackbar('Erreur', 'Identifiants invalides');
+    } else{
+       Get.snackbar('Erreur', 'Identifiants incorrect');
     }
   }
 
-   loginView(password, name) {
-    for (var i = 0; i < listUser.length; i++) {
-      if (listUser[i].email == name ) { 
-        int currentUSer=listUser[i].idUser;
-        postLogin(name,password,currentUSer);
-      }else{
-         Get.snackbar('Erreur', 'Identifiants invalides');
-      }
-    }
+   Future loginView(password, name) async{
+   await getUsers();
+   bool userFound = false;  
+
+for (var i = 0; i < listUser.length; i++) {
+  if (listUser[i].email == name) { 
+    int currentUser = listUser[i].idUser;
+    postLogin(name, password, currentUser);
+    userFound = true;  
+    break;  
+  }
+}
+
+if (!userFound) {
+  Get.snackbar('Erreur', 'Identifiants invalides');
+}
   }
 }

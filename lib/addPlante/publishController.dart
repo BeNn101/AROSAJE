@@ -56,7 +56,7 @@ class PublishViewViewController extends GetxController {
 
   Future<void> createPlante() async {
     
-  final url = Uri.parse('http://172.16.1.49:8000/api/plantes');
+  final url = Uri.parse('http://192.168.1.40:8000/api/plantes');
 
     var imageBase64 = base64Encode(imageBytes.value!);
 
