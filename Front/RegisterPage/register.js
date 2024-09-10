@@ -1,5 +1,5 @@
 const notyf = new Notyf({
-    duration: 3000,
+    duration: 10000,
     position: {
         x: 'right',
         y: 'top',
@@ -127,7 +127,7 @@ document.querySelector('form').addEventListener('submit', function(event) {
             console.log(res)
             if (res.success) {
                 setTimeout(() => {
-                    fetch('http://localhost:3001/send-email', {
+                    fetch('http://localhost:3000/send-email', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -139,12 +139,12 @@ document.querySelector('form').addEventListener('submit', function(event) {
                         notyf.success(data.message);
                         setTimeout(() => {
                             window.location.href = "http://localhost/AROSAJE/Front/LoginPage/login.html";
-                        }, 3000); // Delay to allow notification to be seen
+                        }, 10000); 
                     })
                     .catch((error) => {
                         console.error('Erreur lors de l\'envoi:', error);
                     });
-                }, 3000); // Delay to allow notification to be seen
+                }, 3000); 
             } else {
                 if (res.error === "L'e-mail est déjà utilisé.") {
                     notyf.error("Cet utilisateur existe déjà.");
