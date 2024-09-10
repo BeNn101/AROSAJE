@@ -70,43 +70,6 @@
                 <h3 id="annonce_title"></h3>
                 <p id="adresse"></p>
             </div>
-            <script>
-                $(document).ready(function() {
-                    $.ajax({
-                        url: "../../Back/plantes.php",
-                        type: "GET",
-                        dataType: "json",
-                        data: {
-                            opt: "select_id"
-                        },
-                        success: function(res) {
-                            if (res.plantes && res.plantes.length > 0) {
-                                for (let i = 0; i < res.plantes.length; i++) {
-                                    const name_plante = $("<h3></h3>").text(res.plantes[i].name_plante);
-                                    const img_plante = $("<img>").attr("src","../../images/Rose.jpg");
-                                    if (res.plantes[i].name_plante == "Cactus"){
-                                        img_plante.attr("src","../../images/cactus.jpg");
-                                    } else if (res.plantes[i].name_plante == "Lilla"){
-                                        img_plante.attr("src","../../images/lilla.jpg");
-                                    } else if (res.plantes[i].name_plante == "Pissenli"){
-                                        img_plante.attr("src","../../images/pissenli.jpg");
-                                    } else if (res.plantes[i].name_plante == "Rose") {
-                                        img_plante.attr("src","../../images/Rose.jpg");
-                                    }
-                                    const loc = $("<p></p>").text(res.plantes[i].localisation);
-                                    $("#your_annonce").append(name_plante, img_plante, loc);
-                                }
-                            } else {
-                                $("#no-annonces-message");
-                            }
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            console.error("Erreur lors de la requête AJAX : ", textStatus, errorThrown);
-                        }
-                    });
-                });
-            </script>
-            <!-- <p id="no-annonces-message">Vous n'avez pas posté d'annonces.</p> -->
             <div class="button-container">
                 <button class="add-plant" type="submit">AJOUTER UNE ANNONCE</button>
             </div>

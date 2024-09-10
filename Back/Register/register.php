@@ -3,7 +3,7 @@ require_once('../../db_connect.php');
 
 if (isset($_POST["firstname"], $_POST["lastname"], $_POST["email"], $_POST["pwd"], $_POST["phonenumber"]) && !empty(trim($_POST["firstname"])) && !empty(trim($_POST["lastname"])) && !empty(trim($_POST["email"])) && !empty(trim($_POST["pwd"] && !empty(trim($_POST["phonenumber"]))))) {
 } else {
-    echo json_encode(["success" => false, "error" => "Donnée vide"]);
+    echo json_encode(["success" => false, "error" => "Données vides"]);
     die;
 }
 
@@ -13,7 +13,6 @@ if (!preg_match($regex, $_POST["email"])) {
     die;
 }
 
-// Vérifier si l'e-mail existe déjà
 $req = $db->prepare("SELECT COUNT(*) AS count FROM user WHERE email = :email");
 $req->bindValue(":email", $_POST["email"]);
 $req->execute();

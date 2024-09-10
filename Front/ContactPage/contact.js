@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
             message: userMessage.value,
         };
 
-        fetch('http://localhost:3000/send-email', {
+        fetch('http://localhost:3001/send-email', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

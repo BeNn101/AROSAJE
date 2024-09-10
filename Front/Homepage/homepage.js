@@ -57,29 +57,29 @@ function showError(error) {
 function loadAnnonces() {
     const annonces = JSON.parse(localStorage.getItem('annonces')) || [];
     annonces.forEach(annonce => {
-        console.log('Loading annonce:', annonce); // Debug message
+        console.log('Loading annonce:', annonce); 
         geocodeAndAddMarker(annonce);
     });
 }
 
 function geocodeAndAddMarker(annonce) {
     const address = `${annonce.ownerAddress}, ${annonce.ownerCity}, ${annonce.ownerPostalCode}, ${annonce.ownerCountry}`;
-    console.log('Geocoding address:', address); // Debug message
+    console.log('Geocoding address:', address); 
     L.Control.Geocoder.nominatim().geocode(address, function(results) {
         if (results.length > 0) {
-            console.log('Geocoding results:', results); // Debug message
+            console.log('Geocoding results:', results); 
             const latLng = results[0].center;
             const marker = L.marker(latLng).addTo(map);
             marker.bindPopup(`<b>${annonce.plantName}</b>`).on('click', function() {
                 showAnnonceDetails(annonce);
             });
         } else {
-            console.error('No results found for geocoding address:', address); // Debug message
+            console.error('No results found for geocoding address:', address); 
         }
     });
 }
 
-window.geocodeAndAddMarker = geocodeAndAddMarker; // Make the function accessible globally
+window.geocodeAndAddMarker = geocodeAndAddMarker; 
 
 function showAnnonceDetails(annonce) {
     document.getElementById('details-plant-name').textContent = annonce.plantName;

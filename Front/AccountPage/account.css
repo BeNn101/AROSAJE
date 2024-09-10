@@ -154,6 +154,7 @@ body {
     color: #ddd;
 }
 
+
 .modal {
     display: none;
     position: fixed;
@@ -161,14 +162,14 @@ body {
     left: 0;
     top: 0;
     width: 100%;
-    height: 100%;
+    height: 100%; /* Modification pour utiliser toute la hauteur de la fenêtre */
     background-color: rgba(0, 0, 0, 0.4);
 }
 
 .modal-content {
     position: relative;
     background-color: #fff;
-    margin: 10% auto 20%;
+    margin: 5% auto;
     padding: 40px;
     border-radius: 10px;
     width: 80%;
@@ -176,8 +177,8 @@ body {
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
     animation-name: modalFadeInUp;
     animation-duration: 0.5s;
-    height: 500px; 
-    overflow-y: auto; 
+    height: 600px; /* Modification pour agrandir la hauteur */
+    overflow-y: hidden; /* Désactiver le scroll */
 }
 
 .modal-content h2 {
