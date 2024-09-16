@@ -1,5 +1,4 @@
 import 'package:arosaje_mobile/accountpage/accountViewController.dart';
-import 'package:arosaje_mobile/logPage/loginViewController.dart';
 import 'package:arosaje_mobile/uiKit/XNavbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -19,7 +18,7 @@ class AccountView extends GetView<AccountViewController> {
           height: 60, // Augmenter la taille du logo
         ),
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [Colors.green, Colors.white],
               begin: Alignment.topCenter, // Dégradé vertical de haut en bas
@@ -30,7 +29,7 @@ class AccountView extends GetView<AccountViewController> {
         backgroundColor: Colors.transparent,
         elevation: 3,
         toolbarHeight: 70,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             bottom: Radius.circular(20),
           ),
@@ -40,10 +39,10 @@ class AccountView extends GetView<AccountViewController> {
         child: Obx(
           () => Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Text(
+              const Text(
                 'Mon profil :',
                 textAlign: TextAlign.left,
               ),
@@ -54,20 +53,20 @@ class AccountView extends GetView<AccountViewController> {
                     color: Colors.grey[200],
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  padding: EdgeInsets.all(10),
-                  margin: EdgeInsets.all(5),
+                  padding: const EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(5),
                   child: Row(
                     children: [
-                      Text(
+                      const Text(
                         'Email :',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Text(
                         '${controller.currentUser?.value?.email.obs}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontStyle: FontStyle.italic,
                         ),
                       ),
@@ -82,20 +81,20 @@ class AccountView extends GetView<AccountViewController> {
                     color: Colors.grey[200],
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  padding: EdgeInsets.all(10),
-                  margin: EdgeInsets.all(5),
+                  padding: const EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(5),
                   child: Row(
                     children: [
-                      Text(
+                      const Text(
                         'Nom :',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Text(
                         '${controller.currentUser?.value?.lastName}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontStyle: FontStyle.italic,
                         ),
                       ),
@@ -110,20 +109,20 @@ class AccountView extends GetView<AccountViewController> {
                     color: Colors.grey[200],
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  padding: EdgeInsets.all(10),
-                  margin: EdgeInsets.all(5),
+                  padding: const EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(5),
                   child: Row(
                     children: [
-                      Text(
+                      const Text(
                         'Prénom :',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Text(
                         '${controller.currentUser?.value?.firstName}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontStyle: FontStyle.italic,
                         ),
                       ),
@@ -138,20 +137,20 @@ class AccountView extends GetView<AccountViewController> {
                     color: Colors.grey[200],
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  padding: EdgeInsets.all(10),
-                  margin: EdgeInsets.all(5),
+                  padding: const EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(5),
                   child: Row(
                     children: [
-                      Text(
+                      const Text(
                         'Téléphone :',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Text(
                         '${controller.currentUser?.value?.telephone}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontStyle: FontStyle.italic,
                         ),
                       ),
@@ -159,14 +158,14 @@ class AccountView extends GetView<AccountViewController> {
                   ),
                 ),
               ),
-              Text(
+              const Text(
                 "Mes annonces :",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Expanded(
                 flex: 6,
                 child: Padding(
@@ -183,18 +182,18 @@ class AccountView extends GetView<AccountViewController> {
                           crossAxisSpacing: 10,
                           mainAxisSpacing: 10,
                         ),
-                        itemCount: controller.listUserPlant.length,
+                        itemCount: controller.listUserMyPlant.length,
                         itemBuilder: (context, index) {
                           String imagePath =
-                              controller.listUserPlant[index].image;
+                              controller.listUserMyPlant[index].image;
                           String imageUrl = 'http://localhost:8000/' + imagePath;
-                          if (controller.listUserPlant[index].idUser ==
+                          if (controller.listUserMyPlant[index].idUser ==
                               controller.currentUser.value?.idUser) {
                             return Card(
                               child: Center(
                                 child: Column(
                                   children: [
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                     Image.network(
@@ -203,21 +202,21 @@ class AccountView extends GetView<AccountViewController> {
                                         if (loadingProgress == null) {
                                           return child;
                                         }
-                                        return CircularProgressIndicator();
+                                        return const CircularProgressIndicator();
                                       },
                                       imageUrl,
                                       height: 80,
                                       width: 80,
                                     ),
                                     Text(controller
-                                        .listUserPlant[index].namePlante),
+                                        .listUserMyPlant[index].namePlante),
                                   ],
                                 ),
                               ),
                             );
                           } else {
                             // Retourne un widget vide si la condition n'est pas vérifiée
-                            return SizedBox.shrink();
+                            return const SizedBox.shrink();
                           }
                         },
                       ),
@@ -230,7 +229,7 @@ class AccountView extends GetView<AccountViewController> {
         ),
       ),
       bottomNavigationBar:
-          XNavbar(userId: controller.userId.value, currentIndex: 1),
+          XNavbar(token: controller.token.value, currentIndex: 1),
     );
   }
 }

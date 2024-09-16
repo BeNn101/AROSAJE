@@ -9,11 +9,12 @@ import 'package:arosaje_mobile/freeze/plantes.dart';
 import 'package:get/get.dart';
 
 class HomeViewController extends GetxController {
-  var userId = Rxn<int>();
+  var userId;
   var listPlant = <Plant>[].obs; 
   late File imageFile; 
   RxBool isSkeletonLoader= true.obs;
   String ip =Constants.ipAddress;
+  var token;
   @override
   void onInit() {
     super.onInit();
@@ -24,6 +25,9 @@ class HomeViewController extends GetxController {
     } else if (argument is int) {
       userId.value = argument;
     } else {
+    
+      userId = argument[1];
+      token=argument[1];
       print("Erreur: L'userId n'est pas fourni dans les arguments de navigation.");
     }
     isSkeletonLoader.value=false;
@@ -31,7 +35,7 @@ class HomeViewController extends GetxController {
 
   Future<void> getAllPlant() async {
     try {
-      final url = Uri.parse('http://192.168.1.40:8000/api/getAllPlantes');
+      final url = Uri.parse('http://192.168.245.105:8000/api/getAllPlantes');
       final response = await http.get(url);
       if (response.statusCode == 200) {
         final List<dynamic> plantData = json.decode(response.body);
@@ -52,5 +56,25 @@ class HomeViewController extends GetxController {
       delegate: CustomSearchDelegate(listPlant),
     );
   }
+
+  Future<void> getCurrentUser() async {
+
+  final url = Uri.parse('http://192.168.245.105:8000/api/me'); 
+  final response = await http.get(
+    url,
+    headers: {
+      'Authorization': 'Bearer $token',
+    },
+  );
+
+  if (response.statusCode == 200) {
+    final Map<String, dynamic> user = json.decode(response.body);
+  } else {
+     Get.offAllNamed('login');
+    throw Exception('Erreur de chargement des données : ${response.statusCode}');
+  }
+}
+
+
   
 }

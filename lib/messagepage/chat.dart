@@ -30,7 +30,7 @@ class ChatView extends GetView<MessageViewController> {
                 itemCount: controller.listMessage.length,
                 itemBuilder: (context, index) {
                   return Align(
-                    alignment: controller.listMessage[index].idUser == controller.userId.value
+                    alignment: controller.listMessage[index].idUser == controller.currentUser?.idUser
                         ? Alignment.centerRight
                         : Alignment.centerLeft,
                     child: Container(
@@ -38,7 +38,7 @@ class ChatView extends GetView<MessageViewController> {
                           EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                       padding: EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: controller.listMessage[index].idUser == controller.userId.value
+                        color: controller.listMessage[index].idUser == controller.currentUser?.idUser
                             ? Colors.blue
                             : Colors.grey[300],
                         borderRadius: BorderRadius.circular(16),
@@ -83,7 +83,7 @@ class ChatView extends GetView<MessageViewController> {
         ),
       ),
       bottomNavigationBar: XNavbar(
-        userId: controller.userId.value,
+        token: controller.token.value,
         currentIndex: 4,
       ),
     );

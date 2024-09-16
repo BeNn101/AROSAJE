@@ -155,7 +155,7 @@ class _MapViewState extends State<MapView> {
                 ),
               ],
             ),
-      bottomNavigationBar: XNavbar(userId: 1, currentIndex: 3),
+      bottomNavigationBar: XNavbar(token: '', currentIndex: 3),
     );
   }
 }

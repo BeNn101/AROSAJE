@@ -23,7 +23,7 @@ class RegisterViewController extends GetxController {
 
   Future<void> register() async {
     
-  final url = Uri.parse('http://192.168.1.40:8000/api/users/createUser');
+  final url = Uri.parse('http://192.168.245.105:8000/api/users/createUser');
 
     Map<String, dynamic> data = {
       'mot_de_passe': passwordTextController.value.text,

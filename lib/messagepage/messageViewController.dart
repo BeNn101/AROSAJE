@@ -1,3 +1,5 @@
+import 'package:arosaje_mobile/freeze/chat.dart';
+import 'package:arosaje_mobile/freeze/user.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -6,20 +8,31 @@ import 'dart:convert';
 import 'package:arosaje_mobile/freeze/chatHistorical.dart';
 
 class MessageViewController extends GetxController {
-  var userId = 0.obs;
+  var token =''.obs;
   var listMessage = RxList<ChatHistorical>();
-
+  var listUserMessage = RxList<Chat>();
+  User? currentUser;
   TextEditingController message = TextEditingController();
 
   @override
   void onInit() {
+        token.value = Get.arguments['token'] ?? 0;
+    getCurrentUser();
     super.onInit();
-    userId.value = Get.arguments['userId'] ?? 0;
     getMessage(); 
+
   }
+  @override
+void onReady() async {
+  super.onReady();
+  await getCurrentUser();
+  if (currentUser != null) {
+    getChatsByUser(currentUser!.idUser);
+  }
+}
   
   Future<void> getMessage() async {
-    final url = Uri.parse('http://192.168.1.40:8000/api/getAllMessages');
+    final url = Uri.parse('http://192.168.245.105:8000/api/getAllMessages');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -33,9 +46,9 @@ class MessageViewController extends GetxController {
   }
 
   Future<void> postMessage(message) async {
-    final url = Uri.parse('http://192.168.1.40:8000/api/postMessages');
+    final url = Uri.parse('http://192.168.245.105:8000/api/postMessages');
     Map<String, dynamic> data = {
-      'id_user': userId.value,
+      'id_user': currentUser?.idUser,
       'id_destinataire': 2,
       'message': message,
       'image': 'l'
@@ -52,6 +65,55 @@ class MessageViewController extends GetxController {
       print('Message envoyé avec succès');
     } else {
       // Gérer les erreurs ici
+    }
+  }
+
+  Future<void> getCurrentUser() async {
+
+  final url = Uri.parse('http://192.168.245.105:8000/api/me'); 
+  final response = await http.get(
+    url,
+    headers: {
+      'Authorization': 'Bearer $token',
+    },
+  );
+
+  if (response.statusCode == 200) {
+    final Map<String, dynamic> user = json.decode(response.body);
+    currentUser = User.fromJson(user['user']);
+
+  } else {
+     Get.offAllNamed('login');
+    throw Exception('Erreur de chargement des données : ${response.statusCode}');
+  }
+}
+
+Future<void> getChatsByUser(int idUser) async {
+  final url = Uri.parse('http://192.168.245.105:8000/api/chats/$idUser');
+  final response = await http.get(url);
+
+  if (response.statusCode == 200) {
+    final List<dynamic> chatData = json.decode(response.body);
+    // Traite les données comme tu le souhaites, par exemple assigner à une liste
+    List<Chat> chats = chatData.map((data) => Chat.fromJson(data)).toList();
+   listUserMessage.value=chats;
+   print('${listUserMessage.value}');
+  } else {
+    Get.snackbar('Erreur', 'Impossible de récupérer les chats');
+  }
+}
+Future<void> getUserRecipient(int i, int recipientId) async {
+    final url = Uri.parse('http://192.168.245.105:8000/api/users/$recipientId');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final userData = json.decode(response.body);
+      currentUser = User.fromJson(userData);
+      listUserMessage[i].copyWith(name_recipient: currentUser!.firstName);
+      // Informe GetX que les valeurs ont été mises à jour
+      update();
+    } else {
+      throw Exception('Failed to load user data');
     }
   }
 }

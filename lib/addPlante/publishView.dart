@@ -2,12 +2,10 @@ import 'dart:io';
 
 import 'package:arosaje_mobile/addPlante/publishController.dart';
 import 'package:arosaje_mobile/uiKit/XNavbar.dart';
-import 'package:arosaje_mobile/uiKit/XTextfiled.dart';
 import 'package:arosaje_mobile/uiKit/Xtextfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 
 class PublishView extends GetView<PublishViewViewController> {
   const PublishView({super.key});
@@ -22,7 +20,7 @@ class PublishView extends GetView<PublishViewViewController> {
             height: 60, // Augmenter la taille du logo
           ),
           flexibleSpace: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [Colors.green, Colors.white],
                 begin: Alignment.topCenter, // Dégradé vertical de haut en bas
@@ -33,7 +31,7 @@ class PublishView extends GetView<PublishViewViewController> {
           backgroundColor: Colors.transparent,
           elevation: 3,
           toolbarHeight: 70,
-          shape: RoundedRectangleBorder(
+          shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(
               bottom: Radius.circular(20),
             ),
@@ -48,17 +46,17 @@ class PublishView extends GetView<PublishViewViewController> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
-                  Text('Déposer une Annonces'),
-                  SizedBox(
+                  const Text('Déposer une Annonces'),
+                  const SizedBox(
                     height: 20,
                   ),
                   XTextField(
                       hintText: 'Nom de la plante',
                       controller: controller.namePlanteTextingController),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   InkWell(
@@ -66,8 +64,8 @@ class PublishView extends GetView<PublishViewViewController> {
                     child: Container(
                       width: 200,
                       height: 50,
-                      color: Color.fromARGB(255, 11, 225, 3),
-                      child: Row(
+                      color: const Color.fromARGB(255, 11, 225, 3),
+                      child: const Row(
                         children: [
                           Icon(
                             Icons.add,
@@ -79,14 +77,14 @@ class PublishView extends GetView<PublishViewViewController> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 5),
+                  const SizedBox(height: 5),
                   InkWell(
                     onTap: controller.pickImageFromCamera,
                     child: Container(
                       width: 200,
                       height: 50,
-                      color: Color.fromARGB(255, 11, 225, 3),
-                      child: Row(
+                      color: const Color.fromARGB(255, 11, 225, 3),
+                      child: const Row(
                         children: [
                           Icon(
                             Icons.file_copy,
@@ -98,7 +96,7 @@ class PublishView extends GetView<PublishViewViewController> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
                   Obx(() {
                     final String? imageFilePath =
                         controller.imageFilePath.value;
@@ -109,7 +107,7 @@ class PublishView extends GetView<PublishViewViewController> {
                             height: 200,
                             fit: BoxFit.cover,
                           )
-                        : Text('Aucune image sélectionnée');
+                        : const Text('Aucune image sélectionnée');
                   }),
                   Padding(
                     padding: const EdgeInsets.symmetric(
@@ -118,7 +116,7 @@ class PublishView extends GetView<PublishViewViewController> {
                       onPressed: () async {
                         controller.test();
                       },
-                      child: Text('Post'),
+                      child:  Text('Post'),
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -132,7 +130,7 @@ class PublishView extends GetView<PublishViewViewController> {
             ),
           ),
         ),
-        bottomNavigationBar: XNavbar(userId: controller.userId.value, currentIndex: 2,)
+        bottomNavigationBar: XNavbar(token: controller.token.value, currentIndex: 2,)
     );
   }
 }

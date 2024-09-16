@@ -70,10 +70,10 @@ class HomeView extends GetView<HomeViewController> {
                   itemCount: controller.listPlant.length,
                   itemBuilder: (context, index) {
                     String imagePath = controller.listPlant[index].image;
-                    String imageUrl = 'http://192.168.1.40:8000/'+imagePath;
+                    String imageUrl = 'http://192.168.245.105:8000/'+imagePath;
                     return InkWell(
                       onTap: () {
-                         Get.offAllNamed('plantView',arguments: controller.listPlant[index]);
+                         Get.toNamed('plantView',arguments: [controller.listPlant[index],controller.token]);
                       },
                       child: Card(
                         child: Center(
@@ -104,7 +104,7 @@ class HomeView extends GetView<HomeViewController> {
           ),
         ],
       ),
-      bottomNavigationBar: XNavbar(userId: controller.userId.value!, currentIndex: 0),
+      bottomNavigationBar: XNavbar(token: controller.token ?? controller.userId, currentIndex: 0),
     );
   }
 }

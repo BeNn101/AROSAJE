@@ -1,4 +1,4 @@
-import 'package:arosaje_mobile/uiKit/XNavbar.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:arosaje_mobile/cardPage/cardPageController.dart';
@@ -9,29 +9,44 @@ class CardPage extends GetView<CardPageController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          "Arrosaje",
-          style: TextStyle(
-            fontFamily: 'Roboto',
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
+        leading: Builder(
+    builder: (BuildContext context) {
+      return IconButton(
+        icon: const Icon(Icons.arrow_back),
+        onPressed: () {  Get.offAllNamed('home',arguments: controller.token.value); },
+        tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+      );
+    },
+  ),
+          centerTitle: true,
+          title: Image.asset(
+            'lib/assets/logo.png', // Assurez-vous que votre logo est dans le répertoire 'assets' et référencé dans pubspec.yaml
+            height: 60, // Augmenter la taille du logo
           ),
-        ),
-        backgroundColor: const Color.fromARGB(255, 11, 225, 3),
-        elevation: 3,
-        toolbarHeight: 70,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(20),
+          flexibleSpace: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.green, Colors.white],
+                begin: Alignment.topCenter, // Dégradé vertical de haut en bas
+                end: Alignment.bottomCenter,
+              ),
+            ),
           ),
-        ),
+          backgroundColor: Colors.transparent,
+          elevation: 3,
+          toolbarHeight: 70,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              bottom: Radius.circular(20), 
+            ))
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
               flex: 2,
@@ -45,7 +60,7 @@ class CardPage extends GetView<CardPageController> {
                         color: Colors.grey.withOpacity(0.5),
                         spreadRadius: 5,
                         blurRadius: 7,
-                        offset: Offset(0, 3),
+                        offset: const Offset(0, 3),
                       ),
                     ],
                   ),
@@ -57,7 +72,7 @@ class CardPage extends GetView<CardPageController> {
                         if (loadingProgress == null) {
                           return child;
                         }
-                        return Center(child: CircularProgressIndicator());
+                        return const Center(child: CircularProgressIndicator());
                       },
                     ),
                   ),
@@ -71,7 +86,7 @@ class CardPage extends GetView<CardPageController> {
                 child: Text(
                   controller.imageTitle!,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontFamily: 'Roboto',
                     fontSize: 20,
                     fontWeight: FontWeight.w500,
@@ -88,20 +103,23 @@ class CardPage extends GetView<CardPageController> {
                   onPressed: () async {
                     // Your action here
                   },
-                  child: Text(
-                    'Envoyer message',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
+                    padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
                     shadowColor: Colors.grey.withOpacity(0.5),
-                    elevation: 5,
+                    elevation: 2,
+                  ),
+                  child: InkWell(
+                    onTap: () => controller.register(),
+                    child: const Text(
+                      'Envoyer message',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -109,10 +127,10 @@ class CardPage extends GetView<CardPageController> {
           ],
         ),
       ),
-      bottomNavigationBar: XNavbar(
-        userId: controller.userId.value,
+     /*  bottomNavigationBar: XNavbar(
+        token: controller.token.value,
         currentIndex: 4,
-      ),
+      ), */
     );
   }
 }

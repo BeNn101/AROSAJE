@@ -3,12 +3,12 @@ import 'package:get/get.dart';
 
 class XNavbar extends StatefulWidget {
   int currentIndex;
-  final int userId;
+  final String token;
 
   XNavbar({
     Key? key,
     required this.currentIndex,
-    required this.userId,
+    required this.token,
   }) : super(key: key);
 
   @override
@@ -81,19 +81,19 @@ class _XNavbarState extends State<XNavbar> {
     try {
       switch (value) {
         case 0:
-          Get.toNamed('/home', arguments: {'userId': widget.userId});
+          Get.toNamed('/home', arguments: {'token': widget.token});
           break;
         case 1:
-          Get.toNamed('/account', arguments: {'userId': widget.userId});
+          Get.toNamed('/account', arguments: {'token': widget.token});
           break;
         case 2:
-          Get.toNamed('/publish', arguments: {'userId': widget.userId});
+          Get.toNamed('/publish', arguments: {'token': widget.token});
           break;
         case 3:
-          Get.toNamed('/map', arguments: {'userId': widget.userId});
+          Get.toNamed('/map', arguments: {'token': widget.token});
           break;
         case 4:
-          Get.toNamed('/message', arguments: {'userId': widget.userId});
+          Get.toNamed('/message', arguments: {'token': widget.token});
           break;
       }
     } catch (exception, stackTrace) {

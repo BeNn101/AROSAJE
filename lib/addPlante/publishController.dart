@@ -12,19 +12,20 @@ import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
 
 class PublishViewViewController extends GetxController {
-  var userId = 0
-      .obs; // Utilisez Rx<int> si vous souhaitez que les modifications soient observables.
+  var token = ''.obs; 
   TextEditingController namePlanteTextingController = TextEditingController();
   TextEditingController namePlanteTexting = TextEditingController();
   TextEditingController localisationTexting = TextEditingController();
   Rx<Uint8List?> imageBytes = Rx<Uint8List?>(null);
   LatLng currentLocation = LatLng(0, 0);
+   User? currentUser;
 
   @override
   void onInit() {
     super.onInit();
     getLocation();
-    userId.value = Get.arguments['userId'] ?? 0;
+    token.value = Get.arguments['token'] ?? 0;
+    getCurrentUser();
   }
 
   final ImagePicker _picker = ImagePicker();
@@ -56,7 +57,7 @@ class PublishViewViewController extends GetxController {
 
   Future<void> createPlante() async {
     
-  final url = Uri.parse('http://192.168.1.40:8000/api/plantes');
+  final url = Uri.parse('http://192.168.245.105:8000/api/plantes');
 
     var imageBase64 = base64Encode(imageBytes.value!);
 
@@ -67,7 +68,7 @@ class PublishViewViewController extends GetxController {
           '${imageBase64}', // Assurez-vous que imageFilePath contient le chemin valide de l'image
       'localisation': 'currentLocation',
       'id_user':
-          userId.value, // Assurez-vous que userId contient une valeur valide
+        currentUser?.idUser, // Assurez-vous que userId contient une valeur valide
       // Ajoutez d'autres données si nécessaire
     };
 
@@ -103,4 +104,22 @@ class PublishViewViewController extends GetxController {
       print("Error: $e");
     }
   }
+
+  Future<void> getCurrentUser() async {
+
+  final url = Uri.parse('http://192.168.245.105:8000/api/me'); 
+  final response = await http.get(
+    url,
+    headers: {
+      'Authorization': 'Bearer ${token.value}',
+    },
+  );
+  if (response.statusCode == 200) {
+    final Map<String, dynamic> user = json.decode(response.body);
+    currentUser = User.fromJson(user['user']);
+  } else {
+    Get.offAllNamed('login');
+    throw Exception('Erreur de chargement des données : ${response.statusCode}');
+  }
+}
 }
