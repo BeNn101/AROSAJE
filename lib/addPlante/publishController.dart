@@ -57,7 +57,7 @@ class PublishViewViewController extends GetxController {
 
   Future<void> createPlante() async {
     
-  final url = Uri.parse('http://192.168.245.105:8000/api/plantes');
+  final url = Uri.parse('http://192.168.1.4:8000/api/plantes');
 
     var imageBase64 = base64Encode(imageBytes.value!);
 
@@ -107,7 +107,7 @@ class PublishViewViewController extends GetxController {
 
   Future<void> getCurrentUser() async {
 
-  final url = Uri.parse('http://192.168.245.105:8000/api/me'); 
+  final url = Uri.parse('http://192.168.1.4:8000/api/me'); 
   final response = await http.get(
     url,
     headers: {

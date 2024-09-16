@@ -7,7 +7,7 @@ import 'dart:convert';
 
 import 'package:arosaje_mobile/freeze/chatHistorical.dart';
 
-class MessageViewController extends GetxController {
+class ChatViewController extends GetxController {
   var token =''.obs;
   var listMessage = RxList<ChatHistorical>();
   var listMessageHistorical = RxList<ChatHistorical>();
@@ -18,19 +18,19 @@ class MessageViewController extends GetxController {
 
   @override
   void onInit() {
-        token.value = Get.arguments['token'] ?? 0;
+        token.value = Get.arguments[1];
+        selectedRecipientId = Get.arguments[0];
     getCurrentUser();
     super.onInit();
     getMessage(); 
+
 
   }
   @override
 void onReady() async {
   super.onReady();
   await getCurrentUser();
-  if (currentUser != null) {
-    getChatsByUser(currentUser!.idUser);
-  }
+      getChatHistorical(selectedRecipientId,currentUser!.idUser);
 }
   
   Future<void> getMessage() async {
@@ -57,6 +57,7 @@ void onReady() async {
     final List<dynamic> r = json.decode(response.body);
     listMessageHistorical.assignAll(
       r.map((message) => ChatHistorical.fromJson(message)).toList(),
+
     );
   } else {
     Get.snackbar('Erreur', 'Impossible de charger les messages');
@@ -107,32 +108,4 @@ void onReady() async {
   }
 }
 
-Future<void> getChatsByUser(int idUser) async {
-  final url = Uri.parse('http://192.168.1.4:8000/api/chats/$idUser');
-  final response = await http.get(url);
-
-  if (response.statusCode == 200) {
-    final List<dynamic> chatData = json.decode(response.body);
-    // Traite les données comme tu le souhaites, par exemple assigner à une liste
-    List<Chat> chats = chatData.map((data) => Chat.fromJson(data)).toList();
-   listUserMessage.value=chats;
-   print('${listUserMessage.value}');
-  } else {
-    Get.snackbar('Erreur', 'Impossible de récupérer les chats');
-  }
-}
-Future<void> getUserRecipient(int i, int recipientId) async {
-    final url = Uri.parse('http://192.168.1.4:8000/api/users/$recipientId');
-    final response = await http.get(url);
-
-    if (response.statusCode == 200) {
-      final userData = json.decode(response.body);
-      currentUser = User.fromJson(userData);
-      listUserMessage[i].copyWith(name_recipient: currentUser!.firstName);
-      // Informe GetX que les valeurs ont été mises à jour
-      update();
-    } else {
-      throw Exception('Failed to load user data');
-    }
-  }
 }

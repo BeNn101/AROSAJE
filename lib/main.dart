@@ -4,13 +4,14 @@ import 'package:arosaje_mobile/accountpage/accountView.dart';
 import 'package:arosaje_mobile/accountpage/accountViewControllerBlindings.dart';
 import 'package:arosaje_mobile/addPlante/publishBlindigs.dart';
 import 'package:arosaje_mobile/addPlante/publishView.dart';
+import 'package:arosaje_mobile/chat/chatBlindings.dart';
 import 'package:arosaje_mobile/homepage/homeBindings.dart';
 import 'package:arosaje_mobile/homepage/homeView.dart';
 import 'package:arosaje_mobile/logPage/loginBindings.dart';
 import 'package:arosaje_mobile/logPage/loginView.dart';
 import 'package:arosaje_mobile/mappage/mapBindings.dart';
 import 'package:arosaje_mobile/mappage/mapView.dart';
-import 'package:arosaje_mobile/messagepage/chat.dart';
+import 'package:arosaje_mobile/chat/chat.dart';
 import 'package:arosaje_mobile/messagepage/messageView.dart';
 import 'package:arosaje_mobile/rgpdpage/rgpdpageView.dart';
 import 'package:arosaje_mobile/messagepage/messageViewControllerBlindings.dart';
@@ -83,7 +84,7 @@ class MainApp extends StatelessWidget {
           name: '/chat',
           title: 'Chat',
           page: () => ChatView(),
-          binding: RegisterBindings(),
+          binding: ChatBindings(),
         ),
         GetPage(
           name: '/plantView',

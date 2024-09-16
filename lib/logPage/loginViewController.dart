@@ -24,7 +24,7 @@ class LoginViewController extends GetxController {
   }
 
   Future<void> getUsers() async {
-    final url = Uri.parse('http://192.168.245.105:8000/api/users/alluser');
+    final url = Uri.parse('http://192.168.1.4:8000/api/users/alluser');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -38,7 +38,7 @@ class LoginViewController extends GetxController {
   }
 
    Future<void> postLogin(name, password,currentUSer) async {
-    final url = Uri.parse('http://192.168.245.105:8000/api/login');
+    final url = Uri.parse('http://192.168.1.4:8000/api/login');
     Map<String, dynamic> data = {
       'email': name,
       'mot_de_passe': password,
@@ -55,9 +55,10 @@ class LoginViewController extends GetxController {
        final Map<String, dynamic> data = json.decode(response.body);
     final String token = data['token'];
     print('Token: $token');
+     Get.snackbar('Succes', 'Connection réussi');
         Get.offAllNamed('home',arguments: [currentUSer,token]);
     } else{
-      // Get.snackbar('Erreur', 'Identifiants incorrect');
+       Get.snackbar('Erreur', 'Identifiants incorrect');
     }
   }
 
@@ -75,7 +76,7 @@ for (var i = 0; i < listUser.length; i++) {
 }
 
 if (!userFound) {
-  Get.snackbar('Erreur', 'Identifiants invalides');
+ // Get.snackbar('Erreur', 'Identifiants invalides');
 }
   }
 }
