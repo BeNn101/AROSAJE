@@ -46,46 +46,46 @@ document.getElementById('form').addEventListener('submit', function(event) {
     if (!emailRegex.test(emailInput)) {
         notyf.error("Veuillez entrer une adresse email valide.");
         return;
-    } 
-
-    $.ajax({
-        type: "POST",
-        url: "login_request.js", 
-        data: { email: emailInput, mot_de_passe: mdpInput },
-        dataType: "json",
-        success: function(response) {
-            if (response.success) {
-                
-                window.location.href = '../Homepage/homepage.html';
-            } else {
-                notyf.error("Erreur: " + response.error);
-            }
-        },
-        error: function(xhr, status, error) {
-            console.error(xhr.responseText);
-        }
-    });
+    }
 });
 
 $("form").submit((event) => {
     event.preventDefault();
+    
     $.ajax({
-        url:"../../Back/Login/login.php",
+        url: "http://172.20.10.7:8000/api/login",
         type: "POST",
-        dataType:"json",
+        dataType: "json",
+        timeout: 5000, // Délai d'attente de 5 secondes avant de considérer que l'API ne répond pas
         data: {
             email: $("#emailInput").val(),
             mot_de_passe: $("#mot_de_passe").val(),
         },
-        success: (res) => {
-            console.log(res)
-            if (res.success) {
-                localStorage.setItem("user",JSON.stringify(res.user));
-                // window.location.replace("http://localhost/Projet_Arosaje/AROSAJE/Front/Homepage/homepage.html");
-                window.location.replace("http://localhost/AROSAJE/Front/Homepage/homepage.html");
-            }else{
-                notyf.error(res.error);
+        success: (res, textStatus, jqXHR) => {
+            // Récupérer le statut HTTP
+            console.log("HTTP Status:", jqXHR.status);
+
+            if (jqXHR.status == 200) {
+                localStorage.setItem("user", JSON.stringify(res.user));
+                window.location.replace(`http://localhost/AROSAJE/Front/Homepage/homepage.html?token=${encodeURIComponent(res['token'])}`);
+            } else {
+                console.log("API status message:", res.status || "Aucune information de statut");
+                notyf.error(res.status || "Une erreur s'est produite");
+            }
+        },
+        error: (jqXHR, textStatus, errorThrown) => {
+            console.log("HTTP Status Error:", jqXHR.status);
+
+            if (textStatus === "timeout") {
+                // Gestion du timeout
+                notyf.error("Le serveur ne répond pas. Veuillez réessayer plus tard.");
+            } else if (jqXHR.status === 0) {
+                // Le serveur est probablement hors ligne
+                notyf.error("Impossible de contacter le serveur.");
+            } else {
+                // Autre type d'erreur (réseau, serveur, etc.)
+                notyf.error(`Erreur : ${jqXHR.status} - ${errorThrown}`);
             }
         }
-    })
-})
+    });
+});
