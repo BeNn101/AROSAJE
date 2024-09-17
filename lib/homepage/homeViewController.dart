@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:arosaje_mobile/freeze/user.dart';
 import 'package:arosaje_mobile/homepage/widget/XcustomShearch.dart';
 import 'package:arosaje_mobile/uiKit/const.dart';
 import 'package:flutter/material.dart';
@@ -14,28 +15,29 @@ class HomeViewController extends GetxController {
   late File imageFile; 
   RxBool isSkeletonLoader= true.obs;
   String ip =Constants.ipAddress;
+  var currentUser = Rx<User?>(null);
   var token;
   @override
   void onInit() {
-    super.onInit();
     getAllPlant();
     final argument = Get.arguments;
     if (argument is Map<String, dynamic> && argument.containsKey('userId')) {
-      userId.value = argument['userId'];
+      userId = argument['userId'];
     } else if (argument is int) {
-      userId.value = argument;
+      userId = argument;
     } else {
     
       userId = argument[1];
       token=argument[1];
-      print("Erreur: L'userId n'est pas fourni dans les arguments de navigation.");
+       getCurrentUser();
+          super.onInit();
     }
     isSkeletonLoader.value=false;
   }
 
   Future<void> getAllPlant() async {
     try {
-      final url = Uri.parse('http://192.168.1.4:8000/api/getAllPlantes');
+      final url = Uri.parse('http://172.16.1.148:8000/api/getAllPlantes');
       final response = await http.get(url);
       if (response.statusCode == 200) {
         final List<dynamic> plantData = json.decode(response.body);
@@ -59,7 +61,7 @@ class HomeViewController extends GetxController {
 
   Future<void> getCurrentUser() async {
 
-  final url = Uri.parse('http://192.168.1.4:8000/api/me'); 
+  final url = Uri.parse('http://172.16.1.148:8000/api/me'); 
   final response = await http.get(
     url,
     headers: {
@@ -69,11 +71,13 @@ class HomeViewController extends GetxController {
 
   if (response.statusCode == 200) {
     final Map<String, dynamic> user = json.decode(response.body);
+        currentUser.value = User.fromJson(user['user']);
   } else {
      Get.offAllNamed('login');
     throw Exception('Erreur de chargement des données : ${response.statusCode}');
   }
 }
+
 
 
   

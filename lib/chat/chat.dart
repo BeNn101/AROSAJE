@@ -94,9 +94,12 @@ class ChatView extends GetView<ChatViewController> {
   ),
 ),
 
-      bottomNavigationBar: XNavbar(
-        token: controller.token.value,
-        currentIndex: 4,
+      bottomNavigationBar: Obx(()
+        => XNavbar(
+          token: controller.token.value,
+          currentIndex: 4,
+          isadmin: controller.currentUser?.userType,
+        ),
       ),
     );
   }

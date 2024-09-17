@@ -13,13 +13,12 @@ class MessageViewController extends GetxController {
   var listMessageHistorical = RxList<ChatHistorical>();
   var listUserMessage = RxList<Chat>();
   var selectedRecipientId;
-  User? currentUser;
+     var currentUser = Rx<User?>(null);
   TextEditingController message = TextEditingController();
 
   @override
   void onInit() {
         token.value = Get.arguments['token'] ?? 0;
-    getCurrentUser();
     super.onInit();
     getMessage(); 
 
@@ -28,13 +27,13 @@ class MessageViewController extends GetxController {
 void onReady() async {
   super.onReady();
   await getCurrentUser();
-  if (currentUser != null) {
-    getChatsByUser(currentUser!.idUser);
+  if (currentUser.value != null) {
+    getChatsByUser(currentUser.value!.idUser);
   }
 }
   
   Future<void> getMessage() async {
-    final url = Uri.parse('http://192.168.1.4:8000/api/getAllMessages');
+    final url = Uri.parse('http://172.16.1.148:8000/api/getAllMessages');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -49,7 +48,7 @@ void onReady() async {
 
    Future<void> getChatHistorical(int idRecipient, int idUser) async {
   // Construire l'URL avec les paramètres idRecipient et idUser
-  final url = Uri.parse('http://192.168.1.4:8000/api/chatHistorical?id_user=$idUser&id_destinataire=$idRecipient');
+  final url = Uri.parse('http://172.16.1.148:8000/api/chatHistorical?id_user=$idUser&id_destinataire=$idRecipient');
   
   final response = await http.get(url);
 
@@ -65,9 +64,9 @@ void onReady() async {
 }
 
   Future<void> postMessage(message, int idDestinataire) async {
-    final url = Uri.parse('http://192.168.1.4:8000/api/postMessages');
+    final url = Uri.parse('http://172.16.1.148:8000/api/postMessages');
     Map<String, dynamic> data = {
-      'id_user': currentUser?.idUser,
+      'id_user': currentUser.value?.idUser,
       'id_destinataire': idDestinataire,
       'message': message,
       'image': 'l'
@@ -89,7 +88,7 @@ void onReady() async {
 
   Future<void> getCurrentUser() async {
 
-  final url = Uri.parse('http://192.168.1.4:8000/api/me'); 
+  final url = Uri.parse('http://172.16.1.148:8000/api/me'); 
   final response = await http.get(
     url,
     headers: {
@@ -99,7 +98,7 @@ void onReady() async {
 
   if (response.statusCode == 200) {
     final Map<String, dynamic> user = json.decode(response.body);
-    currentUser = User.fromJson(user['user']);
+    currentUser.value = User.fromJson(user['user']);
 
   } else {
      Get.offAllNamed('login');
@@ -108,7 +107,7 @@ void onReady() async {
 }
 
 Future<void> getChatsByUser(int idUser) async {
-  final url = Uri.parse('http://192.168.1.4:8000/api/chats/$idUser');
+  final url = Uri.parse('http://172.16.1.148:8000/api/chats/$idUser');
   final response = await http.get(url);
 
   if (response.statusCode == 200) {
@@ -122,13 +121,13 @@ Future<void> getChatsByUser(int idUser) async {
   }
 }
 Future<void> getUserRecipient(int i, int recipientId) async {
-    final url = Uri.parse('http://192.168.1.4:8000/api/users/$recipientId');
+    final url = Uri.parse('http://172.16.1.148:8000/api/users/$recipientId');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
       final userData = json.decode(response.body);
-      currentUser = User.fromJson(userData);
-      listUserMessage[i].copyWith(name_recipient: currentUser!.firstName);
+      /* currentUser.value = User.fromJson(userData);
+      listUserMessage[i].copyWith(name_recipient: currentUser.value!.firstName); */
       // Informe GetX que les valeurs ont été mises à jour
       update();
     } else {

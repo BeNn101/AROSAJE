@@ -4,6 +4,8 @@ import 'package:arosaje_mobile/accountpage/accountView.dart';
 import 'package:arosaje_mobile/accountpage/accountViewControllerBlindings.dart';
 import 'package:arosaje_mobile/addPlante/publishBlindigs.dart';
 import 'package:arosaje_mobile/addPlante/publishView.dart';
+import 'package:arosaje_mobile/adminPage/adminPage.dart';
+import 'package:arosaje_mobile/adminPage/adminPageBlindings.dart';
 import 'package:arosaje_mobile/chat/chatBlindings.dart';
 import 'package:arosaje_mobile/homepage/homeBindings.dart';
 import 'package:arosaje_mobile/homepage/homeView.dart';
@@ -91,6 +93,12 @@ class MainApp extends StatelessWidget {
           title: 'PlantView',
           page: () => CardPage(),
           binding: CardBindings(),
+        ),
+        GetPage(
+          name: '/admin',
+          title: 'Admin',
+          page: () => AdminPageView(),
+          binding: AdminPageBindings(),
         ),
         GetPage(name: '/cgu', page: () => RgpdView()),
       ],

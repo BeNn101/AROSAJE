@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 
 
 class CardPageController extends GetxController {
-  var token = ''.obs;
+  var token = '';
   
   String? imageUrl ;
   String? imageTitle ;
@@ -19,12 +19,12 @@ var currentUser = Rx<User?>(null);
 
   @override
   void onInit() {
-    token.value= Get.arguments[1];
+    token= Get.arguments[1];
     plant = Get.arguments[0];
     getCurrentUser();
     getCurrentUserRecipient();
     if (plant!.image.isNotEmpty) {
-    imageUrl = 'http://192.168.1.4:8000/' + plant!.image;
+    imageUrl = 'http://172.16.1.148:8000/' + plant!.image;
   }
   imageTitle=plant!.namePlante;
     //userId.value = Get.arguments['userId'] ?? 0;
@@ -34,7 +34,7 @@ var currentUser = Rx<User?>(null);
   
    Future<void> register() async {
     
-  final url = Uri.parse('http://192.168.1.4:8000/api/chats/insert');
+  final url = Uri.parse('http://172.16.1.148:8000/api/chats/insert');
 
     Map<String, dynamic> data = {
      'id_user' : currentUser.value?.idUser,
@@ -61,11 +61,11 @@ var currentUser = Rx<User?>(null);
   
   Future<void> getCurrentUser() async {
 
-  final url = Uri.parse('http://192.168.1.4:8000/api/me'); 
+  final url = Uri.parse('http://172.16.1.148:8000/api/me'); 
   final response = await http.get(
     url,
     headers: {
-      'Authorization': 'Bearer ${token.value}',
+      'Authorization': 'Bearer ${token}',
     },
   );
   if (response.statusCode == 200) {
@@ -78,7 +78,7 @@ var currentUser = Rx<User?>(null);
 }
 
  Future<void> getCurrentUserRecipient() async {
-    final url = Uri.parse('http://192.168.1.4:8000/api/users/${plant?.idUser}');
+    final url = Uri.parse('http://172.16.1.148:8000/api/users/${plant?.idUser}');
     final response = await http.get(url);
    print(response);
     if (response.statusCode == 200) {

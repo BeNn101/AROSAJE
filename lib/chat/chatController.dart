@@ -34,7 +34,7 @@ void onReady() async {
 }
   
   Future<void> getMessage() async {
-    final url = Uri.parse('http://192.168.1.4:8000/api/getAllMessages');
+    final url = Uri.parse('http://172.16.1.148:8000/api/getAllMessages');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -49,7 +49,7 @@ void onReady() async {
 
    Future<void> getChatHistorical(int idRecipient, int idUser) async {
   // Construire l'URL avec les paramètres idRecipient et idUser
-  final url = Uri.parse('http://192.168.1.4:8000/api/chatHistorical?id_user=$idUser&id_destinataire=$idRecipient');
+  final url = Uri.parse('http://172.16.1.148:8000/api/chatHistorical?id_user=$idUser&id_destinataire=$idRecipient');
   
   final response = await http.get(url);
 
@@ -66,7 +66,7 @@ void onReady() async {
 }
 
   Future<void> postMessage(message, int idDestinataire) async {
-    final url = Uri.parse('http://192.168.1.4:8000/api/postMessages');
+    final url = Uri.parse('http://172.16.1.148:8000/api/postMessages');
     Map<String, dynamic> data = {
       'id_user': currentUser?.idUser,
       'id_destinataire': idDestinataire,
@@ -90,7 +90,7 @@ void onReady() async {
 
   Future<void> getCurrentUser() async {
 
-  final url = Uri.parse('http://192.168.1.4:8000/api/me'); 
+  final url = Uri.parse('http://172.16.1.148:8000/api/me'); 
   final response = await http.get(
     url,
     headers: {

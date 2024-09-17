@@ -108,7 +108,7 @@ class MessageView extends GetView<MessageViewController> {
         ],
       ),
       bottomNavigationBar:
-          XNavbar(token: controller.token.value, currentIndex: 4),
+          Obx(()=> XNavbar(token: controller.token.value, currentIndex: 4,isadmin: controller.currentUser.value?.userType,)),
     );
   }
 }

@@ -4,11 +4,13 @@ import 'package:get/get.dart';
 class XNavbar extends StatefulWidget {
   int currentIndex;
   final String token;
+  final int? isadmin; 
 
   XNavbar({
     Key? key,
     required this.currentIndex,
     required this.token,
+     this.isadmin,
   }) : super(key: key);
 
   @override
@@ -44,6 +46,12 @@ class _XNavbarState extends State<XNavbar> {
         icon: Icon(Icons.chat_bubble_outline),
         label: '',
       ),
+      if(widget.isadmin==4)...[
+         BottomNavigationBarItem(
+        icon: Icon(Icons.settings),
+        label: '',
+      ),
+      ]
     ];
 
     return Container(
@@ -59,7 +67,7 @@ class _XNavbarState extends State<XNavbar> {
         showUnselectedLabels: true,
         selectedItemColor: Colors.green,
         unselectedItemColor: Get.theme.hintColor,
-        currentIndex: widget.currentIndex,
+        currentIndex: widget.currentIndex < items.length ? widget.currentIndex : 0,
         onTap: (value) {
           if (widget.currentIndex != value) toPage(value);
         },
@@ -94,6 +102,9 @@ class _XNavbarState extends State<XNavbar> {
           break;
         case 4:
           Get.toNamed('/message', arguments: {'token': widget.token});
+          break;
+        case 5:
+          Get.toNamed('/admin', arguments: {'token': widget.token});
           break;
       }
     } catch (exception, stackTrace) {

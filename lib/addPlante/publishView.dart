@@ -130,7 +130,7 @@ class PublishView extends GetView<PublishViewViewController> {
             ),
           ),
         ),
-        bottomNavigationBar: XNavbar(token: controller.token.value, currentIndex: 2,)
+        bottomNavigationBar: Obx(()=> XNavbar(token: controller.token.value, currentIndex: 2,isadmin: controller.currentUser.value?.userType,))
     );
   }
 }

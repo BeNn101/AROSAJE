@@ -186,7 +186,7 @@ class AccountView extends GetView<AccountViewController> {
                         itemBuilder: (context, index) {
                           String imagePath =
                               controller.listUserMyPlant[index].image;
-                          String imageUrl = 'http://localhost:8000/' + imagePath;
+                          String imageUrl = 'http://172.16.1.148:8000/' + imagePath;
                           if (controller.listUserMyPlant[index].idUser ==
                               controller.currentUser.value?.idUser) {
                             return Card(
@@ -229,7 +229,7 @@ class AccountView extends GetView<AccountViewController> {
         ),
       ),
       bottomNavigationBar:
-          XNavbar(token: controller.token.value, currentIndex: 1),
+          Obx(()=> XNavbar(token: controller.token.value, currentIndex: 1,isadmin: controller.currentUser.value?.userType,)),
     );
   }
 }
