@@ -23,12 +23,12 @@ class HomeViewController extends GetxController {
     final argument = Get.arguments;
     if (argument is Map<String, dynamic> && argument.containsKey('userId')) {
       userId = argument['userId'];
-    } else if (argument is int) {
-      userId = argument;
+    } else if (argument is String) {
+      token = argument;
     } else {
     
       userId = argument[1];
-      token=argument[1];
+      token=argument[1] ;
        getCurrentUser();
           super.onInit();
     }
