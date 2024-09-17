@@ -186,7 +186,7 @@ class AccountView extends GetView<AccountViewController> {
                         itemBuilder: (context, index) {
                           String imagePath =
                               controller.listUserMyPlant[index].image;
-                          String imageUrl = 'http://172.16.1.148:8000/' + imagePath;
+                          String imageUrl = 'http://192.168.1.4:8000/' + imagePath;
                           if (controller.listUserMyPlant[index].idUser ==
                               controller.currentUser.value?.idUser) {
                             return Card(

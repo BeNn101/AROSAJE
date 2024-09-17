@@ -24,7 +24,7 @@ class LoginViewController extends GetxController {
   }
 
   Future<void> getUsers() async {
-    final url = Uri.parse('http://172.16.1.148:8000/api/users/alluser');
+    final url = Uri.parse('http://192.168.1.4:8000/api/users/alluser');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -38,7 +38,7 @@ class LoginViewController extends GetxController {
   }
 
    Future<void> postLogin(name, password,currentUSer) async {
-    final url = Uri.parse('http://172.16.1.148:8000/api/login');
+    final url = Uri.parse('http://192.168.1.4:8000/api/login');
     Map<String, dynamic> data = {
       'email': name,
       'mot_de_passe': password,

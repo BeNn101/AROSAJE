@@ -98,6 +98,7 @@ class CardPage extends GetView<CardPageController> {
         child: ElevatedButton(
           onPressed: () async {
             // Your action here
+            controller.register();
           },
           style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(

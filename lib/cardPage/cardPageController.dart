@@ -24,7 +24,7 @@ var currentUser = Rx<User?>(null);
     getCurrentUser();
     getCurrentUserRecipient();
     if (plant!.image.isNotEmpty) {
-    imageUrl = 'http://172.16.1.148:8000/' + plant!.image;
+    imageUrl = 'http://192.168.1.4:8000/' + plant!.image;
   }
   imageTitle=plant!.namePlante;
     //userId.value = Get.arguments['userId'] ?? 0;
@@ -34,7 +34,7 @@ var currentUser = Rx<User?>(null);
   
    Future<void> register() async {
     
-  final url = Uri.parse('http://172.16.1.148:8000/api/chats/insert');
+  final url = Uri.parse('http://192.168.1.4:8000/api/chats/insert');
 
     Map<String, dynamic> data = {
      'id_user' : currentUser.value?.idUser,
@@ -61,7 +61,7 @@ var currentUser = Rx<User?>(null);
   
   Future<void> getCurrentUser() async {
 
-  final url = Uri.parse('http://172.16.1.148:8000/api/me'); 
+  final url = Uri.parse('http://192.168.1.4:8000/api/me'); 
   final response = await http.get(
     url,
     headers: {
@@ -78,7 +78,7 @@ var currentUser = Rx<User?>(null);
 }
 
  Future<void> getCurrentUserRecipient() async {
-    final url = Uri.parse('http://172.16.1.148:8000/api/users/${plant?.idUser}');
+    final url = Uri.parse('http://192.168.1.4:8000/api/users/${plant?.idUser}');
     final response = await http.get(url);
    print(response);
     if (response.statusCode == 200) {

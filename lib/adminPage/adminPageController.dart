@@ -27,7 +27,7 @@ void onReady() async {
 
   Future<void> getCurrentUser() async {
 
-  final url = Uri.parse('http://172.16.1.148:8000/api/me'); 
+  final url = Uri.parse('http://192.168.1.4:8000/api/me'); 
   final response = await http.get(
     url,
     headers: {
@@ -46,7 +46,7 @@ void onReady() async {
 }
 
  Future<void> getUsers() async {
-    final url = Uri.parse('http://172.16.1.148:8000/api/users/alluser');
+    final url = Uri.parse('http://192.168.1.4:8000/api/users/alluser');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -60,7 +60,7 @@ void onReady() async {
   }
 
    Future<void> deleteUser(int idUser) async {
-    final url = Uri.parse('http://172.16.1.148:8000/api/usersDelete/$idUser');
+    final url = Uri.parse('http://192.168.1.4:8000/api/usersDelete/$idUser');
     final response = await http.delete(url);
 
     if (response.statusCode == 200) {

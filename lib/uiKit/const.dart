@@ -1,3 +1,3 @@
 class Constants {
-  static const String ipAddress = '172.16.1.148';
+  static const String ipAddress = '192.168.1.4';
 }
