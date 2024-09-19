@@ -1,570 +1,365 @@
+
 const notyf = new Notyf({
   duration: 10000,
   position: {
-    x: "right",
-    y: "top",
-  },
+      x: 'right',
+      y: 'top',
+  }
 });
+
+function redirectWithToken(page) {
+  let token = new URLSearchParams(window.location.search).get('token') || localStorage.getItem('token');
+  if (token) {
+      window.location.href = `${page}?token=${token}`;
+  } else {
+      console.error('Token is missing or invalid');
+  }
+}
 
 function getParams() {
   const params = new URLSearchParams(window.location.search);
-  const token = params.get('token');
-
-  console.log("Token:", token);
+  const token = params.get('token') || localStorage.getItem('token');
 
   if (!token) {
       console.error("Token is missing or invalid");
+      window.location.replace("http://localhost/AROSAJE/Front/LoginPage/login.html");
       return;
   }
 
-  // Définir un délai d'attente (timeout)
-  const fetchWithTimeout = (url, options, timeout = 5000) => {
-      return Promise.race([
-          fetch(url, options),
-          new Promise((_, reject) =>
-              setTimeout(() => reject(new Error('Timeout')), timeout)
-          )
-      ]);
-  };
+  // Afficher le loader
+  document.getElementById('loader').style.display = 'block';
 
-  // Utilisation de fetch avec timeout
-  fetchWithTimeout("http://172.20.10.7:8000/api/me", {
+  fetchWithTimeout("http://172.16.1.148:8000/api/me", {
       method: "GET",
       headers: {
           'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
       }
-  }, 5000) // Timeout de 5 secondes
+  }, 5000)
   .then(response => {
-      console.log("HTTP Status:", response.status);
       if (response.status === 200) {
           return response.json();
       } else {
-          window.location.replace("http://localhost/AROSAJE/Front/LoginPage/login.html");
           throw new Error(`Unauthorized or failed request with status ${response.status}`);
       }
   })
   .then(data => {
-      console.log("Response data:", data);
-  })
+    // Masquer le loader et afficher les détails du profil
+    document.getElementById('loader').style.display = 'none';
+    document.getElementById('your_profil').style.display = 'block'; 
+
+    // Mettre à jour les informations de profil
+    $("#your_name").text(`${data.user.prenom} ${data.user.nom}`);
+    $("#your_email").text(data.user.email);
+    $("#your_phone").text(`0${data.user.telephone}`);
+
+    // Vérifier si l'utilisateur a un type "admin" (user_type == 4)
+    if (data.user.user_type === 4) {
+        // Ajouter l'onglet Admin avant le bouton de déconnexion
+        const navbarLinks = document.querySelector('.navbar-links');
+        const logoutLink = document.getElementById('logout');
+
+        const adminLink = document.createElement('a');
+        adminLink.href = "javascript:void(0);";
+        adminLink.innerHTML = '<i class="fas fa-cogs"></i> Admin';
+        adminLink.onclick = function() {
+            redirectWithToken('../AdminPage/admin.html');
+        };
+
+        // Insérer avant le bouton de déconnexion
+        navbarLinks.insertBefore(adminLink, logoutLink);
+    }
+
+    // Charger les annonces de l'utilisateur
+    loadUserAnnonces(data.user.id_user);
+})
+
   .catch(error => {
-      if (error.message === 'Timeout') {
-          // Gérer le timeout
-          console.error("Request timed out");
-          notyf.error("Le serveur ne répond pas. Veuillez réessayer plus tard.");
-      } else {
-          // Gérer d'autres types d'erreurs (erreurs réseau, serveur hors ligne, etc.)
-          console.error("Request failed:", error);
-          notyf.error("Impossible de contacter le serveur.");
-      }
+      console.error(error);
+      document.getElementById('loader').style.display = 'none'; // Masquer le loader en cas d'erreur
   });
 }
 
-const ownerPostalCodeInput = document.getElementById("ownerPostalCode");
-const ownerCity = document.getElementById("ownerCity");
-const plantName = document.getElementById("plantName");
-const ownerAddress = document.getElementById("ownerAddress");
 
-function capitalizeFirstLetter(input) {
-  return input
-    .toLowerCase()
-    .split(/\s+/)
-    .map((word) => {
-      let parts = word.split(/(-|')/);
-      parts = parts.map((part) => {
-        if (/^[a-zA-Z]+$/.test(part)) {
-          return part.charAt(0).toUpperCase() + part.slice(1);
-        } else {
-          return part;
-        }
-      });
-      return parts.join("");
-    })
-    .join(" ");
+function fetchWithTimeout(url, options, timeout = 5000) {
+  return Promise.race([
+      fetch(url, options),
+      new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), timeout))
+  ]);
 }
 
-ownerPostalCodeInput.addEventListener("input", function (event) {
-  this.value = this.value.toUpperCase();
-});
+function loadUserAnnonces(userId) {
+  fetch("http://172.16.1.148:8000/api/getAllPlantes")
+  .then(response => response.json())
+  .then(data => {
+      const annonces = data.filter(annonce => annonce.id_user === userId);
+      const noAnnoncesMessage = document.getElementById('no-annonces-message');
+      if (annonces.length === 0) {
+          noAnnoncesMessage.style.display = 'block';
+      } else {
+          noAnnoncesMessage.style.display = 'none';
+          displayAnnonces(annonces);
+      }
+  })
+  .catch(error => {
+      console.error("Erreur lors du chargement des annonces :", error);
+      notyf.error("Erreur lors du chargement des annonces.");
+  });
+}
 
-ownerCity.addEventListener("input", function (event) {
-  this.value = this.value.toUpperCase();
-});
+function displayAnnonces(annonces) {
+  const annoncesContainer = document.getElementById("annoncesContainer");
+  annoncesContainer.innerHTML = '';
 
-ownerAddress.addEventListener("input", function (event) {
-  this.value = capitalizeFirstLetter(this.value);
-});
+  annonces.forEach(annonce => {
+      const annonceContainer = document.createElement("div");
+      annonceContainer.className = "annonce";
 
-plantName.addEventListener("input", function (event) {
-  this.value = capitalizeFirstLetter(this.value);
-});
+      const detailsDiv = document.createElement("div");
+      detailsDiv.className = "annonce-details";
 
-function openTab(evt, tabName) {
-  var i, tabcontent, tabbuttons;
-  tabcontent = document.getElementsByClassName("tab-content");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
+      // Construire l'URL de l'image
+      const imageUrl = `http://172.16.1.148:8000/${annonce.image}`;
+
+      // Récupérer l'adresse en fonction des coordonnées
+      const coords = `${annonce.localisation}`; // Contient latitude et longitude
+      const [lat, lng] = coords.split(', ');
+
+      // Appel à l'API pour récupérer l'adresse
+      geocodeAddress(`${lat}, ${lng}`).then(({ formattedAddress }) => {
+        console.log(formattedAddress);
+        detailsDiv.innerHTML = `
+        <h3>${annonce.name_plante}</h3>
+        <div class="annonce-content">
+            <img src="${imageUrl}" alt="${annonce.name_plante}" class="annonce-img" />
+            <div class="details">
+                <p>Adresse : ${formattedAddress}</p>
+            </div>
+        </div>
+    `;
+    
+
+          annonceContainer.appendChild(detailsDiv);
+          annoncesContainer.appendChild(annonceContainer);
+      }).catch(error => {
+          console.error('Erreur lors de la récupération de l\'adresse:', error);
+          detailsDiv.innerHTML = `
+              <img src="${imageUrl}" alt="${annonce.name_plante}" class="annonce-img" />
+              <h3>${annonce.name_plante}</h3>
+              <p>Adresse : Non trouvée</p>
+          `;
+          annonceContainer.appendChild(detailsDiv);
+          annoncesContainer.appendChild(annonceContainer);
+      });
+  });
+}
+
+
+
+function geocodeAddress(address) {
+  const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`;
+  return fetch(url)
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Erreur lors du géocodage');
+          }
+          return response.json();
+      })
+      .then(data => {
+          if (data.length > 0) {
+              return {
+                  lat: data[0].lat,
+                  lng: data[0].lon,
+                  formattedAddress: data[0].display_name
+              };
+          } else {
+              throw new Error('Aucune adresse trouvée');
+          }
+      });
+}
+
+
+
+
+
+const plantName = document.getElementById("plantName");
+const ownerCity = document.getElementById("ownerCity");
+const plantImage = document.getElementById("plantImage");
+const submitButton = document.getElementById("addAnnonceSubmit");
+
+function checkFormValidity() {
+  const isFormValid = plantName.value.trim() !== "" &&
+                      plantImage.files.length > 0 &&
+                      ownerCity.value.trim() !== "";
+  submitButton.disabled = !isFormValid;
+}
+
+plantName.addEventListener("input", checkFormValidity);
+plantImage.addEventListener("change", checkFormValidity);
+ownerCity.addEventListener("input", checkFormValidity);
+
+document.addEventListener("DOMContentLoaded", function () {
+  loadCountries(); // Charger les pays lorsque le document est prêt
+  const addAnnonceBtn = document.querySelector(".add-plant");
+  const addAnnonceModal = document.getElementById("addAnnonceModal");
+  const closeAddAnnonceModal = document.querySelector("#addAnnonceModal .close");
+  const addAnnonceForm = document.getElementById("addAnnonceForm");
+  let currentUserId = null;
+
+  const token = new URLSearchParams(window.location.search).get('token') || localStorage.getItem('token');
+
+  if (token) {
+      fetchWithTimeout("http://172.16.1.148:8000/api/me", {
+          method: "GET",
+          headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json',
+          }
+      })
+      .then(response => response.json())
+      .then(data => {
+          currentUserId = data.user.id_user; // Assurez-vous que cela correspond à votre structure
+          console.log("Current User ID:", currentUserId);
+      })
+      .catch(error => {
+          console.error("Error fetching user:", error);
+      });
   }
 
+  addAnnonceBtn.addEventListener("click", function () {
+      addAnnonceModal.style.display = "block";
+  });
+
+  closeAddAnnonceModal.addEventListener("click", function () {
+      addAnnonceModal.style.display = "none";
+      addAnnonceForm.reset();
+  });
+
+  window.onclick = function (event) {
+      if (event.target === addAnnonceModal) {
+          addAnnonceModal.style.display = "none";
+          addAnnonceForm.reset();
+      }
+  };
+
+  addAnnonceForm.addEventListener('submit', async function (event) {
+    event.preventDefault();
+
+    const imageFile = plantImage.files[0];
+    if (!imageFile) {
+        notyf.error('Veuillez sélectionner une image.');
+        return;
+    }
+
+    if (!currentUserId) {
+        notyf.error('ID utilisateur manquant.');
+        return;
+    }
+
+    const address = `${ownerAddress.value}, ${ownerCity.value}`; // Utilisez tous les champs nécessaires pour l'adresse
+
+    try {
+        const { lat, lng, formattedAddress } = await geocodeAddress(address);
+
+        const reader = new FileReader();
+        reader.readAsDataURL(imageFile);
+        reader.onloadend = function () {
+            const base64data = reader.result;
+
+            const formData = new FormData();
+            formData.append('name_plante', plantName.value);
+            formData.append('image', base64data.split(',')[1]);
+            formData.append('localisation', `${lat}, ${lng}`); // Enregistrer les coordonnées
+            formData.append('address', formattedAddress); // Enregistrer l'adresse formatée
+            formData.append('id_user', currentUserId);
+
+            fetch('http://172.16.1.148:8000/api/plantes', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                console.log(response);
+                console.log(response.ok);
+                console.log(response.status);
+
+                // Vérifier le statut de la réponse
+                if (response.ok) {
+                    return response.json(); // Retourner les données JSON
+                } else {
+                    throw new Error('Erreur lors de la création de l\'annonce');
+                }
+            })
+            .then(data => {
+                notyf.success('Annonce ajoutée avec succès');
+                addAnnonceModal.style.display = 'none';
+                loadUserAnnonces(currentUserId);
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                notyf.error(`Erreur: ${error.message}`);
+            });
+        };
+
+        reader.onerror = function () {
+            notyf.error('Erreur lors de la lecture de l\'image.');
+        };
+
+    } catch (error) {
+        notyf.error(error.message);
+    }
+});
+
+
+
+
+
+
+});
+function loadCountries() {
+  const countries = [
+      "France", 
+      "USA", 
+      "Canada", 
+      "Germany", 
+      "Spain", 
+      "Italy", 
+      "UK", 
+      "Belgium", 
+      "Netherlands", 
+      "Switzerland"
+  ];
+  const ownerCountrySelect = document.getElementById("ownerCountry");
+
+  countries.forEach(country => {
+      const option = document.createElement("option");
+      option.value = country;
+      option.textContent = country;
+      ownerCountrySelect.appendChild(option);
+  });
+
+  ownerCountrySelect.value = "France"; // Définir la France comme sélection par défaut
+}
+
+// Ajoute cette fonction au début du fichier JavaScript pour s'assurer qu'elle est disponible
+function openTab(evt, tabName) {
+  var i, tabcontent, tabbuttons;
+  
+  // Cache tout le contenu des onglets
+  tabcontent = document.getElementsByClassName("tab-content");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none"; // Cache chaque élément avec la classe "tab-content"
+  }
+
+  // Supprime la classe "active" de tous les boutons
   tabbuttons = document.getElementsByClassName("tab-button");
   for (i = 0; i < tabbuttons.length; i++) {
     tabbuttons[i].className = tabbuttons[i].className.replace(" active", "");
   }
 
+  // Affiche le contenu de l'onglet sélectionné
   document.getElementById(tabName).style.display = "block";
+
+  // Ajoute la classe "active" au bouton cliqué
   evt.currentTarget.className += " active";
 }
 
-function loadCountries() {
-  const countries = [
-    "France",
-    "Afghanistan",
-    "Albania",
-    "Algeria",
-    "Andorra",
-    "Angola",
-    "Antigua and Barbuda",
-    "Argentina",
-    "Armenia",
-    "Australia",
-    "Austria",
-    "Azerbaijan",
-    "Bahamas",
-    "Bahrain",
-    "Bangladesh",
-    "Barbados",
-    "Belarus",
-    "Belgium",
-    "Belize",
-    "Benin",
-    "Bhutan",
-    "Bolivia",
-    "Bosnia and Herzegovina",
-    "Botswana",
-    "Brazil",
-    "Brunei",
-    "Bulgaria",
-    "Burkina Faso",
-    "Burundi",
-    "Cabo Verde",
-    "Cambodia",
-    "Cameroon",
-    "Canada",
-    "Central African Republic",
-    "Chad",
-    "Chile",
-    "China",
-    "Colombia",
-    "Comoros",
-    "Congo",
-    "Costa Rica",
-    "Croatia",
-    "Cuba",
-    "Cyprus",
-    "Czech Republic",
-    "Denmark",
-    "Djibouti",
-    "Dominica",
-    "Dominican Republic",
-    "Ecuador",
-    "Egypt",
-    "El Salvador",
-    "Equatorial Guinea",
-    "Eritrea",
-    "Estonia",
-    "Eswatini",
-    "Ethiopia",
-    "Fiji",
-    "Finland",
-    "France",
-    "Gabon",
-    "Gambia",
-    "Georgia",
-    "Germany",
-    "Ghana",
-    "Greece",
-    "Grenada",
-    "Guatemala",
-    "Guinea",
-    "Guinea-Bissau",
-    "Guyana",
-    "Haiti",
-    "Honduras",
-    "Hungary",
-    "Iceland",
-    "India",
-    "Indonesia",
-    "Iran",
-    "Iraq",
-    "Ireland",
-    "Israel",
-    "Italy",
-    "Jamaica",
-    "Japan",
-    "Jordan",
-    "Kazakhstan",
-    "Kenya",
-    "Kiribati",
-    "Kuwait",
-    "Kyrgyzstan",
-    "Laos",
-    "Latvia",
-    "Lebanon",
-    "Lesotho",
-    "Liberia",
-    "Libya",
-    "Liechtenstein",
-    "Lithuania",
-    "Luxembourg",
-    "Madagascar",
-    "Malawi",
-    "Malaysia",
-    "Maldives",
-    "Mali",
-    "Malta",
-    "Marshall Islands",
-    "Mauritania",
-    "Mauritius",
-    "Mexico",
-    "Micronesia",
-    "Moldova",
-    "Monaco",
-    "Mongolia",
-    "Montenegro",
-    "Morocco",
-    "Mozambique",
-    "Myanmar",
-    "Namibia",
-    "Nauru",
-    "Nepal",
-    "Netherlands",
-    "New Zealand",
-    "Nicaragua",
-    "Niger",
-    "Nigeria",
-    "North Korea",
-    "North Macedonia",
-    "Norway",
-    "Oman",
-    "Pakistan",
-    "Palau",
-    "Palestine",
-    "Panama",
-    "Papua New Guinea",
-    "Paraguay",
-    "Peru",
-    "Philippines",
-    "Poland",
-    "Portugal",
-    "Qatar",
-    "Romania",
-    "Russia",
-    "Rwanda",
-    "Saint Kitts and Nevis",
-    "Saint Lucia",
-    "Saint Vincent and the Grenadines",
-    "Samoa",
-    "San Marino",
-    "Sao Tome and Principe",
-    "Saudi Arabia",
-    "Senegal",
-    "Serbia",
-    "Seychelles",
-    "Sierra Leone",
-    "Singapore",
-    "Slovakia",
-    "Slovenia",
-    "Solomon Islands",
-    "Somalia",
-    "South Africa",
-    "South Korea",
-    "South Sudan",
-    "Spain",
-    "Sri Lanka",
-    "Sudan",
-    "Suriname",
-    "Sweden",
-    "Switzerland",
-    "Syria",
-    "Taiwan",
-    "Tajikistan",
-    "Tanzania",
-    "Thailand",
-    "Timor-Leste",
-    "Togo",
-    "Tonga",
-    "Trinidad and Tobago",
-    "Tunisia",
-    "Turkey",
-    "Turkmenistan",
-    "Tuvalu",
-    "Uganda",
-    "Ukraine",
-    "United Arab Emirates",
-    "United Kingdom",
-    "United States",
-    "Uruguay",
-    "Uzbekistan",
-    "Vanuatu",
-    "Vatican City",
-    "Venezuela",
-    "Vietnam",
-    "Yemen",
-    "Zambia",
-    "Zimbabwe",
-  ];
-
-  const ownerCountrySelect = document.getElementById("ownerCountry");
-
-  countries.forEach(function (country) {
-    const option = document.createElement("option");
-    option.value = country;
-    option.textContent = country;
-    ownerCountrySelect.appendChild(option);
-  });
-
-  ownerCountrySelect.value = "France";
-}
-
-loadCountries();
-
-document.addEventListener("DOMContentLoaded", function () {
-  const addAnnonceBtn = document.querySelector(".add-plant");
-  const addAnnonceModal = document.getElementById("addAnnonceModal");
-  const closeAddAnnonceModal = document.querySelector(
-    "#addAnnonceModal .close"
-  );
-  const decoBtn = document.querySelector(".deco-btn");
-  const addAnnonceForm = document.getElementById("addAnnonceForm");
-  const submitButton = addAnnonceForm.querySelector('button[type="submit"]');
-
-  document.querySelector(".tab-button[onclick*='Compte']").click();
-
-  function validateForm() {
-    let isValid = true;
-    Array.from(addAnnonceForm.elements).forEach(function (element) {
-      if (!element.checkValidity()) {
-        isValid = false;
-      }
-    });
-    submitButton.disabled = !isValid;
-  }
-
-  Array.from(addAnnonceForm.elements).forEach(function (element) {
-    element.addEventListener("input", validateForm);
-  });
-
-  addAnnonceBtn.addEventListener("click", function () {
-    addAnnonceModal.style.display = "block";
-    validateForm();
-  });
-
-  closeAddAnnonceModal.addEventListener("click", function () {
-    addAnnonceModal.style.display = "none";
-    addAnnonceForm.reset();
-    validateForm();
-  });
-
-  decoBtn.addEventListener("click", function () {
-    window.location.href = "../LoginPage/login.html";
-  });
-
-  window.onclick = function (event) {
-    if (event.target == addAnnonceModal) {
-      addAnnonceModal.style.display = "none";
-      addAnnonceForm.reset();
-      validateForm();
-    }
-  };
-
-  document
-    .getElementById("addAnnonceForm")
-    .addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      const plantName = document.getElementById("plantName").value;
-      const ownerAddress = document.getElementById("ownerAddress").value;
-      const ownerPostalCode = document.getElementById("ownerPostalCode").value;
-      const ownerCity = document.getElementById("ownerCity").value;
-      const ownerCountry = document.getElementById("ownerCountry").value;
-      const plantImageFile = document.getElementById("plantImage").files[0];
-
-      const reader = new FileReader();
-      reader.onload = function (event) {
-        const imageSrc = event.target.result;
-
-        const annonce = {
-          plantName,
-          ownerAddress,
-          ownerPostalCode,
-          ownerCity,
-          ownerCountry,
-          imageSrc,
-        };
-
-        $.ajax({
-          url: "../../Back/Plantes/plantes.php",
-          type: "POST",
-          contentType: "application/json",
-          data: JSON.stringify(annonce),
-          success: function (response) {
-            const res = JSON.parse(response);
-            if (res.success) {
-              notyf.success(res.message);
-              addAnnonceModal.style.display = "none";
-              addAnnonceForm.reset();
-              validateForm();
-            } else {
-              notyf.error(res.error);
-            }
-          },
-          error: function (jqXHR, textStatus, errorThrown) {
-            console.error(
-              "Erreur lors de la requête AJAX : ",
-              textStatus,
-              errorThrown
-            );
-          },
-        });
-      };
-
-      if (plantImageFile) {
-        reader.readAsDataURL(plantImageFile);
-      } else {
-        const annonce = {
-          plantName,
-          ownerAddress,
-          ownerPostalCode,
-          ownerCity,
-          ownerCountry,
-          imageSrc: null,
-        };
-
-        $.ajax({
-          url: "../../Back/Plantes/plantes.php",
-          type: "POST",
-          contentType: "application/json",
-          data: JSON.stringify(annonce),
-          success: function (response) {
-            const res = JSON.parse(response);
-            if (res.success) {
-              notyf.success(res.message);
-              addAnnonceModal.style.display = "none";
-              addAnnonceForm.reset();
-              validateForm();
-            } else {
-              notyf.error(res.error);
-            }
-          },
-          error: function (jqXHR, textStatus, errorThrown) {
-            console.error(
-              "Erreur lors de la requête AJAX : ",
-              textStatus,
-              errorThrown
-            );
-          },
-        });
-      }
-    });
-
-  function saveAnnonceToLocalStorage(annonce) {
-    let annonces = JSON.parse(localStorage.getItem("annonces")) || [];
-    annonces.push(annonce);
-    try {
-      localStorage.setItem("annonces", JSON.stringify(annonces));
-    } catch (e) {
-      if (e.name === "QuotaExceededError") {
-        notyf.error(
-          "Le quota de stockage local a été dépassé. Veuillez supprimer certaines annonces."
-        );
-      }
-    }
-    toggleNoAnnoncesMessage();
-  }
-
-  function loadAnnonces() {
-    const annonces = JSON.parse(localStorage.getItem("annonces")) || [];
-    annonces.forEach((annonce) => displayAnnonce(annonce));
-    toggleNoAnnoncesMessage();
-  }
-
-  function displayAnnonce(annonce) {
-    const annoncesContainer = document.getElementById("annoncesContainer");
-    const annonceContainer = document.createElement("div");
-    annonceContainer.className = "annonce";
-
-    const imgContainer = document.createElement("div");
-    imgContainer.className = "img-container";
-    if (annonce.imageSrc) {
-      const img = document.createElement("img");
-      img.src = annonce.imageSrc;
-      img.alt = "Image de la plante";
-      img.className = "annonce-img";
-      imgContainer.appendChild(img);
-    }
-    annonceContainer.appendChild(imgContainer);
-
-    const detailsDiv = document.createElement("div");
-    detailsDiv.className = "annonce-details";
-    detailsDiv.innerHTML = `<p>${annonce.plantName}</p><p>${annonce.ownerAddress}</p><p>${annonce.ownerPostalCode}</p><p>${annonce.ownerCity}</p><p>${annonce.ownerCountry}</p>`;
-    annonceContainer.appendChild(detailsDiv);
-
-    const deleteButton = document.createElement("button");
-    deleteButton.textContent = "Supprimer";
-    deleteButton.className = "delete-btn";
-    deleteButton.addEventListener("click", function () {
-      removeAnnonceFromLocalStorage(annonce);
-      annonceContainer.remove();
-      notyf.success("Annonce supprimée avec succès!");
-      toggleNoAnnoncesMessage();
-    });
-    annonceContainer.appendChild(deleteButton);
-
-    annoncesContainer.appendChild(annonceContainer);
-  }
-
-  function removeAnnonceFromLocalStorage(annonceToRemove) {
-    let annonces = JSON.parse(localStorage.getItem("annonces")) || [];
-    annonces = annonces.filter(
-      (annonce) =>
-        annonce.plantName !== annonceToRemove.plantName ||
-        annonce.ownerAddress !== annonceToRemove.ownerAddress ||
-        annonce.ownerPostalCode !== annonceToRemove.ownerPostalCode ||
-        annonce.ownerCity !== annonceToRemove.ownerCity ||
-        annonce.ownerCountry !== annonceToRemove.ownerCountry
-    );
-    localStorage.setItem("annonces", JSON.stringify(annonces));
-    toggleNoAnnoncesMessage();
-  }
-
-  function toggleNoAnnoncesMessage() {
-    const annonces = JSON.parse(localStorage.getItem("annonces")) || [];
-    if (annonces.length === 0) {
-      document.getElementById("no-annonces-message").style.display = "block";
-    } else {
-      document.getElementById("no-annonces-message").style.display = "none";
-    }
-  }
-
-  loadAnnonces();
-  toggleNoAnnoncesMessage();
-});
-
-$("#logoutConfirm").click(function () {
-  $.ajax({
-    url: "../../logout.php",
-    type: "GET",
-    dataType: "json",
-    success: function (res) {
-      if (res.success) {
-        localStorage.removeItem("user");
-        window.location.replace(
-          "http://localhost/Projet_Arosaje/AROSAJE/Front/LoginPage/login.html"
-        );
-        console.log("Déconnecté");
-      } else {
-        console.log("Erreur lors de la déconnexion");
-      }
-    },
-  });
-});

@@ -19,10 +19,12 @@
             <img src="../../images/logo arosage.png" alt="logo de l'app" class="logo">
         </a>
         <div class="navbar-links">
-            <a href="../Homepage/homepage.html"><i class="fas fa-home"></i> Accueil</a>
-            <a href="account.html"><i class="fas fa-user"></i> Compte</a>
-            <a href="../ContactPage/contact.html"><i class="fas fa-envelope"></i> Contact</a>
-            <a href="../LoginPage/login.html"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+            <a href="javascript:void(0);" onclick="redirectWithToken('../Homepage/homepage.html');"><i class="fas fa-home"></i> Accueil</a>
+            <a href="javascript:void(0);" onclick="redirectWithToken('../AnnouncesPage/announces.html');"><i class="fas fa-bullhorn"></i> Annonces</a>
+            <a href="javascript:void(0);" onclick="redirectWithToken('../TchatPage/tchat.html');"><i class="fas fa-comment-dots"></i> Tchat</a>
+            <a href="javascript:void(0);" onclick="redirectWithToken('account.html');"><i class="fas fa-user"></i> Compte</a>
+            <a href="javascript:void(0);" onclick="redirectWithToken('../ContactPage/contact.html');"><i class="fas fa-envelope"></i> Contact</a>
+            <a id="logout" href="../LoginPage/login.html"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
         </div>
     </nav>
     <section class="base">
@@ -31,7 +33,8 @@
             <button class="tab-button" onclick="openTab(event, 'Annonce')">Mes annonces</button>
         </div>
         <div id="Compte" class="tab-content active">
-            <div id="your_profil" class="account-container">
+            <div id="loader" class="loader">Chargement de vos données...</div>
+            <div id="your_profil" class="account-container" style="display: none;">
                 <div class="account-details">
                     <h2 id="your_name"></h2>
                     <p id="your_email"></p>
@@ -39,39 +42,16 @@
                     <p id="your_phone"></p>
                 </div>
             </div>
-            <script>
-                $(document).ready(function() {
-                    $.ajax({
-                        url: "../../Back/Account/account.php",
-                        type: "GET",
-                        dataType: "json",
-                        success: function(res) {
-                            $("#your_name").text(res.user.prenom + " " + res.user.nom);
-                            $("#your_email").text(res.user.email);
-                            $("#your_phone").text("0"+res.user.telephone);
-                            if (res.user.adresse) {
-                                $("#your_adresse").text(res.user.adresse);
-                            }
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            console.error("Erreur lors de la requête AJAX : ", textStatus, errorThrown);
-                        }
-                    });
-                });
-            </script>
             <div class="button-container">
                 <button class="deco-btn" type="submit" id="logout_button">DECONNEXION</button>
             </div>
         </div>
+        
         <div id="Annonce" class="tab-content">
             <div id="annoncesContainer"></div>
             <div id="no-annonces-message" style="display: none;">Vous n'avez pas posté d'annonces.</div>
-            <div id="your_annonce">
-                <h3 id="annonce_title"></h3>
-                <p id="adresse"></p>
-            </div>
             <div class="button-container">
-                <button class="add-plant" type="submit">AJOUTER UNE ANNONCE</button>
+                <button class="add-plant">AJOUTER UNE ANNONCE</button>
             </div>
         </div>
     </section>
@@ -79,12 +59,12 @@
         <p>© 2024 Tous droits réservés.</p>
         <a href="https://www.instagram.com/arosajeprojet/" target="_blank">Contactez-nous sur Instagram <i class="fab fa-instagram"></i></a>
     </footer>
-    <div id="addAnnonceModal" class="modal">
+    <div id="addAnnonceModal" class="modal" style="display: none;">
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Ajouter une annonce</h2>
-            <form id="addAnnonceForm" method="POST" action="../../Back/Plantes/add_plante.php" enctype="multipart/form-data">
-                <input type="hidden" name="id_user" value="<?php echo $_SESSION['id_user']; ?>">
+            <form id="addAnnonceForm" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="id_user">
                 <div class="form-group">
                     <label for="plantName">Nom de la plante* :</label>
                     <input type="text" id="plantName" name="plantName" required>
@@ -114,9 +94,9 @@
                 <i>*Champs requis</i>
                 <button type="submit" id="addAnnonceSubmit" disabled>AJOUTER</button>
             </form>
-            
         </div>
     </div>
+    
     <div id="logoutModal" class="modal">
         <div class="decoModal-content">
             <p>Voulez-vous vraiment vous déconnecter ?</p>

@@ -20,7 +20,7 @@ function getParams() {
     };
 
     // Utilisation de fetch avec timeout
-    fetchWithTimeout("http://172.20.10.7:8000/api/me", {
+    fetchWithTimeout("http://172.16.1.148:8000/api/me", {
         method: "GET",
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -38,6 +38,23 @@ function getParams() {
     })
     .then(data => {
         console.log("Response data:", data);
+
+        // Vérifier le type d'utilisateur
+        if (data.user.user_type === 4) {
+            // Ajouter l'onglet Admin avant le bouton de déconnexion
+            const navbarLinks = document.querySelector('.navbar-links');
+            const logoutLink = document.getElementById('logout');
+            
+            const adminLink = document.createElement('a');
+            adminLink.href = "javascript:void(0);";
+            adminLink.innerHTML = '<i class="fas fa-cogs"></i> Admin';
+            adminLink.onclick = function() {
+                redirectWithToken('../AdminPage/admin.html');
+            };
+            
+            // Insérer avant le bouton de déconnexion
+            navbarLinks.insertBefore(adminLink, logoutLink);
+        }
     })
     .catch(error => {
         if (error.message === 'Timeout') {
@@ -47,9 +64,24 @@ function getParams() {
         } else {
             // Gérer d'autres types d'erreurs (erreurs réseau, serveur hors ligne, etc.)
             console.error("Request failed:", error);
-            notyf.error("Impossible de contacter le serveur.");
+            notyf.error("Impossible de contacter le serveur. Veuillez vérifier que l'API est allumée.");
         }
     });
+}
+
+function redirectWithToken(page) {
+    let token = new URLSearchParams(window.location.search).get('token');
+
+    if (!token) {
+        // Si le token n'est pas dans l'URL, le récupérer depuis localStorage
+        token = localStorage.getItem('token');
+    }
+
+    if (token) {
+        window.location.href = `${page}?token=${token}`;
+    } else {
+        console.error('Token is missing or invalid');
+    }
 }
 
 

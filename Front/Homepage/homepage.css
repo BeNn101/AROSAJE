@@ -106,15 +106,66 @@ body {
 }
 
 .modal {
-    display: none;
-    position: fixed;
-    z-index: 1001;
+    display: none; 
+    position: fixed; 
+    z-index: 1001; 
     left: 0;
-    top: 0;
+    top: 0; /* Positionner la modale plus haut */
     width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
+    height: 300px; /* Laisser la hauteur s'ajuster automatiquement */
+    backdrop-filter: blur(5px); /* Flou de fond */
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+.modal-content {
+    position: relative;
+    font-family: 'Roboto', sans-serif; /* Utiliser la police Roboto */
+    background-color: #fff;
+    margin: 15px auto; /* Espacement autour de la modale */
+    padding: 20px;
+    border-radius: 12px; /* Coins arrondis plus doux */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Ombre douce */
+    width: 80%;
+    max-width: 400px; /* Réduire la largeur maximale */
+}
+
+
+#modal-plant-name {
+    font-size: 20px; /* Augmenter la taille du nom */
+    font-weight: bold; /* Mettre en gras */
+    margin-bottom: 10px; /* Espace en dessous */
+    color: #2c3e50; /* Couleur de texte sombre */
+}
+
+
+#modal-coordinates {
+    font-family: 'Inter', sans-serif; /* Utiliser la police Roboto */
+}
+
+
+.modal p {
+    font-family: 'Roboto', sans-serif; /* Utiliser la police Roboto */
+    font-size: 16px; /* Taille de police pour les paragraphes */
+    color: #34495e; /* Couleur de texte pour les informations */
+    margin: 5px 0; /* Espace entre les paragraphes */
+    line-height: 1.5; /* Espacement entre les lignes */
+}
+
+
+.close {
+    cursor: pointer; /* Curseur pointer pour indiquer que c'est cliquable */
+    color: #e74c3c; /* Couleur pour le bouton de fermeture */
+    float: right; /* Positionner à droite */
+    font-size: 24px; /* Taille de la croix */
+}
+
+.close:hover {
+    color: #c0392b; /* Changer de couleur au survol */
+}
+
+
+
 
 .decoModal-content{
     position: relative;
@@ -204,8 +255,8 @@ body {
     border-radius: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
     position: relative;
-    width: 90%; /* Augmenter la largeur */
-    max-width: 800px; /* Augmenter la largeur max */
+    width: 100%; /* Augmenter la largeur */
+    max-width: 1000px; /* Augmenter la largeur max */
     height: 70vh; /* Augmenter la hauteur */
     left: 50%;
     transform: translateX(-50%);
@@ -291,3 +342,96 @@ body {
 .close-btn:hover {
     color: #cc0000;
 }
+
+
+h1 {
+    font-family: 'Roboto', sans-serif; /* Police moderne */
+    font-size: 26px; /* Taille de la police */
+    color: #34495e; /* Couleur sombre */
+    text-align: center; /* Centrer le texte */
+    margin-bottom: 10px; /* Espacement autour du titre */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Ombre légère pour un effet 3D */
+    padding: 5px; /* Espacement interne */
+    background-color: rgba(255, 255, 255, 0.8); /* Fond léger pour le titre */
+    border-radius: 8px; /* Coins arrondis */
+}
+
+
+
+
+
+.image-contact-container {
+    display: flex; /* Utiliser flexbox pour aligner l'image et le bouton horizontalement */
+    align-items: center; /* Centrer verticalement l'image et le bouton */
+    margin-top: 10px; /* Espacement au-dessus du conteneur */
+}
+
+#modal-image {
+    max-width: 100px; /* Ajuster la taille de l'image */
+    height: 150px; /* Ajuster la hauteur automatiquement */
+    border-radius: 8px; /* Coins arrondis pour l'image */
+    margin-right: 10px; /* Espace entre l'image et le bouton */
+}
+
+.contact-btn {
+    padding: 8px 16px; /* Espacement à l'intérieur du bouton */
+    border: none; /* Pas de bordure */
+    border-radius: 5px; /* Coins arrondis */
+    background-color: #007bff; /* Couleur de fond */
+    color: white; /* Couleur du texte */
+    cursor: pointer; /* Curseur en main */
+    transition: background-color 0.3s; /* Transition douce pour la couleur de fond */
+}
+
+.contact-btn:hover {
+    background-color: #0056b3; /* Couleur de fond au survol */
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column; /* Aligner les éléments verticalement */
+    position: relative;
+    font-family: 'Roboto', sans-serif; /* Utiliser la police Roboto */
+    background-color: #fff;
+    margin: 15px auto; /* Espacement autour de la modale */
+    padding: 20px;
+    border-radius: 12px; /* Coins arrondis plus doux */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Ombre douce */
+    width: 80%;
+    max-width: 400px; /* Réduire la largeur maximale */
+}
+
+.modal-header {
+    display: flex; /* Utiliser flexbox pour aligner le titre et le bouton */
+    justify-content: space-between; /* Espacement entre le titre et le bouton */
+    align-items: center; /* Centrer verticalement */
+}
+
+.loader {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    color: #34495e;
+    z-index: 1000; /* Assurez-vous qu'il est au-dessus des autres éléments */
+    display: flex;
+    align-items: center;
+}
+
+.loader::after {
+    content: '';
+    border: 5px solid #f3f3f3; /* Couleur de fond du loader */
+    border-top: 5px solid #3498db; /* Couleur de l'animation */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite; /* Animation de rotation */
+    margin-left: 10px; /* Espace entre le texte et le loader */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+

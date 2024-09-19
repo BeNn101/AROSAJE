@@ -53,7 +53,7 @@ $("form").submit((event) => {
     event.preventDefault();
     
     $.ajax({
-        url: "http://172.20.10.7:8000/api/login",
+        url: "http://172.16.1.148:8000/api/login",
         type: "POST",
         dataType: "json",
         timeout: 5000, // Délai d'attente de 5 secondes avant de considérer que l'API ne répond pas
@@ -67,7 +67,13 @@ $("form").submit((event) => {
 
             if (jqXHR.status == 200) {
                 localStorage.setItem("user", JSON.stringify(res.user));
-                window.location.replace(`http://localhost/AROSAJE/Front/Homepage/homepage.html?token=${encodeURIComponent(res['token'])}`);
+                // Afficher la notification de succès avant la redirection
+                notyf.success('Vous êtes connecté !');
+                
+                // Utiliser setTimeout pour attendre la fin de la notification avant la redirection
+                setTimeout(() => {
+                    window.location.replace(`http://localhost/AROSAJE/Front/Homepage/homepage.html?token=${encodeURIComponent(res['token'])}`);
+                }, 1000); // 1 seconde d'attente pour laisser le temps de voir la notification
             } else {
                 console.log("API status message:", res.status || "Aucune information de statut");
                 notyf.error(res.status || "Une erreur s'est produite");
@@ -80,8 +86,8 @@ $("form").submit((event) => {
                 // Gestion du timeout
                 notyf.error("Le serveur ne répond pas. Veuillez réessayer plus tard.");
             } else if (jqXHR.status === 0) {
+                console.log(jqXHR.status);
                 // Le serveur est probablement hors ligne
-                notyf.error("Impossible de contacter le serveur.");
             } else {
                 // Autre type d'erreur (réseau, serveur, etc.)
                 notyf.error(`Erreur : ${jqXHR.status} - ${errorThrown}`);

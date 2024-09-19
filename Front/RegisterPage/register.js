@@ -111,55 +111,118 @@ document.querySelector('form').addEventListener('submit', function(event) {
         firstName: firstName,
         lastName: lastName
     };
-
-    $.ajax({
-        url: "../../Back/Register/register.php",
-        type: "POST",
-        dataType: "json",
-        data: {
-            firstname: $("#firstname").val(),
-            lastname: $("#lastname").val(),
-            email: $("#email").val(),
-            pwd: $("#pwd").val(),
-            phonenumber: $("#phonenumber").val(),
-        },
-        success: (res) => {
-            console.log(res)
-            if (res.success) {
-                setTimeout(() => {
-                    fetch('http://localhost:3000/send-email', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(formData),
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        notyf.success(data.message);
-                        setTimeout(() => {
-                            window.location.href = "http://localhost/AROSAJE/Front/LoginPage/login.html";
-                        }, 10000); 
-                    })
-                    .catch((error) => {
-                        console.error('Erreur lors de l\'envoi:', error);
-                    });
-                }, 3000); 
-            } else {
-                if (res.error === "L'e-mail est déjà utilisé.") {
-                    notyf.error("Cet utilisateur existe déjà.");
-                }
-            }
-        }
-    });
 });
+
 
 var telephoneInput = document.getElementById("phonenumber");
 
 telephoneInput.addEventListener('input', function(event) {
     var inputValue = telephoneInput.value;
+    var numericValue = inputValue.replace(/\D/g, '');  // Supprimer tout sauf les chiffres
+    telephoneInput.value = numericValue;  // Remettre la valeur formatée
+});
 
-    var numericValue = inputValue.replace(/\D/g, '');
 
-    telephoneInput.value = numericValue;
+$("form").submit((event) => {
+    event.preventDefault();
+
+    // Récupérer les valeurs des champs de formulaire
+    const email = $("#email").val();
+    const mot_de_passe = $("#pwd").val();
+    const confirmPassword = $("#confirmPassword").val();
+    const telephone = $("#phonenumber").val();
+    const nom = $("#lastname").val();
+    const prenom = $("#firstname").val();
+
+    // Validation des champs (email, mot de passe, etc.)
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        notyf.error("Veuillez entrer une adresse email valide.");
+        return;
+    }
+    if (mot_de_passe.length < 8) {
+        notyf.error("Le mot de passe doit contenir au moins 8 caractères.");
+        return; 
+    }
+    if (mot_de_passe !== confirmPassword) {
+        notyf.error("Les mots de passe ne correspondent pas.");
+        return;
+    }
+
+    // Vérification du numéro de téléphone (si fourni)
+    var telephoneRegex = /^(0|\+33)[1-9]([-. ]?[0-9]{2}){4}$/;
+    if (telephone.trim() !== '' && !telephoneRegex.test(telephone)) {
+        notyf.error("Veuillez entrer un numéro de téléphone valide (format français).");
+        return;
+    }
+
+    // Préparer les données à envoyer à l'API
+    const data = {
+        mot_de_passe: mot_de_passe,
+        email: email,
+        telephone: telephone,
+        nom: nom,
+        prenom: prenom
+    };
+
+    // Appel AJAX à l'API d'inscription
+    $.ajax({
+        url: "http://172.16.1.148:8000/api/users/createUser",  // URL de l'API d'inscription
+        type: "POST",
+        dataType: "json",  // Type de données attendues en retour
+        contentType: "application/json; charset=UTF-8",  // Type de contenu envoyé
+        timeout: 5000,  // Timeout de 5 secondes pour la requête
+        data: JSON.stringify(data),  // Les données sont envoyées en format JSON
+        success: (res, textStatus, jqXHR) => {
+            console.log("HTTP Status:", jqXHR.status);
+
+            if (jqXHR.status == 201) {  // Code 201 : Utilisateur créé
+                notyf.success("Utilisateur créé avec succès !");
+
+                // Envoi de l'email de bienvenue
+                const emailData = {
+                    firstName: prenom,
+                    lastName: nom,
+                    email: email
+                };
+
+                $.ajax({
+                    url: "http://localhost:3000/send-email",  // URL de l'API pour l'envoi d'email
+                    type: "POST",
+                    dataType: "json",  // Type de données attendues en retour
+                    contentType: "application/json; charset=UTF-8",  // Type de contenu envoyé
+                    timeout: 5000,  // Timeout de 5 secondes pour la requête
+                    data: JSON.stringify(emailData),  // Les données sont envoyées en format JSON
+                    success: (res, textStatus, jqXHR) => {
+                        console.log("Email envoyé avec succès :", res.message);
+                        notyf.success(res.message);
+                    },
+                    error: (jqXHR, textStatus, errorThrown) => {
+                        console.error("Erreur lors de l'envoi de l'email :", errorThrown);
+                        notyf.error("Erreur lors de l'envoi de l'email de confirmation.");
+                    }
+                });
+
+                // Attendre que les notifications soient affichées avant de rediriger
+                setTimeout(() => {
+                    window.location.replace('../LoginPage/login.html');
+                }, 2000);  // Attendre 2 secondes avant la redirection
+            } else {
+                notyf.error(res.status || "Une erreur s'est produite lors de l'inscription.");
+            }
+        },
+        error: (jqXHR, textStatus, errorThrown) => {
+            console.log("HTTP Status Error:", jqXHR.status);
+
+            if (jqXHR.status === 409) {
+                // Si l'utilisateur existe déjà (statut 409 Conflict)
+                notyf.error("Un utilisateur avec cet email existe déjà.");
+            } else if (textStatus === "timeout") {
+                notyf.error("Le serveur ne répond pas. Veuillez réessayer plus tard.");
+            } else if (jqXHR.status === 0) {
+            } else {
+                notyf.error(`Erreur : ${jqXHR.status} - ${errorThrown}`);
+            }
+        }
+    });
 });

@@ -1,5 +1,10 @@
 var map;
 
+function initialize() {
+    getLocation();
+    getParams();
+}
+
 
 function getParams() {
     const params = new URLSearchParams(window.location.search);
@@ -23,7 +28,7 @@ function getParams() {
     };
 
     // Utilisation de fetch avec timeout
-    fetchWithTimeout("http://172.20.10.7:8000/api/me", {
+    fetchWithTimeout("http://172.16.1.148:8000/api/me", {
         method: "GET",
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -41,6 +46,21 @@ function getParams() {
     })
     .then(data => {
         console.log("Response data:", data);
+        if (data.user.user_type === 4) {
+            // Ajouter l'onglet Admin avant le bouton de déconnexion
+            const navbarLinks = document.querySelector('.navbar-links');
+            const logoutLink = document.getElementById('logout');
+            
+            const adminLink = document.createElement('a');
+            adminLink.href = "javascript:void(0);";
+            adminLink.innerHTML = '<i class="fas fa-cogs"></i> Admin';
+            adminLink.onclick = function() {
+                redirectWithToken('../AdminPage/admin.html');
+            };
+            
+            // Insérer avant le bouton de déconnexion
+            navbarLinks.insertBefore(adminLink, logoutLink);
+        }
     })
     .catch(error => {
         if (error.message === 'Timeout') {
@@ -50,12 +70,9 @@ function getParams() {
         } else {
             // Gérer d'autres types d'erreurs (erreurs réseau, serveur hors ligne, etc.)
             console.error("Request failed:", error);
-            notyf.error("Impossible de contacter le serveur.");
         }
     });
 }
-
-
 
 function getLocation() {
     if (navigator.geolocation) {
@@ -68,17 +85,23 @@ function getLocation() {
 function showPosition(position) {
     var latitude = position.coords.latitude;
     var longitude = position.coords.longitude;
-    map = L.map('map').setView([latitude, longitude], 13); 
+    map = L.map('map').setView([latitude, longitude], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);
-    
+
     var marker = L.marker([latitude, longitude]).addTo(map);
     marker.bindPopup("<b>Votre position</b>").openPopup();
     L.Control.geocoder().addTo(map);
 
-    loadAnnonces();
+    // Masquer le loader et afficher la carte
+    document.getElementById('loader').style.display = 'none';
+    document.getElementById('map').style.display = 'block';
+
+    loadAnnonces(); // Charge les annonces après avoir initialisé la carte
 }
+
+
 
 function centerToUserLocation(map) {
     if (navigator.geolocation) {
@@ -112,52 +135,111 @@ function showError(error) {
 }
 
 function loadAnnonces() {
-    const annonces = JSON.parse(localStorage.getItem('annonces')) || [];
-    annonces.forEach(annonce => {
-        console.log('Loading annonce:', annonce); 
-        geocodeAndAddMarker(annonce);
+    const token = new URLSearchParams(window.location.search).get('token');
+
+    fetchWithTimeout("http://172.16.1.148:8000/api/getAllPlantes", {
+        method: "GET",
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (response.status === 200) {
+            return response.json();
+        } else {
+            throw new Error(`Erreur lors de la récupération des annonces, statut : ${response.status}`);
+        }
+    })
+    .then(data => {
+        data.forEach(annonce => {
+            geocodeAndAddMarker(annonce);
+        });
+    })
+    .catch(error => {
+        console.error("Erreur lors du chargement des annonces :", error);
+        notyf.error("Impossible de charger les annonces.");
     });
 }
+
 
 function geocodeAndAddMarker(annonce) {
-    const address = `${annonce.ownerAddress}, ${annonce.ownerCity}, ${annonce.ownerPostalCode}, ${annonce.ownerCountry}`;
-    console.log('Geocoding address:', address); 
-    L.Control.Geocoder.nominatim().geocode(address, function(results) {
-        if (results.length > 0) {
-            console.log('Geocoding results:', results); 
-            const latLng = results[0].center;
-            const marker = L.marker(latLng).addTo(map);
-            marker.bindPopup(`<b>${annonce.plantName}</b>`).on('click', function() {
-                showAnnonceDetails(annonce);
-            });
-        } else {
-            console.error('No results found for geocoding address:', address); 
-        }
+    const coords = `${annonce.localisation}`; // latitude, longitude
+    const [lat, lng] = coords.split(', ');
+
+    const marker = L.marker([lat, lng]).addTo(map);
+    marker.bindPopup(`<b>${annonce.name_plante}</b>`).on('click', function() {
+        showAnnonceDetails(annonce);
     });
 }
 
-window.geocodeAndAddMarker = geocodeAndAddMarker; 
-
 function showAnnonceDetails(annonce) {
-    document.getElementById('details-plant-name').textContent = annonce.plantName;
-    document.getElementById('details-address').textContent = annonce.ownerAddress;
-    document.getElementById('details-city').textContent = annonce.ownerCity;
-    document.getElementById('details-postal-code').textContent = annonce.ownerPostalCode;
-    document.getElementById('details-country').textContent = annonce.ownerCountry;
-    const detailsImage = document.getElementById('details-image');
-    if (annonce.imageSrc) {
-        detailsImage.src = annonce.imageSrc;
-        detailsImage.style.display = 'block';
+    document.getElementById('modal-plant-name').textContent = annonce.name_plante;
+    const modalImage = document.getElementById('modal-image');
+
+    if (annonce.image) {
+        modalImage.src = `http://172.16.1.148:8000/${annonce.image}`;
+        modalImage.style.display = 'block';
     } else {
-        detailsImage.style.display = 'none';
+        modalImage.style.display = 'none';
     }
-    document.getElementById('annonce-details').style.display = 'block';
+
+    const coords = annonce.localisation;
+    const [lat, lng] = coords.split(',');
+
+    geocodeAddress(`${lat}, ${lng}`)
+        .then(({ formattedAddress }) => {
+            document.getElementById('modal-coordinates').textContent = `Adresse : ${formattedAddress}`;
+        })
+        .catch(error => {
+            console.error('Erreur lors de la récupération de l\'adresse:', error);
+            document.getElementById('modal-coordinates').textContent = 'Adresse : Non trouvée';
+        });
+
+    // Écouteur pour le bouton Contacter
+    document.getElementById('contact-button').onclick = function() {
+        redirectWithToken('../TchatPage/tchat.html'); // Redirection vers la page de tchat avec le token
+    };
+
+    document.getElementById('annonce-modal').style.display = 'block'; // Afficher la modale
 }
+
+
+
+
+
+// Ajouter un écouteur d'événement pour fermer la modale
+document.getElementById('close-modal').addEventListener('click', function() {
+    document.getElementById('annonce-modal').style.display = 'none';
+});
+
 
 document.getElementById('close-details').addEventListener('click', function() {
     document.getElementById('annonce-details').style.display = 'none';
 });
 
+
+
+
+
+
+function redirectWithToken(page) {
+    let token = new URLSearchParams(window.location.search).get('token');
+    console.log(token);
+
+    if (!token) {
+        // Si le token n'est pas dans l'URL, le récupérer depuis localStorage
+        token = localStorage.getItem('token');
+    }
+
+    if (token) {
+        console.log(token);
+        window.location.href = `${page}?token=${token}`;
+        
+    } else {
+        console.error('Token is missing or invalid');
+    }
+}
 
 
 $("#logoutConfirm").click(function() {

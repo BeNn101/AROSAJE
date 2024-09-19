@@ -80,18 +80,7 @@ body {
 
 }
 
-.base {
-    margin-top: 30px;
-    padding: 0; 
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    position: relative;
-    width: 80%;
-    max-width: 600px;
-    left: 50%;
-    transform: translateX(-50%);
-}
+
 
 
 .footer {
@@ -207,3 +196,167 @@ body {
 .decoModal-content button:hover {
     opacity: 0.9; 
 }
+
+.base {
+    margin-top: 5px; /* Ajuster l'espacement supérieur */
+    padding: 0; 
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    display: flex;
+    width: 100%; /* Prendre toute la largeur */
+    max-width: none; /* Enlever la largeur max */
+}
+
+/* Layout pour le chat */
+.chatLayout {
+    display: flex;
+    width: 100%;
+}
+
+/* Styles de la liste de conversations */
+.conversationsList {
+    width: 25%; /* Largeur de la liste des conversations */
+    padding: 10px;
+    background-color: #fff;
+    height: calc(100vh - 120px); /* Ajuste pour la navbar et le footer */
+    overflow-y: auto;
+}
+#conversationsList li {
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#conversationsList li:hover {
+    background-color: #f5f5f5;
+}
+
+#conversationsList li:last-child {
+    border-bottom: none;
+}
+
+/* Styles pour chaque conversation */
+.conversation-item {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+/* Ajoute un trait horizontal entre chaque conversation */
+.conversation-item:not(:last-child) {
+    border-bottom: 1px solid #ddd; /* Ligne horizontale */
+}
+
+.conversation-item:hover {
+    background-color: #f0f0f0; /* Couleur au survol */
+}
+
+
+
+
+.loader {
+    font-size: 16px;
+    color: #3498db; /* Couleur du texte */
+    text-align: center;
+    margin: 10px 0;
+}
+
+
+/* Style pour le dernier message */
+.last-message {
+    font-size: 14px; /* Taille du texte pour le dernier message */
+    color: #888; /* Couleur grise pour le texte du dernier message */
+}
+/* Styles du conteneur de chat */
+/* Styles du conteneur de chat */
+#chatContainer {
+    width: 100%;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    position: relative; /* Nécessaire pour positionner les éléments enfants */
+}
+
+/* Styles du conteneur de messages */
+#messagesContainer {
+    display: flex;
+    flex-direction: column; /* Colonne pour empiler les messages */
+    overflow-y: auto; /* Ajout de la scrollbar */
+    flex: 1; /* Prendre l'espace disponible */
+    padding: 10px; /* Padding autour des messages */
+    max-height: 500px; /* Ajustez cette valeur selon vos besoins */
+    
+}
+
+/* Styles des messages */
+#messagesContainer .message {
+    margin: 10px 0;
+    padding: 10px 15px; /* Ajout de padding */
+    border-radius: 20px; /* Forme de bulle */
+    max-width: 70%; /* Limiter la largeur des messages */
+    display: inline-block; /* Pour rendre le fond visible comme une bulle */
+}
+
+/* Messages envoyés */
+#messagesContainer .message.sender {
+    background-color: #3498db; /* Couleur des messages envoyés */
+    color: white;
+    align-self: flex-end; /* Aligner à droite */
+    text-align: right; /* Alignement du texte à droite */
+}
+
+/* Messages reçus */
+#messagesContainer .message.received {
+    background-color: #f1f1f1; /* Couleur des messages reçus */
+    color: black;
+    align-self: flex-start; /* Aligner à gauche */
+    text-align: left; /* Alignement du texte à gauche */
+}
+
+/* Styles pour le champ de saisie et le bouton */
+.message-input-container {
+    display: flex;
+    align-items: center; /* Aligner verticalement */
+    position: fixed; /* Fixe en bas du conteneur */
+    bottom: 60px; /* Ajustez selon vos préférences */
+    left: 280px; /* Ajustement pour le padding */
+    right: 10px; /* Ajustement pour le padding */
+    background-color: white; /* Fond blanc pour l'input */
+    padding: 10px; /* Espacement autour de l'input */
+    border-radius: 10px; /* Coins arrondis */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Ombre légère */
+}
+
+#messageInput {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    flex: 1; /* Prendre tout l'espace disponible */
+    margin-right: 5px; /* Espacement avec le bouton */
+}
+
+#sendMessageBtn {
+    padding: 0; /* Supprimer le padding pour centrer l'icône */
+    background: none; /* Aucune couleur de fond */
+    border: none; /* Aucune bordure */
+    cursor: pointer;
+}
+
+#sendMessageBtn:hover i {
+    color: #2980b9; /* Changer la couleur au survol */
+}
+
+.chat-header {
+    background-color: #34495e; /* Couleur du bandeau */
+    color: white; /* Couleur du texte */
+    padding: 10px; /* Espacement autour du texte */
+    border-radius: 10px 10px 0 0; /* Coins arrondis en haut */
+    text-align: center; /* Centre le texte */
+}
+
+
