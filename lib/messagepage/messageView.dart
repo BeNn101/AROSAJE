@@ -71,7 +71,7 @@ class MessageView extends GetView<MessageViewController> {
                         child: InkWell(
                           onTap: () {
                             controller.getMessage();
-                            Get.toNamed('chat',arguments:[controller.listUserMessage[index].id_user,controller.token.value]);
+                            Get.toNamed('chat',arguments:[controller.listUserMessage[index].id_user,controller.token.value,controller.listUserMessage[index].id_recipient]);
                           },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 16),

@@ -4,9 +4,10 @@ import 'package:get/get.dart';
 
 class CustomSearchDelegate extends SearchDelegate {
   final List data;
+  final String token;
    // La liste de données à rechercher
 
-  CustomSearchDelegate(this.data);
+  CustomSearchDelegate(this.data,this.token);
 
  @override
 Widget buildSuggestions(BuildContext context) {
@@ -23,6 +24,9 @@ Widget buildSuggestions(BuildContext context) {
       var plant = matchQuery[index];
       return ListTile(
         title: Text(plant.namePlante),
+        onTap: () {
+          Get.toNamed('plantView',arguments: [plant,token]);
+        },
         // Ajoutez ici d'autres éléments de Player que vous souhaitez afficher
       );
     },

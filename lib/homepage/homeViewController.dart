@@ -55,7 +55,7 @@ class HomeViewController extends GetxController {
    void startSearch(BuildContext context) {
     showSearch(
       context: context,
-      delegate: CustomSearchDelegate(listPlant),
+      delegate: CustomSearchDelegate(listPlant,token),
     );
   }
 
@@ -77,8 +77,7 @@ class HomeViewController extends GetxController {
     throw Exception('Erreur de chargement des données : ${response.statusCode}');
   }
 }
-
-
-
-  
 }
+
+
+

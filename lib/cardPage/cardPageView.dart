@@ -93,6 +93,7 @@ class CardPage extends GetView<CardPageController> {
         ),
       ),
  // Espacement entre le texte et le bouton
+    
       Padding(
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         child: ElevatedButton(

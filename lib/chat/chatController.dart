@@ -12,7 +12,7 @@ class ChatViewController extends GetxController {
   var listMessage = RxList<ChatHistorical>();
   var listMessageHistorical = RxList<ChatHistorical>();
   var listUserMessage = RxList<Chat>();
-  var selectedRecipientId;
+  var selectedRecipientId,selectedRecipientId2;
   User? currentUser;
   TextEditingController message = TextEditingController();
 
@@ -20,6 +20,7 @@ class ChatViewController extends GetxController {
   void onInit() {
         token.value = Get.arguments[1];
         selectedRecipientId = Get.arguments[0];
+        selectedRecipientId2 = Get.arguments[2];
     getCurrentUser();
     super.onInit();
     getMessage(); 
@@ -30,7 +31,12 @@ class ChatViewController extends GetxController {
 void onReady() async {
   super.onReady();
   await getCurrentUser();
-      getChatHistorical(selectedRecipientId,currentUser!.idUser);
+  if(selectedRecipientId != currentUser!.idUser){
+     getChatHistorical(selectedRecipientId,currentUser!.idUser);
+  }else if(selectedRecipientId2 != currentUser!.idUser){
+    getChatHistorical(selectedRecipientId2,currentUser!.idUser);
+  }
+      
 }
   
   Future<void> getMessage() async {
@@ -67,8 +73,10 @@ void onReady() async {
 }
 
   Future<void> postMessage(message, int idDestinataire) async {
+   await getCurrentUser();
     final url = Uri.parse('http://192.168.1.4:8000/api/postMessages');
-    Map<String, dynamic> data = {
+    if (currentUser?.idUser!=idDestinataire) {
+       Map<String, dynamic> data = {
       'id_user': currentUser?.idUser,
       'id_destinataire': idDestinataire,
       'message': message,
@@ -87,6 +95,10 @@ void onReady() async {
     } else {
       // Gérer les erreurs ici
     }
+    }else{
+      Get.snackbar('Erreur', "Impossible d'envoyer un message id incorrect");
+    }
+   
   }
 
   Future<void> getCurrentUser() async {

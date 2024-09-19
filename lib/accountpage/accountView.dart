@@ -193,9 +193,20 @@ class AccountView extends GetView<AccountViewController> {
                               child: Center(
                                 child: Column(
                                   children: [
-                                    const SizedBox(
+                                     SizedBox(
                                       height: 10,
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                         /*  IconButton(onPressed: () => controller.deletePlante(controller.listUserMyPlant[index].idPlante), 
+                                          icon: */ InkWell(onTap:()=>
+                                            controller.deletePlante(controller.listUserMyPlant[index].idPlante)
+                                          ,child: Icon(Icons.cancel,size: 30,))
+                                        ],
+                                      ),
+
                                     ),
+                                    const SizedBox(height: 30,),
                                     Image.network(
                                       loadingBuilder:
                                           (context, child, loadingProgress) {

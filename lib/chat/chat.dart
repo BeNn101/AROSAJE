@@ -67,7 +67,12 @@ class ChatView extends GetView<ChatViewController> {
             Expanded(
               child: TextField(
                 onSubmitted: (value) {
-                  controller.postMessage(value, controller.selectedRecipientId);
+                  
+                   if(controller.selectedRecipientId != controller.currentUser!.idUser){
+     controller.postMessage(value, controller.selectedRecipientId);
+  }else if(controller.selectedRecipientId2 != controller.currentUser!.idUser){
+     controller.postMessage(value, controller.selectedRecipientId2);
+  }
                   controller.message.clear();
                   controller.getMessage();
                 },
@@ -82,7 +87,12 @@ class ChatView extends GetView<ChatViewController> {
             IconButton(
               icon: const Icon(Icons.send),
               onPressed: () {
-                controller.postMessage(controller.message.value.text, controller.selectedRecipientId);
+              
+                    if(controller.selectedRecipientId != controller.currentUser!.idUser){
+     controller.postMessage(controller.message.value.text, controller.selectedRecipientId);
+  }else if(controller.selectedRecipientId2 != controller.currentUser!.idUser){
+     controller.postMessage(controller.message.value.text, controller.selectedRecipientId2);
+  }
                 controller.message.clear();
                 controller.getMessage();
               },

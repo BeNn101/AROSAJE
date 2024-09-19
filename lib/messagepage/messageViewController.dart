@@ -46,7 +46,7 @@ void onReady() async {
     }
   }
 
-   Future<void> getChatHistorical(int idRecipient, int idUser) async {
+ /*   Future<void> getChatHistorical(int idRecipient, int idUser) async {
   // Construire l'URL avec les paramètres idRecipient et idUser
   final url = Uri.parse('http://192.168.1.4:8000/api/chatHistorical?id_user=$idUser&id_destinataire=$idRecipient');
   
@@ -61,9 +61,9 @@ void onReady() async {
     Get.snackbar('Erreur', 'Impossible de charger les messages');
     throw Exception('Erreur de chargement des données : ${response.statusCode}');
   }
-}
+} */
 
-  Future<void> postMessage(message, int idDestinataire) async {
+/*   Future<void> postMessage(message, int idDestinataire) async {
     final url = Uri.parse('http://192.168.1.4:8000/api/postMessages');
     Map<String, dynamic> data = {
       'id_user': currentUser.value?.idUser,
@@ -84,7 +84,7 @@ void onReady() async {
     } else {
       // Gérer les erreurs ici
     }
-  }
+  } */
 
   Future<void> getCurrentUser() async {
 

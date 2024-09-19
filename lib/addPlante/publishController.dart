@@ -10,6 +10,7 @@ import 'package:get/route_manager.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class PublishViewViewController extends GetxController {
   var token = ''.obs; 
@@ -66,7 +67,7 @@ class PublishViewViewController extends GetxController {
       'name_plante': namePlanteTextingController.value.text,
       'image':
           '${imageBase64}', // Assurez-vous que imageFilePath contient le chemin valide de l'image
-      'localisation': 'currentLocation',
+      'localisation': '${currentLocation.latitude}, ${currentLocation.longitude}',
       'id_user':
         currentUser.value?.idUser, // Assurez-vous que userId contient une valeur valide
       // Ajoutez d'autres données si nécessaire
@@ -94,16 +95,20 @@ class PublishViewViewController extends GetxController {
     }
   }
 
-  Future<void> getLocation() async {
+   Future<void> getLocation() async {
+  if (await Permission.location.request().isGranted) {
     try {
       Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
-      );
-      currentLocation = LatLng(position.latitude, position.longitude);
+      );    
+        currentLocation = LatLng(position.latitude, position.longitude);
     } catch (e) {
       print("Error: $e");
     }
+  } else {
+    print('Location permission not granted');
   }
+}
 
   Future<void> getCurrentUser() async {
 

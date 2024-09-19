@@ -57,4 +57,15 @@ Future<void> getCurrentUser() async {
     throw Exception('Erreur de chargement des données : ${response.statusCode}');
   }
 }
+
+ Future<void> deletePlante(int idPlant) async {
+    final url = Uri.parse('http://192.168.1.4:8000/api/plantesDelete/$idPlant');
+    final response = await http.delete(url);
+
+    if (response.statusCode == 200) {
+       Get.snackbar('Succes', 'Plante supprimer');
+    } else {
+      throw Exception('Failed to load user data');
+    }
+  }
 }

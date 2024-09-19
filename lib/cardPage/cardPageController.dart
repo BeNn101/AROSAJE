@@ -33,9 +33,8 @@ var currentUser = Rx<User?>(null);
   }
   
    Future<void> register() async {
-    
+  await  getCurrentUser();
   final url = Uri.parse('http://192.168.1.4:8000/api/chats/insert');
-
     Map<String, dynamic> data = {
      'id_user' : currentUser.value?.idUser,
             'id_recipient' :  plant?.idUser,
@@ -65,7 +64,7 @@ var currentUser = Rx<User?>(null);
   final response = await http.get(
     url,
     headers: {
-      'Authorization': 'Bearer ${token}',
+      'Authorization': 'Bearer $token',
     },
   );
   if (response.statusCode == 200) {
@@ -87,6 +86,18 @@ var currentUser = Rx<User?>(null);
       nameRecipient=currentUser.value?.firstName;
       // Informe GetX que les valeurs ont été mises à jour
       update();
+    } else {
+      throw Exception('Failed to load user data');
+    }
+  }
+
+   Future<void> deletePlante(int idPLante) async {
+    final url = Uri.parse('http://192.168.1.4:8000/api/plantesDelete/$idPLante');
+    final response = await http.delete(url);
+
+    if (response.statusCode == 200) {
+       Get.snackbar('Succes', 'Utilisateurs supprimer');
+       Get.offAllNamed('home',arguments: token);
     } else {
       throw Exception('Failed to load user data');
     }
