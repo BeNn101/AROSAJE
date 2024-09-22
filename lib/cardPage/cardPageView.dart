@@ -110,7 +110,7 @@ class CardPage extends GetView<CardPageController> {
             elevation: 2,
           ),
           child: const Text(
-            'Envoyer message',
+            'Créer une conversation',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,

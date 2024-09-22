@@ -37,7 +37,7 @@ class HomeViewController extends GetxController {
 
   Future<void> getAllPlant() async {
     try {
-      final url = Uri.parse('http://192.168.1.4:8000/api/getAllPlantes');
+      final url = Uri.parse('http://172.16.1.148:8000/api/getAllPlantes');
       final response = await http.get(url);
       if (response.statusCode == 200) {
         final List<dynamic> plantData = json.decode(response.body);
@@ -61,7 +61,7 @@ class HomeViewController extends GetxController {
 
   Future<void> getCurrentUser() async {
 
-  final url = Uri.parse('http://192.168.1.4:8000/api/me'); 
+  final url = Uri.parse('http://172.16.1.148:8000/api/me'); 
   final response = await http.get(
     url,
     headers: {

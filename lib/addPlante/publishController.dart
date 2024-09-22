@@ -58,7 +58,7 @@ class PublishViewViewController extends GetxController {
 
   Future<void> createPlante() async {
     
-  final url = Uri.parse('http://192.168.1.4:8000/api/plantes');
+  final url = Uri.parse('http://172.16.1.148:8000/api/plantes');
 
     var imageBase64 = base64Encode(imageBytes.value!);
 
@@ -72,7 +72,7 @@ class PublishViewViewController extends GetxController {
         currentUser.value?.idUser, // Assurez-vous que userId contient une valeur valide
       // Ajoutez d'autres données si nécessaire
     };
-
+    print(data);
     final response = await http.post(
       url,
       headers: <String, String>{
@@ -112,7 +112,7 @@ class PublishViewViewController extends GetxController {
 
   Future<void> getCurrentUser() async {
 
-  final url = Uri.parse('http://192.168.1.4:8000/api/me'); 
+  final url = Uri.parse('http://172.16.1.148:8000/api/me'); 
   final response = await http.get(
     url,
     headers: {
@@ -121,7 +121,7 @@ class PublishViewViewController extends GetxController {
   );
   if (response.statusCode == 200) {
     final Map<String, dynamic> user = json.decode(response.body);
-    currentUser.value = User.fromJson(user['user']);
+   currentUser .value = User.fromJson(user['user']);
   } else {
     Get.offAllNamed('login');
     throw Exception('Erreur de chargement des données : ${response.statusCode}');

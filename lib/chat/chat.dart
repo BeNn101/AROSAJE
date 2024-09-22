@@ -38,26 +38,35 @@ class ChatView extends GetView<ChatViewController> {
   () => Column(
     children: [  // Ajout des accolades manquantes
       Expanded(
-        child: ListView.builder(
-          itemCount: controller.listMessageHistorical.length,
-          itemBuilder: (context, index) {
-            return Align(
-              alignment: controller.listMessageHistorical[index].idUser == controller.currentUser?.idUser
-                  ? Alignment.centerRight
-                  : Alignment.centerLeft,
-              child: Container(
-                margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                padding: EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: controller.listMessageHistorical[index].idUser == controller.currentUser?.idUser
-                      ? Colors.blue
-                      : Colors.grey[300],
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Text(controller.listMessageHistorical[index].message),
-              ),
-            );
+        child: RefreshIndicator(
+          onRefresh: () async {
+             if(controller.selectedRecipientId != controller.currentUser!.idUser){
+ await controller.getChatHistorical(controller. selectedRecipientId,controller. currentUser!.idUser);
+  }else if(controller. selectedRecipientId2 !=controller. currentUser!.idUser){
+await  controller.  getChatHistorical(controller. selectedRecipientId2,controller. currentUser!.idUser);
+  }
           },
+          child: ListView.builder(
+            itemCount: controller.listMessageHistorical.length,
+            itemBuilder: (context, index) {
+              return Align(
+                alignment: controller.listMessageHistorical[index].idUser == controller.currentUser?.idUser
+                    ? Alignment.centerRight
+                    : Alignment.centerLeft,
+                child: Container(
+                  margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  padding: EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: controller.listMessageHistorical[index].idUser == controller.currentUser?.idUser
+                        ? Colors.blue
+                        : Colors.grey[300],
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Text(controller.listMessageHistorical[index].message),
+                ),
+              );
+            },
+          ),
         ),
       ),
       Padding(

@@ -186,7 +186,7 @@ class AccountView extends GetView<AccountViewController> {
                         itemBuilder: (context, index) {
                           String imagePath =
                               controller.listUserMyPlant[index].image;
-                          String imageUrl = 'http://192.168.1.4:8000/' + imagePath;
+                          String imageUrl = 'http://172.16.1.148:8000/' + imagePath;
                           if (controller.listUserMyPlant[index].idUser ==
                               controller.currentUser.value?.idUser) {
                             return Card(
@@ -199,9 +199,14 @@ class AccountView extends GetView<AccountViewController> {
                                         mainAxisAlignment: MainAxisAlignment.end,
                                         children: [
                                          /*  IconButton(onPressed: () => controller.deletePlante(controller.listUserMyPlant[index].idPlante), 
-                                          icon: */ InkWell(onTap:()=>
-                                            controller.deletePlante(controller.listUserMyPlant[index].idPlante)
-                                          ,child: Icon(Icons.cancel,size: 30,))
+                                          icon: */ InkWell(
+  onTap: () {
+    Get.snackbar("Test", "InkWell fonctionne");
+   // controller.deletePlante(controller.listUserMyPlant[index].idPlante);
+  },
+  child: Icon(Icons.cancel, size: 30),
+),
+
                                         ],
                                       ),
 
@@ -232,9 +237,37 @@ class AccountView extends GetView<AccountViewController> {
                         },
                       ),
                     ),
+                    
                   ),
                 ),
-              )
+              ),
+              SizedBox(height: 4,),
+                SizedBox(
+  height: 50, // Augmenter la hauteur du bouton pour mieux ajuster le texte
+  width: 160, // Augmenter la largeur pour permettre au texte d'être affiché correctement
+  child: ElevatedButton(
+    onPressed: () async {
+      Get.offAllNamed('login');
+    },
+    style: ElevatedButton.styleFrom(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0), // Ajuster les marges internes
+      shadowColor: const Color.fromARGB(255, 132, 156, 108).withOpacity(0.5),
+      elevation: 1,
+    ),
+    child: const Text(
+      'Se déconnecter',
+      style: TextStyle(
+        fontSize: 16, // Taille de police plus lisible
+        fontWeight: FontWeight.bold, // Rendre le texte plus visible
+        color: Color.fromARGB(255, 117, 154, 97), // Assurez-vous que le texte est bien visible sur le bouton
+      ),
+    ),
+  ),
+),
+
             ],
           ),
         ),

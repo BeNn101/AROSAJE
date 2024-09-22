@@ -138,7 +138,7 @@ class AdminPageView extends GetView<AdminPageViewController> {
         ],
       ),
       bottomNavigationBar:
-          Obx(()=> XNavbar(token: controller.token.value, currentIndex: 5,isadmin: controller.currentUser?.userType,)),
+          Obx(()=> XNavbar(token: controller.token.value, currentIndex: 5,isadmin: controller.currentUser.value?.userType,)),
     );
   }
 }

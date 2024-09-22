@@ -71,7 +71,7 @@ class _MapViewState extends State<MapView> {
 
     Future<void> getCurrentUser() async {
 
-  final url = Uri.parse('http://192.168.1.4:8000/api/me'); 
+  final url = Uri.parse('http://172.16.1.148:8000/api/me'); 
   final response = await http.get(
     url,
     headers: {
@@ -91,7 +91,7 @@ class _MapViewState extends State<MapView> {
 
     Future<void> getAllPlant() async {
     try {
-      final url = Uri.parse('http://192.168.1.4:8000/api/getAllPlantes');
+      final url = Uri.parse('http://172.16.1.148:8000/api/getAllPlantes');
       final response = await http.get(url);
       if (response.statusCode == 200) {
         final List<dynamic> plantData = json.decode(response.body);
@@ -189,6 +189,7 @@ class _MapViewState extends State<MapView> {
                     ),
                     if(listPlant.value.isNotEmpty)
                     ...List.generate(4, (index) {
+                      
                       final markerData = listPlant[index];
                       List<String> coordinates = markerData.localisationPlante.split(', '); 
 double latitude = double.parse(coordinates[0]);
@@ -202,7 +203,7 @@ double longitude = double.parse(coordinates[1]);
                       onTap: () {
                         print('Marker at index $index clicked');
                       },
-                      child: Image.network('http://192.168.1.4:8000/'+markerData.image,  loadingBuilder:
+                      child: Image.network('http://172.16.1.148:8000/'+markerData.image,  loadingBuilder:
                                           (context, child, loadingProgress) {
                                         if (loadingProgress == null) {
                                           return child;
