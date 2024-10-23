@@ -1,0 +1,536 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    position: relative;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+    background-image: url('../../images/app_background.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.navbar {
+    background-color: #34495e; 
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 15px 30px;
+    position: relative;
+    width: 100%;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    overflow: visible;
+}
+
+.navbar a, .navbar-logo a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    margin: 0 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+
+.navbar a:hover {
+    background-color: #2c3e50; 
+    color: #fafafa;
+}
+
+.navbar-logo {
+    position: absolute;
+    left: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.navbar-logo img.logo {
+    height: 60px;
+    width: auto;
+}
+
+.navbar-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-left: 80px;
+}
+
+.navbar-links a {
+    padding: 10px 20px;
+
+}
+.navbar-logo a {
+    padding: 10px 20px;
+
+}
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap');
+
+.navbar a {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+
+}
+
+
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    background-color: #34495e;
+    color: #fff;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.footer a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer a:hover {
+    color: #ddd;
+}
+
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1001; 
+    left: 0;
+    top: 0; /* Positionner la modale plus haut */
+    width: 100%;
+    height: 300px; /* Laisser la hauteur s'ajuster automatiquement */
+    backdrop-filter: blur(5px); /* Flou de fond */
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+.modal-content {
+    position: relative;
+    font-family: 'Roboto', sans-serif; /* Utiliser la police Roboto */
+    background-color: #fff;
+    margin: 15px auto; /* Espacement autour de la modale */
+    padding: 20px;
+    border-radius: 12px; /* Coins arrondis plus doux */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Ombre douce */
+    width: 80%;
+    max-width: 400px; /* Réduire la largeur maximale */
+}
+
+
+#modal-plant-name {
+    font-size: 20px; /* Augmenter la taille du nom */
+    font-weight: bold; /* Mettre en gras */
+    margin-bottom: 10px; /* Espace en dessous */
+    color: #2c3e50; /* Couleur de texte sombre */
+}
+
+
+#modal-coordinates {
+    font-family: 'Inter', sans-serif; /* Utiliser la police Roboto */
+}
+
+
+.modal p {
+    font-family: 'Roboto', sans-serif; /* Utiliser la police Roboto */
+    font-size: 16px; /* Taille de police pour les paragraphes */
+    color: #34495e; /* Couleur de texte pour les informations */
+    margin: 5px 0; /* Espace entre les paragraphes */
+    line-height: 1.5; /* Espacement entre les lignes */
+}
+
+
+.close {
+    cursor: pointer; /* Curseur pointer pour indiquer que c'est cliquable */
+    color: #e74c3c; /* Couleur pour le bouton de fermeture */
+    float: right; /* Positionner à droite */
+    font-size: 24px; /* Taille de la croix */
+}
+
+.close:hover {
+    color: #c0392b; /* Changer de couleur au survol */
+}
+
+
+
+
+.decoModal-content{
+    position: relative;
+    background-color: #fff;
+    margin: 10% auto 20%;
+    padding: 40px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    animation-name: modalFadeInUp;
+    animation-duration: 0.5s;
+}
+
+@keyframes modalFadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.modal-buttons {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+}
+
+
+.decoModal-content button {
+    flex: 1; 
+    padding: 12px 20px; 
+    font-size: 18px; 
+    background-color: white;
+    margin: 0 10px; 
+    border: 2px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold; 
+    transition: background-color 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.decoModal-content button:first-child {
+    margin-left: 0;
+}
+
+.decoModal-content button:last-child {
+    margin-right: 0;
+}
+
+.decoModal-content button#logoutConfirm {
+    margin: auto 10px;    
+}
+.decoModal-content button#logoutConfirm:hover {
+    background-color: #45a049; 
+    color: white; 
+}
+
+.decoModal-content button#logoutCancel:hover {
+    background-color: #e60000; 
+    color: white; 
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+.decoModal-content p {
+    font-family: 'Poppins', sans-serif; 
+    font-size: 20px; 
+    font-weight: 600; 
+    margin-bottom: 30px; 
+    color: #333; 
+    line-height: 1.6; 
+    text-align: center; 
+}
+.decoModal-content button:hover {
+    opacity: 0.9; 
+}
+/* Styles existants */
+
+.base {
+    margin-top: 30px;
+    padding: 20px; 
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+    position: relative;
+    width: 100%; /* Augmenter la largeur */
+    max-width: 1000px; /* Augmenter la largeur max */
+    height: 70vh; /* Augmenter la hauteur */
+    left: 50%;
+    transform: translateX(-50%);
+    overflow:auto; 
+}
+
+#map {
+    height: 60vh; /* Ajuster la hauteur de la carte pour occuper plus d'espace */
+    width: 100%; /* Assurer que la carte prend toute la largeur de la base */
+    position: relative; /* S'assurer que les éléments enfants peuvent être positionnés absolument par rapport à cette div */
+}
+
+#position-btn {
+    position: absolute;
+    bottom: 10px; /* Positionnement en bas de la carte */
+    left: 10px; /* Positionnement à gauche de la carte */
+    z-index: 1000;
+    background-color: #007BFF; 
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 50%; 
+    cursor: pointer;
+    font-size: 20px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px; 
+    height: 40px; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3); 
+    transition: background-color 0.3s; 
+}
+
+#position-btn:hover {
+    background-color: #0056b3; 
+}
+
+/* Autres styles existants */
+
+.annonce-details-popup {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    max-width: 300px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.annonce-details-popup h3 {
+    margin-top: 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.annonce-details-popup p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.annonce-details-popup img {
+    max-width: 100%;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.close-btn {
+    background-color: transparent;
+    border: none;
+    color: #ff0000;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.close-btn:hover {
+    color: #cc0000;
+}
+
+
+h1 {
+    font-family: 'Roboto', sans-serif; /* Police moderne */
+    font-size: 26px; /* Taille de la police */
+    color: #34495e; /* Couleur sombre */
+    text-align: center; /* Centrer le texte */
+    margin-bottom: 10px; /* Espacement autour du titre */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Ombre légère pour un effet 3D */
+    padding: 5px; /* Espacement interne */
+    background-color: rgba(255, 255, 255, 0.8); /* Fond léger pour le titre */
+    border-radius: 8px; /* Coins arrondis */
+}
+
+
+
+
+
+.image-contact-container {
+    display: flex; /* Utiliser flexbox pour aligner l'image et le bouton horizontalement */
+    align-items: center; /* Centrer verticalement l'image et le bouton */
+    margin-top: 10px; /* Espacement au-dessus du conteneur */
+}
+
+#modal-image {
+    max-width: 100px; /* Ajuster la taille de l'image */
+    height: 150px; /* Ajuster la hauteur automatiquement */
+    border-radius: 8px; /* Coins arrondis pour l'image */
+    margin-right: 10px; /* Espace entre l'image et le bouton */
+}
+
+.contact-btn {
+    padding: 8px 16px; /* Espacement à l'intérieur du bouton */
+    border: none; /* Pas de bordure */
+    border-radius: 5px; /* Coins arrondis */
+    background-color: #007bff; /* Couleur de fond */
+    color: white; /* Couleur du texte */
+    cursor: pointer; /* Curseur en main */
+    transition: background-color 0.3s; /* Transition douce pour la couleur de fond */
+}
+
+.contact-btn:hover {
+    background-color: #0056b3; /* Couleur de fond au survol */
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column; /* Aligner les éléments verticalement */
+    position: relative;
+    font-family: 'Roboto', sans-serif; /* Utiliser la police Roboto */
+    background-color: #fff;
+    margin: 15px auto; /* Espacement autour de la modale */
+    padding: 20px;
+    border-radius: 12px; /* Coins arrondis plus doux */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Ombre douce */
+    width: 80%;
+    max-width: 400px; /* Réduire la largeur maximale */
+}
+
+.modal-header {
+    display: flex; /* Utiliser flexbox pour aligner le titre et le bouton */
+    justify-content: space-between; /* Espacement entre le titre et le bouton */
+    align-items: center; /* Centrer verticalement */
+}
+
+
+/* Style de la box utilisateur */
+.user {
+    display: flex;
+    justify-content: space-between; /* Espacement entre le nom et le bouton */
+    align-items: center;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+.user:hover {
+    background-color: #f1f1f1;
+}
+
+/* Style du nom de l'utilisateur */
+.user-name {
+    font-size: 16px;
+    font-weight: bold;
+    color: #34495e;
+}
+
+/* Style du bouton "Supprimer" */
+.delete-btn {
+    padding: 8px 12px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.delete-btn:hover {
+    background-color: #c0392b;
+}
+
+/* Style pour la modale de suppression */
+.modal-delete {
+    display: none; 
+    position: fixed; 
+    z-index: 1001; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px); 
+    background-color: rgba(0, 0, 0, 0.5); 
+}
+
+.modal-content-delete {
+    position: relative;
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 12px;
+    width: 80%;
+    max-width: 400px; 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); 
+    text-align: center;
+}
+
+.modal-buttons-delete {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.modal-buttons-delete button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.modal-buttons-delete button:hover {
+    opacity: 0.8;
+}
+
+#confirmDeleteBtn {
+    background-color: #e74c3c;
+    color: white;
+}
+
+#cancelDeleteBtn {
+    background-color: #95a5a6;
+    color: white;
+}
+
+#loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute; /* Utilisez position: absolute pour le centrer par rapport au conteneur parent */
+    top: 50%; /* Le positionner à 50% de la hauteur */
+    left: 50%; /* Le centrer horizontalement */
+    transform: translate(-50%, -50%); /* Ajuster pour le centrer verticalement et horizontalement */
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    color: #34495e;
+    font-size: 18px;
+}
+
+
+.loader-spinner {
+    border: 4px solid #f3f3f3; /* Couleur de fond du loader */
+    border-top: 4px solid #3498db; /* Couleur du spinner */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin-right: 10px; /* Espacement entre le texte et le spinner */
+}
+
+/* Animation pour le loader */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+

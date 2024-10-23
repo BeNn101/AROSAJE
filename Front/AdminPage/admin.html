@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <link rel="icon" href="../../images/logo arosage.png" type="image/png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf/notyf.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/notyf/notyf.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>Accueil</title>
+</head>
+<body onload="getParams();">
+    <nav class="navbar">
+        <a href="../Homepage/homepage.html" class="navbar-logo">
+            <img src="../../images/logo arosage.png" alt="logo de l'app" class="logo">
+        </a>
+        <div class="navbar-links">
+            <a href="javascript:void(0);" onclick="redirectWithToken('../Homepage/homepage.html');"><i class="fas fa-home"></i> Accueil</a>
+            <a href="javascript:void(0);" onclick="redirectWithToken('../AnnouncesPage/announces.html');"><i class="fas fa-bullhorn"></i> Annonces</a>
+            <a href="javascript:void(0);" onclick="redirectWithToken('../TchatPage/tchat.html');"><i class="fas fa-comment-dots"></i> Tchat</a>
+            <a href="javascript:void(0);" onclick="redirectWithToken('../AccountPage/account.html');"><i class="fas fa-user"></i> Compte</a>
+            <a href="javascript:void(0);" onclick="redirectWithToken('../ContactPage/contact.html');"><i class="fas fa-envelope"></i> Contact</a>
+            <a href="javascript:void(0);" onclick="redirectWithToken('admin.html');"><i class="fas fa-envelope"></i> Contact</a>
+            <a id="logout" href="../LoginPage/login.html"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+        </div>
+    </nav>
+    <section class="base">
+        <h2>Liste des utilisateurs</h2>
+        <div id="userContainer">
+            <div id="loader">
+                <div class="loader-spinner"></div>
+                <p>Chargement des utilisateurs...</p>
+            </div>
+            
+        </div>
+        <!-- Modale de confirmation de suppression -->
+        <div id="deleteModal" class="modal-delete">
+            <div class="modal-content-delete">
+                <p>Voulez-vous vraiment supprimer cet utilisateur ?</p>
+                <div class="modal-buttons-delete">
+                    <button id="confirmDeleteBtn">Oui, supprimer</button>
+                    <button id="cancelDeleteBtn">Annuler</button>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    
+    <footer class="footer">
+        <p>© 2024 Tous droits réservés.</p>
+        <a href="https://www.instagram.com/arosajeprojet/" target="_blank">Contactez-nous sur Instagram <i class="fab fa-instagram"></i></a>
+    </footer>
+    <div id="logoutModal" class="modal">
+        <div class="decoModal-content">
+            <p>Voulez-vous vraiment vous déconnecter ?</p>
+            <div class="modal-buttons">
+                <button id="logoutConfirm">OUI</button>
+                <button id="logoutCancel">NON</button>
+            </div>
+        </div>
+    </div>
+    <script src="admin.js"></script>
+    <script src="../logout.js"></script>
+</body>
+</html>
