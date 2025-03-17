@@ -44,3 +44,18 @@ CREATE TABLE Order_Sneakers (
     FOREIGN KEY (number_order) REFERENCES orders(number_order),
     FOREIGN KEY (sneakers_id) REFERENCES sneakers(sneakers_id)
 );
+
+CREATE TABLE shopping_list (
+    id INT AUTO_INCREMENT PRIMARY KEY, -- Identifiant unique pour chaque entrée
+    sneakers_id INT NOT NULL,          -- Identifiant de la sneaker
+    users_id INT NOT NULL,             -- Identifiant de l'utilisateur
+    brand VARCHAR(255) NOT NULL,       -- Marque de la sneaker
+    price DECIMAL(10, 2) NOT NULL,     -- Prix de la sneaker
+    image VARCHAR(255) NOT NULL,       -- Chemin ou nom de l'image
+    stock INT NOT NULL,                -- Stock disponible
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Date de création
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- Dernière mise à jour
+    FOREIGN KEY (sneakers_id) REFERENCES sneakers(id) ON DELETE CASCADE, -- Clé étrangère pour sneakers
+    FOREIGN KEY (users_id) REFERENCES users(id) ON DELETE CASCADE        -- Clé étrangère pour users
+);
+

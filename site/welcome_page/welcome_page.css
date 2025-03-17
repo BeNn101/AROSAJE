@@ -1,71 +1,118 @@
-body{
-    margin: 0px;
-    padding: 0px;
+/* Styles globaux */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
     background-image: url("../background_image.jpg");
     background-repeat: no-repeat;
     background-size: cover;
+    color: #333;
 }
-header{
-    display:flex;
+
+/* Header */
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.header-container {
+    display: flex;
     justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
 }
 
-.title{
+.logo {
+    width: 100px;
+    height: auto;
+}
+
+.title h1 {
+    font-size: 28px;
+    margin: 0;
+    color: #333;
+}
+
+.title h2 {
+    font-size: 20px;
+    margin: 0;
+    color: #555;
+}
+
+.menu-inline {
+    display: flex;
+    gap: 20px;
+}
+
+.menu-link {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+    padding: 5px 15px;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+}
+
+.menu-link:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Séparateur */
+.separator {
+    width: 80%;
+    margin: 20px auto;
+    border: none;
+    border-top: 2px solid #ccc;
+}
+
+/* Description */
+.description p {
+    text-align: center;
+    margin: 20px auto;
+    max-width: 1000px;
+    font-size: 30px;
+    line-height: 1.5;
+}
+
+/* Catégories */
+.image-categorie {
+    display: flex;
+    justify-content: center;
+    gap: 300px;
+    margin: 50px 20px;
+}
+
+figure {
     text-align: center;
 }
 
-.dropdown-menu{
-    width: 150px;
-    height: 135px;
-    margin:5px;
+figure img {
+    width: 120px;
+    height: auto;
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
 }
 
-.dropdown-item{
-    padding:0rem 1rem;
+figure img:hover {
+    transform: scale(1.1);
 }
 
-h1{
-    margin-left:100px;
-    margin-right: 150px;
-
+figcaption {
+    font-size: 18px;
+    margin-top: 10px;
+    color: #333;
 }
 
-h2{
-    margin-right:55px;
-}
-
-img{
-    width: 180px;
-    height:160px;
-}
-
-
-.image_categorie{
-    display:flex;
-    justify-content: space-around;
-    margin-bottom: 50px;
-}
-
-p{
-    margin-top:50px;
-    text-align:center;
-    margin-bottom:150px;
-}
-
-figure{
+/* Footer */
+footer {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
     text-align: center;
-}
-
-figcaption{
-    font-size: 25px;
-}
-
-select{
-    margin-top: 35px;
-    margin-right: 50px;
-}
-
-footer{
-    display:flex;
-    justify-content: left;
+    padding: 10px 0;
+    margin-top: 610px;
 }

@@ -1,6 +1,6 @@
 <?php
-require_once("db_connect.php");
-require("function.php");
+require_once("../db_connect.php");
+require("../function.php");
 //isAdmin();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") $method = $_POST;
@@ -22,6 +22,18 @@ switch($method['opt']){
         }
 
     break;
+
+    case 'select_shopping_list_by_users_id':
+        if (isset($_SESSION["users_id"])) {
+            $req = $db->prepare("SELECT * FROM shopping_list WHERE users_id = ?");
+            $req->execute([$_SESSION["users_id"]]);
+            $order = $req->fetchAll(PDO::FETCH_ASSOC); // Utilisez fetchAll si vous voulez un tableau complet
+            echo json_encode(['success' => true, 'shopping_list' => $order]); // Corrigez 'sucess' en 'success'
+        } else {
+            echo json_encode(['success' => false, 'msg' => "Pas de commande avec cette ID."]);
+        }
+        break;
+    
 
     case 'select_num':
         if (isset($_POST["number_order"])){

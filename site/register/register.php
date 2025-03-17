@@ -30,5 +30,5 @@ if (!preg_match($regex, $_POST["pwd"])) {
     $req->bindValue(":pwd",$hash);
     $req->execute();
     echo json_encode(["success" => true, "msg" => "inscrit"]);
-    mailer("m.beaumet@gmail.com", "Bienvenu {$_POST["firstname"]} {$_POST["lastname"]}", "Merci de ton inscription");
+    // mailer("m.beaumet@gmail.com", "Bienvenu {$_POST["firstname"]} {$_POST["lastname"]}", "Merci de ton inscription");
 }

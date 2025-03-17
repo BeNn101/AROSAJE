@@ -16,3 +16,59 @@
     width: 600px;
     margin-top:20px;
 }
+
+#catalogue {
+    display: grid; /* Utilisation de la grille CSS */
+    grid-template-columns: repeat(4, 1fr); /* 4 colonnes égales */
+    gap: 20px; /* Espacement entre les cartes */
+    padding: 20px; /* Espacement autour du conteneur */
+}
+
+.sneaker-card {
+    border: 1px solid #ddd; /* Bordure légère autour de chaque carte */
+    border-radius: 8px; /* Coins arrondis */
+    padding: 15px; /* Espacement interne */
+    text-align: center; /* Centrer le contenu */
+    background-color: #fff; /* Fond blanc */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre légère */
+}
+
+.sneaker-card img {
+    max-width: 100%; /* L'image occupe toute la largeur disponible */
+    height: auto; /* Préserver les proportions */
+    border-radius: 8px; /* Coins arrondis pour l'image */
+    margin-bottom: 10px; /* Espacement entre l'image et le texte */
+}
+
+.sneaker-card h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.sneaker-card p {
+    font-size: 14px;
+    margin: 5px 0;
+    color: #555; /* Couleur de texte gris */
+}
+
+.add-to-cart {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 15px;
+    font-size: 14px;
+    color: #fff; /* Texte blanc */
+    background-color: #007bff; /* Couleur bleue */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-to-cart:hover {
+    background-color: #0056b3; /* Couleur plus foncée au survol */
+}
+
+.add-to-cart:active {
+    background-color: #003d80; /* Couleur encore plus foncée au clic */
+}

@@ -5,6 +5,8 @@
     <title>Catalogue Produit</title>
     <link rel="stylesheet" href="page_catalogue.css">
     <link rel="stylesheet" href="../global_style.css">
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"
+    integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </head>
@@ -36,16 +38,71 @@
         </div>
     </nav>
 
-    <div id="article">
-
+    <div id="catalogue">
+        <!-- Les articles seront affichés ici -->
     </div>
-
-
-
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-modal">&times;</span>
+            <h2>Modifier la sneaker</h2>
+            <form id="editForm">
+                <input type="hidden" id="sneakerId">
+                <label>Nom :</label>
+                <input type="text" id="editBrand">
+                
+                <label>Taille :</label>
+                <input type="number" id="editSize">
+                
+                <label>Couleur :</label>
+                <input type="text" id="editColor">
+                
+                <label>Marque :</label>
+                <input type="text" id="editBrandName">
+                
+                <label>Prix (€) :</label>
+                <input type="number" id="editPrice">
+                
+                <label>État :</label>
+                <input type="text" id="editState">
+                
+                <label>Stock :</label>
+                <input type="number" id="editStock">
+                
+                <button type="submit">Enregistrer</button>
+            </form>
+        </div>
+    </div>
+    
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 20px;
+            width: 50%;
+            border-radius: 10px;
+        }
+        .close {
+            float: right;
+            font-size: 28px;
+            cursor: pointer;
+        }
+    </style>
+    
     <footer>
         <p>&copy WWS</p>
     </footer>
 
+    <script src="page_catalogue.js"></script>
 
 </body>
 

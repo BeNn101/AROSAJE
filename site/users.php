@@ -1,81 +1,81 @@
 <?php
 require_once("db_connect.php");
-require("function.php");
-is_Connected();
+session_start();
+header('Content-Type: application/json');
 
-if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
-   $method= $_POST;
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $method = $_POST;
 } else {
-    $method= $_GET;
+    $method = $_GET;
 }
 
-print_r($_POST);
-switch($method["opt"]) {
-    case "select_id":
-        if(isset($_SESSION["users_id"]) && !empty(trim($_SESSION["users_id"]))){
-            $req=$db->prepare("SELECT * FROM users WHERE users_id=?");
-            $req->execute([$_SESSION["users_id"]]);
-            $user=$req->fetch(PDO::FETCH_ASSOC);
-            echo json_encode(["success"=> true, "user"=>$user]); 
-        }
-        break;
-    
-    case "update_id":
-        if(isset($_POST["firstname"], $_POST["lastname"], $_POST["email"],$_POST["user_name"]) && !empty(trim($_POST["firstname"])) && !empty(trim($_POST["lastname"])) && !empty(trim($_POST["email"])) && !empty(trim($_POST["user_name"]))) { 
-            $password = "";
-    
-            if(isset($_POST["pwd"]) && !empty(trim($_POST["pwd"]))) {
-                $password=",pwd = :pwd";
-                // $regex = "/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])[a-zA-Z0-9]{8,12}$/";
-                $regex = '/^[A-Z](?=.*\d)(?=.*[@#$%^+=!])(?=.*[a-zA-Z])[a-zA-Z0-9@#$%^+=!]{7,}$/';
-                if (!preg_match($regex, $_POST["pwd"])) {
-                    echo json_encode(["success" => false, "error" => "Mot de passe au mauvais format"]);
-                    die;
+switch ($method["opt"] ?? '') {
+    case 'select_user':
+        if (isset($_SESSION["users_id"])) {
+            try {
+                $stmt = $db->prepare("SELECT * FROM users WHERE users_id = ?");
+                $stmt->execute([$_SESSION["users_id"]]);
+                $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                if ($user) {
+                    echo json_encode(["success" => true, "user" => $user]);
+                } else {
+                    echo json_encode(["success" => false, "msg" => "Utilisateur non trouvé."]);
                 }
-                $hash = password_hash($_POST["pwd"], PASSWORD_DEFAULT);
-            } 
-
-            $req = $db->prepare("UPDATE users SET firstname = :firstname, lastname = :lastname, email = :email, user_name=:user_name WHERE users_id = :users_id");
-            
-            $req->bindValue(":firstname", $_POST["firstname"]);
-            $req->bindValue(":lastname" , $_POST["lastname"]);
-            $req->bindValue(":email" , $_POST["email"]);
-            $req->bindValue(":user_name" , $_POST["user_name"]);
-            $req->bindValue(":users_id",$_SESSION["users_id"]);
-            $req->execute();
-
-            if($password !="") {
-                $req = $db->prepare("UPDATE users SET firstname = :firstname, lastname = :lastname, email = :email, user_name=:user_name,pwd=:pwd WHERE users_id = :users_id");
-
-                $req->bindValue(":firstname", $_POST["firstname"]);
-                $req->bindValue(":lastname" , $_POST["lastname"]);
-                $req->bindValue(":email" , $_POST["email"]);
-                $req->bindValue(":user_name" , $_POST["user_name"]);
-                $req->bindValue(":pwd" , $hash);  
-                $req->bindValue(":users_id",$_SESSION["users_id"]);
-          
-                $req->execute();
-
+            } catch (PDOException $e) {
+                echo json_encode(["success" => false, "msg" => "Erreur de requête : " . $e->getMessage()]);
             }
-            echo json_encode(["success" => true, "msg"=> "changement éffectué"]);
         } else {
-            echo json_encode(["success" => false, "error" => "erreur de MAJ"]);
+            echo json_encode(["success" => false, "msg" => "Aucun utilisateur connecté."]);
         }
         break;
 
-        case 'delete_id':
-            if (isset($_SESSION["users_id"]) && !empty(trim($_SESSION["users_id"]))){
-                $req=$db->prepare("DELETE FROM users WHERE users_id=?");
-                $req->execute([$_SESSION["users_id"]]);
-                echo json_encode((["success"=>true ]));
-    
-            }else{
-                echo json_encode((["success"=>false, "error"=>"erreur de suppression"]));
+    case 'update_user':
+        if (
+            isset($_POST["firstname"], $_POST["lastname"], $_POST["email"], $_POST["username"]) &&
+            !empty(trim($_POST["firstname"])) &&
+            !empty(trim($_POST["lastname"])) &&
+            !empty(trim($_POST["email"])) &&
+            !empty(trim($_POST["username"]))
+        ) {
+            try {
+                $stmt = $db->prepare("UPDATE users SET firstname = ?, lastname = ?, email = ?, user_name = ? WHERE users_id = ?");
+                $stmt->execute([
+                    $_POST["firstname"],
+                    $_POST["lastname"],
+                    $_POST["email"],
+                    $_POST["username"],
+                    $_SESSION["users_id"]
+                ]);
+                echo json_encode(["success" => true, "msg" => "Mise à jour réussie."]);
+            } catch (PDOException $e) {
+                echo json_encode(["success" => false, "msg" => "Erreur de mise à jour : " . $e->getMessage()]);
             }
-        die;
-
-    default:
-        echo json_encode((["success"=>false, "error"=>"demand inconnu"]));
-            
+        } else {
+            echo json_encode(["success" => false, "msg" => "Données invalides."]);
+        }
         break;
+
+        case 'delete_user':
+            if (isset($_SESSION["users_id"])) {
+                try {
+                    // Supprimer les enregistrements liés dans la table sneakers
+                    $stmt1 = $db->prepare("DELETE FROM sneakers WHERE users_id = :users_id");
+                    $stmt1->execute(["users_id" => $_SESSION["users_id"]]);
+        
+                    // Supprimer l'utilisateur dans la table users
+                    $stmt2 = $db->prepare("DELETE FROM users WHERE users_id = :users_id");
+                    $stmt2->execute(["users_id" => $_SESSION["users_id"]]);
+        
+                    echo json_encode(["success" => true, "msg" => "Utilisateur supprimé."]);
+                } catch (PDOException $e) {
+                    echo json_encode(["success" => false, "msg" => "Erreur de suppression : " . $e->getMessage()]);
+                }
+            } else {
+                echo json_encode(["success" => false, "msg" => "Aucun utilisateur connecté."]);
+            }
+            break;
+        
+    default:
+        echo json_encode(["success" => false, "msg" => "Action inconnue."]);
 }

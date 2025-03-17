@@ -13,10 +13,15 @@ $("form").submit((event) => {
             pwd: $("#pwd").val()
         },
         success: (res) => {
-            console.log(res);
-            if (res.success) window.location.replace("../../site/login_logout/login.html");
-            else console.log("error");
-                //alert(res.error);
+            
+            if (res.success){
+                window.location.replace("../../site/login_logout/login.html");
+                alert("Vous êtes bien inscrit, bravo à toi, nouveau reseller !")
+            } 
+            else{
+                console.log("error");
+                alert("Désolé, votre inscription a échoué. Veuillez réessayer ultérieurement.");
+            }
         }
     });
 });
