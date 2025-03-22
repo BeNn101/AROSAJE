@@ -15,7 +15,7 @@ $(document).ready(function () {
                     $.each(response.articles, function (index, article) {
                         let isOwner = userObj.users_id === parseInt(article.users_id);
                         articlesHtml += ` 
-                            <div class="sneaker-card" data-id="${article.sneakers_id}">
+                            <div class="sneaker-card" data-id="${article.sneakers_id}" data-users_id="${article.users_id}">
                                 <h3>${article.brand}</h3>
                                 <img src="../asset/product_img/${article.image}" alt="${article.brand}" class="sneaker-image">
                                 
@@ -84,41 +84,82 @@ $(document).ready(function () {
         $("#editModal").fadeOut();
     });
 
-    // Envoi des modifications en AJAX
-    $("#editForm").submit(function(e) {
-        e.preventDefault(); // Empêche le rechargement de la page
+   // Envoi des modifications en AJAX
+$("#editForm").submit(function(e) {
+    e.preventDefault(); // Empêche le rechargement de la page
 
-        let formData = {
-            opt: 'update_id',
-            sneakers_id: $("#sneakerId").val(),
-            brand: $("#editBrand").val(),
-            size: $("#editSize").val(),
-            color: $("#editColor").val(),
-            brand_name: $("#editBrandName").val(),
-            price: $("#editPrice").val(),
-            states: $("#editState").val(),
-            stock: $("#editStock").val()
-        };
+    let formData = new FormData();
+    formData.append("opt", "update_id");
+    formData.append("sneakers_id", $("#sneakerId").val());
+    formData.append("brand", $("#editBrand").val());
+    formData.append("size", $("#editSize").val());
+    formData.append("color", $("#editColor").val());
+    formData.append("price", $("#editPrice").val());
+    formData.append("states", $("#editState").val());
+    formData.append("stock", 1);
 
-        $.ajax({
-            url: "../sneakers.php",
-            type: "POST",
-            data: formData,
-            dataType: "json",
-            success: function(response) {
-                if (response.success) {
-                    alert("Modifications enregistrées !");
-                    $("#editModal").fadeOut();
-                    loadArticles(); // Recharger les sneakers après modification
-                } else {
-                    alert("Erreur : " + response.error);
-                }
-            },
-            error: function() {
-                alert("Erreur de connexion avec le serveur.");
+    // Vérification et ajout du fichier image s'il est sélectionné
+    let imageFile = $("#editImage")[0].files[0];
+    if (imageFile) {
+        formData.append("image", imageFile);
+    }
+
+    $.ajax({
+        url: "../sneakers.php",
+        type: "POST",
+        data: formData,
+        contentType: false, // Nécessaire pour envoyer des fichiers
+        processData: false, // Empêche jQuery de transformer FormData en string
+        dataType: "json",
+        success: function(response) {
+            if (response.success) {
+                console.log(response);
+                alert("Modifications enregistrées !");
+                $("#editModal").fadeOut();
+                loadArticles(); // Recharger les sneakers après modification
+            } else {
+                alert("Erreur : " + response.error);
             }
-        });
+        },
+        error: function(xhr, status, error) {
+            console.log("XHR Response:", xhr.responseText);
+            console.log("Status:", status);
+            console.log("Error:", error);
+            alert("Erreur de connexion avec le serveur.");
+        }        
+        
     });
+});
+
+$(document).on("click", ".add-to-cart", function() {
+    let sneakers_id = $(this).data("id");
+
+    // Récupération du users_id depuis le parent contenant la classe "sneaker-card"
+    let users_id = $(this).closest(".sneaker-card").data("users_id");
+
+    // Stockage dans le localStorage
+    if (users_id) {
+        localStorage.setItem("users_id_shopping_list", users_id);
+    }
+
+    $.ajax({
+        url: "../sneakers.php",
+        type: "POST",
+        data: { opt: "add_to_cart", sneakers_id: sneakers_id },
+        dataType: "json",
+        success: function(response) {
+            if (response.success) {
+                alert("Produit ajouté au panier avec succès !");
+            } else {
+                alert("Erreur : " + response.error);
+            }
+        },
+        error: function() {
+            alert("Erreur de connexion avec le serveur.");
+        }
+    });
+});
+
 
     // Supprimer une sneaker
     $(document).on('click', '.delete-sneaker', function () {

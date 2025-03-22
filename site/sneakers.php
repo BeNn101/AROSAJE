@@ -134,35 +134,95 @@ switch($opt){
     
         case 'update_id':
             if (
-                isset($_POST["sneakers_id"], $_POST["brand"], $_POST["size"], $_POST["price"], $_POST["color"], $_POST["brand_name"], $_POST["states"], $_POST["stock"]) &&
+                isset($_POST["sneakers_id"], $_POST["brand"], $_POST["size"], $_POST["price"], $_POST["color"], $_POST["states"], $_POST["stock"]) &&
                 !empty(trim($_POST["brand"])) &&
                 !empty(trim($_POST["size"])) &&
                 !empty(trim($_POST["price"])) &&
                 !empty(trim($_POST["color"])) &&
-                !empty(trim($_POST["brand_name"])) &&
                 !empty(trim($_POST["states"])) &&
                 !empty(trim($_POST["stock"]))
             ) {
-                $req = $db->prepare("
-                    UPDATE sneakers 
-                    SET brand = :brand, size = :size, price = :price, color = :color, brand = :brand_name, states = :states, stock = :stock
-                    WHERE sneakers_id = :sneakers_id AND users_id = :users_id
-                ");
-        
-                $success = $req->execute([
+                // Connexion à la BDD (Assurez-vous que $db est bien connecté)
+                
+                $params = [
                     ":brand" => $_POST["brand"],
                     ":size" => $_POST["size"],
                     ":price" => $_POST["price"],
                     ":color" => $_POST["color"],
-                    ":brand_name" => $_POST["brand_name"],
                     ":states" => $_POST["states"],
                     ":stock" => $_POST["stock"],
                     ":sneakers_id" => $_POST["sneakers_id"],
                     ":users_id" => $_SESSION["users_id"]
-                ]);
+                ];
+        
+                $image_query = "";
+                
+                // Vérifier si une nouvelle image est envoyée
+                if (isset($_FILES["image"]) && $_FILES["image"]["error"] === 0) {
+                    $file_name = $_FILES['image']['name'];
+                    $file_tmp = $_FILES['image']['tmp_name'];
+                    $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+                    $allowed_exts = ["jpg", "jpeg", "png", "gif"];
+        
+                    $uploadDir = "asset/product_img/";
+        
+                    // Vérifier si le dossier d'upload existe, sinon le créer
+                    if (!is_dir($uploadDir)) {
+                        mkdir($uploadDir, 0755, true);
+                    }
+        
+                    // Vérifier que l'extension est autorisée
+                    if (!in_array($file_ext, $allowed_exts)) {
+                        echo json_encode(["success" => false, "error" => "Format d'image non autorisé"]);
+                        exit();
+                    }
+        
+                    // Générer un nom unique pour le fichier
+                    $new_file_name = uniqid() . '.' . $file_ext;
+                    $destination = $uploadDir . $new_file_name;
+        
+                    // Déplacer l'image vers le dossier d'uploads
+                    if (move_uploaded_file($file_tmp, $destination)) {
+                        // Récupérer l'ancienne image pour suppression
+                        $stmt = $db->prepare("SELECT image FROM sneakers WHERE sneakers_id = :sneakers_id AND users_id = :users_id");
+                        $stmt->execute([
+                            ":sneakers_id" => $_POST["sneakers_id"],
+                            ":users_id" => $_SESSION["users_id"]
+                        ]);
+                        $old_image = $stmt->fetchColumn();
+        
+                        // Supprimer l'ancienne image si elle existe
+                        if ($old_image && file_exists($uploadDir . $old_image)) {
+                            unlink($uploadDir . $old_image);
+                        }
+        
+                        // Ajouter la nouvelle image à la requête de mise à jour
+                        $image_query = ", image = :image";
+                        $params[":image"] = $new_file_name;
+                    } else {
+                        echo json_encode(["success" => false, "error" => "Échec du téléchargement de l'image"]);
+                        exit();
+                    }
+                }
+        
+                // Requête SQL avec mise à jour conditionnelle de l’image
+                $req = $db->prepare("
+                    UPDATE sneakers 
+                    SET brand = :brand, 
+                        size = :size, 
+                        price = :price, 
+                        color = :color, 
+                        states = :states, 
+                        stock = :stock
+                        $image_query
+                    WHERE sneakers_id = :sneakers_id 
+                    AND users_id = :users_id
+                ");
+        
+                $success = $req->execute($params);
         
                 if ($success) {
-                    echo json_encode(["success" => true]);
+                    echo json_encode(["success" => true, "message" => "Mise à jour réussie"]);
                 } else {
                     echo json_encode(["success" => false, "error" => "Échec de la mise à jour"]);
                 }

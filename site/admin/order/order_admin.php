@@ -1,7 +1,7 @@
 <?php
-require_once("../db_connect.php");
-require("../function.php");
-//isAdmin();
+require_once("../../db_connect.php");
+require("../../function.php");
+isAdmin();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") $method = $_POST;
 else $method = $_GET;

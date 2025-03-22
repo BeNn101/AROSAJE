@@ -28,16 +28,6 @@
         </div>
     </header>
 
-    <!-- Barre de recherche avec BoodStrap ou sans -->
-    <nav class="navbar-body">
-        <div class="container-fluid">
-          <form class="d-flex" id="navbar" role="nav-bar-search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
-        </div>
-    </nav>
-
     <div id="catalogue">
         <!-- Les articles seront affichés ici -->
     </div>
@@ -67,6 +57,10 @@
                 
                 <label>Stock :</label>
                 <input type="number" id="editStock">
+
+                <!-- Champ pour uploader l'image -->
+                <label for="editImage">Image :</label>
+                <input type="file" id="editImage" accept="image/*">
                 
                 <button type="submit">Enregistrer</button>
             </form>

@@ -1,85 +1,85 @@
 <?php
 
-require_once("../db_connect.php");
-require("../function.php");
+require_once("../../db_connect.php");
+require("../../function.php");
 is_Connected();
 
-if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
-   $method= $_POST;
-} else {
-    $method= $_GET;
+header('Content-Type: application/json'); // Définit le type de réponse JSON
+$response = ["success" => false];
+
+// Nettoie le buffer de sortie pour éviter tout caractère parasite avant la réponse JSON
+if (ob_get_contents()) {
+    ob_clean();
 }
 
-switch($method["opt"]) {
+$method = $_SERVER["REQUEST_METHOD"] == "POST" ? $_POST : $_GET;
 
-    case "select":
-        $req=$db->prepare("SELECT * FROM users");
-        $req->execute();
-        $user=$req->fetch(PDO::FETCH_ASSOC);
-        echo json_encode(["success"=> true, "user"=>$user]); 
-    break;
-    
-    case "select_id":
-        if(isset($_SESSION["users_id"]) && !empty(trim($_SESSION["users_id"]))){
-            $req=$db->prepare("SELECT * FROM users WHERE users_id=?");
-            $req->execute([$_SESSION["users_id"]]);
-            $user=$req->fetch(PDO::FETCH_ASSOC);
-            echo json_encode(["success"=> true, "user"=>$user]); 
-        }
-    break;
-    
-    case "update_id":
-        if(isset($_POST["firstname"], $_POST["lastname"], $_POST["email"],$_POST["user_name"],$_POST["users_id"]) && !empty(trim($_POST["firstname"])) && !empty(trim($_POST["lastname"])) && !empty(trim($_POST["email"])) && !empty(trim($_POST["user_name"])) && !empty(trim($_POST["users_id"]))) { 
-            $password = "";
-    
-            if(isset($_POST["pwd"]) && !empty(trim($_POST["pwd"]))) {
-                $password=",pwd = :pwd";
-                $regex = "/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])[a-zA-Z0-9]{8,12}$/";
-                if (!preg_match($regex, $_POST["pwd"])) {
-                    echo json_encode(["success" => false, "error" => "Mot de passe au mauvais format"]);
-                    die;
-                }
-                $hash = password_hash($_POST["pwd"], PASSWORD_DEFAULT);
-            } 
-
-            $req = $db->prepare("UPDATE users SET firstname = :firstname, lastname = :lastname, email = :email, user_name=:user_name WHERE users_id=:users_id");
-            
-            $req->bindValue(":firstname", $_POST["firstname"]);
-            $req->bindValue(":lastname" , $_POST["lastname"]);
-            $req->bindValue(":email" , $_POST["email"]);
-            $req->bindValue(":user_name" , $_POST["user_name"]);
-            $req->bindValue(":users_id",$_POST["users_id"]);
-            $req->execute();
-
-            if($password !="") {
-                $req = $db->prepare("UPDATE users SET firstname = :firstname, lastname = :lastname, email = :email, user_name=:user_name,pwd=:pwd WHERE users_id=:users_id");
-
-                $req->bindValue(":firstname", $_POST["firstname"]);
-                $req->bindValue(":lastname" , $_POST["lastname"]);
-                $req->bindValue(":email" , $_POST["email"]);
-                $req->bindValue(":user_name" , $_POST["user_name"]);
-                $req->bindValue(":pwd" , $hash);  
-                $req->bindValue("users_id",$_POST["users_id"]);
-          
-                $req->execute();
-
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($method['opt'])) {
+    switch ($method["opt"]) {
+        case "delete":
+            if (!empty($method["users_id"])) {
+                $id = intval($method["users_id"]);
+                $stmt = $db->prepare("DELETE FROM users WHERE users_id = ?");
+                $success = $stmt->execute([$id]);
+                $response = ["success" => $success, "msg" => $success ? "Utilisateur supprimé" : "Erreur lors de la suppression"];
             }
-            echo json_encode(["success" => true, "msg"=> "changement éffectué"]);
-        } else {
-            echo json_encode(["success" => false, "error" => "erreur de MAJ"]);
-        }
-        break;
+            break;
 
-    case 'delete_id':
-        if(!(isset($_POST["users_id"])) && !empty(trim($_POST["users_id"]))){
-            $req=$db->prepare("DELETE users WHERE users_id=?");
-            $req->execute($_POST["users_id"]);
-            echo json_encode(["sucess" => true, "msg" => "votre compte a été supprimer malheureusement ! "]);
-        }
-    break;
+        case "update":
+            if (!empty($method["user"])) {
+                $data = $method["user"];
+                $stmt = $db->prepare("UPDATE users SET firstname = ?, lastname = ?, user_name = ?, email = ?, newsletter = ? WHERE users_id = ?");
+                $success = $stmt->execute([
+                    $data['firstname'], $data['lastname'], $data['user_name'], 
+                    $data['email'], $data['newsletter'], $data['users_id']
+                ]);
+                $response = ["success" => $success, "msg" => $success ? "Mise à jour réussie" : "Erreur lors de la mise à jour"];
+            }
+            break;
+    }
+} elseif ($_SERVER["REQUEST_METHOD"] === "GET" && isset($method['opt'])) {
+    switch ($method["opt"]) {
+        case "select":
+            $req = $db->prepare("SELECT * FROM users");
+            $req->execute();
+            $users = $req->fetchAll(PDO::FETCH_ASSOC);
+            $response = ["success" => true, "users" => $users];
+            break;
 
-    default:
-        echo json_encode((["success"=>false, "error"=>"demand inconnu"]));
-            
-        break;
+        case "select_id":
+            if (!empty($_SESSION["users_id"])) {
+                $req = $db->prepare("SELECT * FROM users WHERE users_id = ?");
+                $req->execute([$_SESSION["users_id"]]);
+                $user = $req->fetch(PDO::FETCH_ASSOC);
+                $response = ["success" => true, "user" => $user];
+            }
+            break;
+
+        case "update_id":
+            if (!empty($method["users_id"]) && !empty($method["firstname"]) && !empty($method["lastname"]) && !empty($method["email"]) && !empty($method["user_name"])) {
+                $passwordQuery = "";
+                $params = [
+                    ":firstname" => $method["firstname"],
+                    ":lastname" => $method["lastname"],
+                    ":email" => $method["email"],
+                    ":user_name" => $method["user_name"],
+                    ":users_id" => $method["users_id"]
+                ];
+
+                if (!empty($method["pwd"])) {
+                    $passwordQuery = ", pwd = :pwd";
+                    $params[":pwd"] = password_hash($method["pwd"], PASSWORD_DEFAULT);
+                }
+
+                $req = $db->prepare("UPDATE users SET firstname = :firstname, lastname = :lastname, email = :email, user_name = :user_name $passwordQuery WHERE users_id = :users_id");
+                $success = $req->execute($params);
+                $response = ["success" => $success, "msg" => "Mise à jour réussie"];
+            }
+            break;
+    }
 }
+
+// Retour de la réponse JSON
+echo json_encode($response);
+exit();
+?>
